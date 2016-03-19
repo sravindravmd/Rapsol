@@ -168,9 +168,51 @@ angular.module('starter.controllers', [])
         // Set Ink
         ionicMaterialInk.displayEffect();
     $scope.firsttime=true;
+      $scope.userlogin= function (mobile,password) {
+        console.log(mobile,password)
+
+        $http.get(API_ENDPOINT.url+'/services.php/userlogin/'+mobile+'/'+password).success(function (data) {
+
+          console.log('user info',data);
+
+          var role=data.data.user.ROLE_FK_ID;
+          console.log('user info',data.data.message);
+
+          $scope.message=data.data.message;
+
+          $timeout(function () {
+
+            if(role==5){
+              $state.go('app.channel_partner');
+            } else if(role==4){
+              $state.go('app.retailer_home');
+            } else if(role==3){
+              $state.go('app.distributor_home')
+            } else if(role==2){
+              alert('No state craeted for L1')
+            }
+            else if(role==6){
+              alert('No state craeted L2')
+            }else if(role==7){
+              alert('No state craeted L3')
+            }
+
+          },3000)
+          /*
+           if(data.data.user.ROLE_FK_ID==5){
+           $state.go('app.channel_partner');
+           } else if(data.data.user.ROLE_FK_ID==5){
+           $state.go('app.channel_partner');
+           }*/
+
+        }).error(function (error) {
+
+        })
+
+      }
 
       $scope.checkuser= function (mobile) {
-
+        userinfoService.setUsermobile(mobile)
         $http.get(API_ENDPOINT.url+'/services.php/firstuserlogin/'+mobile).then(function (data) {
 
           console.log('First login',data.data.Message.isfrstLogin);
@@ -368,6 +410,7 @@ angular.module('starter.controllers', [])
             data:'fname='+customer.fname+'&mobile='+customer.mobile+'&roleid='+customer.roleid
           }).success(function (data, status, headers, config) {
             userinfoService.setUserinfo(data);
+            userinfoService.setUsermobile(customer.mobile)
             $scope.regsuccess=true;
            $timeout(callAtTimeout, 3000);
             console.log(data, status, headers, config)  })
@@ -966,7 +1009,7 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
 
-    .controller('ForgotPasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,$http) {
+    .controller('ForgotPasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,$http,userinfoService,$state) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -990,7 +1033,7 @@ angular.module('starter.controllers', [])
         // Set Ink
         ionicMaterialInk.displayEffect();
 
-
+     $scope.mobile=userinfoService.getUsermobile();
       $scope.forgotpass=function(mobile){
         $http({
           method:'POST',
@@ -1000,12 +1043,15 @@ angular.module('starter.controllers', [])
           }
 
         }).then(function (data) {
+          userinfoService.setUserinfo(data.data);
 
-          $scope.userinfo=data.data.users;
+          $timeout(function () {
+            $state.go('app.otp');
+          },300)
+         // $scope.userinfo=data.data.users;
           console.log(data);
-          $scope.message=data.data.Message;
+          $scope.message="Otp generated successfully";
 
-          alert(data);
           // 'new_password='+createpass.password+'&confirm_password='+createpass.conPassword
 
         })
@@ -1470,7 +1516,7 @@ angular.module('starter.controllers', [])
 
 
   })
-  .controller('otpCtrl', function ($scope,$http,$state,userinfoService) {
+  .controller('otpCtrl', function ($scope,$http,$state,userinfoService,API_ENDPOINT) {
 
     $scope.userOtp="Use OTP: "+userinfoService.getUserInfo().otp
 
@@ -1507,17 +1553,22 @@ angular.module('starter.controllers', [])
     }
     $scope.regenrate= function () {
     var  mobile=userinfoService.getUsermobile()
-      console.log(userinfoService.getUsermobile());
+
+      var userId=userinfoService.getUserInfo().userId;
+      console.log('userId',userinfoService.getUserInfo().userId)
+      console.log('userMobile',userinfoService.getUsermobile());
       $http({
         method:'POST',
-        url:'http://10.10.10.58/gulf_v1/webservices/services.php/forgotpassword/'+mobile,
+        url:API_ENDPOINT.url+'/services.php/getOTP',
+        data:'userId='+userId,
+        //'http://10.10.10.58/gulf_v1/webservices/services.php/forgotpassword/'+mobile,
         headers: {
           'Content-Type': "application/x-www-form-urlencoded"
         }
 
       }).success(function (data) {
         console.log(data)
-        userinfoService.setUserinfo(data)
+          //userinfoService.setUserinfo(data)
 
         $scope.userOtp="Use OTP: "+userinfoService.getUserInfo().otp
 
@@ -1529,13 +1580,14 @@ angular.module('starter.controllers', [])
     }
 
   })
-  .controller('CreatePasswordCtrl', function ($scope,$http,userinfoService,$state) {
+  .controller('CreatePasswordCtrl', function ($scope,$http,userinfoService,$state,API_ENDPOINT) {
 
     $scope.createNewPassword= function (createpass ,createPassForm) {
       var userId= userinfoService.getUserInfo().userId;
+      var mobile=userinfoService.getUsermobile();
       $http({
         method:'POST',
-        url:'http://10.10.10.58/gulf_v1/webservices/services.php/firstusercredential',
+        url:API_ENDPOINT.url+'/services.php/firstusercredential',
         headers: {
           'Content-Type': "application/x-www-form-urlencoded"
 
@@ -1543,13 +1595,46 @@ angular.module('starter.controllers', [])
         data:'new_password='+createpass.password+'&confirm_password='+createpass.conPassword+'&userId='+userId
 
       }).then(function (data) {
-        alert(data);
-        var roleId=userinfoService.getRoleInfo().roleid;
+        //alert(data);
+
+        $http.get(API_ENDPOINT.url+'/services.php/userlogin/'+mobile+'/'+createpass.password).success(function (data) {
+
+          console.log('user info',data.data.user.ROLE_FK_ID);
+
+          var role=data.data.user.ROLE_FK_ID;
+          console.log('user info',data.data.message);
+
+          var message=data.data.message;
+            if(role==5){
+              $state.go('app.channel_partner');
+            } else if(role==4){
+              $state.go('app.retailer_home');
+            } else if(role==3){
+              $state.go('app.distributor_home')
+          } else if(role==2){
+             alert('No state craeted for L1')
+            }
+            else if(role==6){
+              alert('No state craeted L2')
+            }else if(role==7){
+              alert('No state craeted L3')
+            }
+/*
+          if(data.data.user.ROLE_FK_ID==5){
+            $state.go('app.channel_partner');
+          } else if(data.data.user.ROLE_FK_ID==5){
+            $state.go('app.channel_partner');
+          }*/
+
+        }).error(function (error) {
+
+        })
+      /*  var roleId=userinfoService.getRoleInfo().roleid;
         if(roleId==5){
           $state.go('app.channel_partner');
         } else if(roleId==4){
           $state.go('app.retailer_home');
-        }
+        }*/
 
         // 'new_password='+createpass.password+'&confirm_password='+createpass.conPassword
 
