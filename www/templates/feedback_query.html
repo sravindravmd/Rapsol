@@ -1,49 +1,48 @@
-<ion-view view-title="Login" align-title="left">
-    <ion-content class="">
-        <div class="hero no-header flat">
-            <div class="app-icon"></div>
-            <div class="content"></div>
-                <div class="row">
-                    <div class="col col-30 font_color"><input type="radio" id="feedback" name="reading" value="feedback" ng-model="choose" />
-                      <label for="feedback"> Customer </label>
-                    </div>
-                    <div class="col font_color"><input type="radio" id="query" name="reading" value="query" ng-model="choose" />
-                      <label for="query"> Query </label>
-                    </div>
-                </div>
+<ion-view view-title="Feedback Query" align-title="left">
+  <ion-content class="">
+    <div class="hero no-header flat">
+      <div class="app-icon"></div>
+      <div class="content"></div>
+      <div class="row">
+        <div class="col col-30 font_color"><input type="radio" id="feedback" name="reading" value="feedback" ng-model="choose" />
+          <label for="feedback"> Feedback </label>
         </div>
-          <ng-form name="feedbackForm" ng-show="choose == 'feedback'">
-                <div >
-                  <div class="list list-inset">
-                    <label class="item item-input item-floating-label">
-                      <span class="input-label">Feedback Message</span>
-                      <textarea type="text" placeholder="Message Text" name="message" ng-model="msgText"></textarea>
-                    </label>
-                  </div>
-                    <button ng-disabled="feedbackForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submit(message)">Submit</button>
-                </div>
-            <div ng-show="feedbackForm.$invalid">
-              <p ng-show="feedbackForm.message.$error.required && feedbackForm.$dirty">Message is required</p>
-            </div>
-          </ng-form>
-                <!--<div class="padding">z
-                    <p ng-show="myForm.username.$error.required">* Username is required</p>
-                    <p ng-show="myForm.username.$invalid && !myForm.username.$pristine">* Username must be an email address</p>
-                    <p ng-show="myForm.username.$error.minlength">* Username must be longer than 5 characters</p>
-                    <p ng-show="myForm.password.$error.required">* Password is required</p>
-                    <p ng-show="myForm.password.$error.minlength">* Password must be longer than 6 characters</p>
-                </div>-->
-          <ng-form name="queryForm" ng-show="choose == 'query'">
+        <div class="col font_color"><input type="radio" id="query" name="reading" value="query" ng-model="choose" />
+          <label for="query"> Query </label>
+        </div>
+      </div>
+    </div>
+    <ng-form name="feedbackForm" ng-show="choose == 'feedback'">
+      <div >
+        <div class="list list-inset" style=" border: none;">
+          <label class="item item-input item-stacked-label item-divider card">
+            <textarea type="text" placeholder="Message Text" name="message" ng-model="msgText"></textarea>
+          </label>
+        </div>
 
-                  <div class="list list-inset">
-                    <label class="item item-input item-floating-label">
-                      <span class="input-label">Query Message</span>
-                      <textarea type="textarea" placeholder="Message Text" name="message" ng-model="msgText"></textarea>
-                    </label>
-                  </div>
-                    <button class="button button-full custom-dark1 ink" ng-click="submit()">Send</button>
+        <button ng-disabled="feedbackForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submit(message)">Submit</button>
+      </div>
+      <div ng-show="feedbackForm.$invalid">
+        <p ng-show="feedbackForm.message.$error.required && feedbackForm.$dirty">Message is required</p>
+      </div>
+    </ng-form>
+    <ng-form name="queryForm" ng-show="choose == 'query'">
+      <label class="item-input margn_top"><input placeholder="Name" type="text" name="fname" ng-model="query.fname" required/></label>
+      <label class="item-input margn_top"><input placeholder="Mobile Number" type="tel" name="mobile" ng-model="query.mobile" required/></label>
+      <label class="item-input margn_top"><input placeholder="Email Id" type="email" name="email" ng-model="query.email" required/></label>
+      <label class="item-input margn_top card">
+        <textarea type="text" placeholder="Message Text" name="message" ng-model="msgText"></textarea>
+      </label>
+      <br>
+      <button ng-disabled="queryForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submit()">Send</button>
+      <div style="text-align: center">
+        <div ng-show="queryForm.$invalid">
+          <p ng-show="queryForm.name.$error.required && queryForm.$dirty">Name required</p>
+          <p ng-show="queryForm.mobile.$error.required && queryForm.$dirty">Mobile Number required</p>
+          <p ng-show="queryForm.email.$error.required && queryForm.$dirty">Email required</p>
+        </div>
+      </div>
+    </ng-form>
 
-          </ng-form>
-
-    </ion-content>
+  </ion-content>
 </ion-view>
