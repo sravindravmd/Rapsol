@@ -1,24 +1,47 @@
-<ion-view view-title="Choose Campaign">
+<ion-view view-title="Choose Champion">
   <ion-content ng-class="{expanded:$scope.isExpanded}">
     <div class="tabs tabs-icon-top static">
       <p>Champion</p>
     </div>
-    <!--<div class="row">
-        <input type="radio" name="reading" value="0" id="reading_0" checked />
-        <label for="reading_0">Very much</label>
+    <div class="list padding">
+      <label class="item item-input item-select custom-dark3">
+        <div class="input-label">Select Vehicle</div>
+        <select name="bike" ng-model="bike" ng-change="choosebike(bike)" class="custom-dark2">
+          <option class="custom-dark2" ng-repeat="bike in bikes" >{{bike.name}}</option>
+        </select>
+      </label>
+    </div>
+    <div class="card padding">
+      <div class="row custom-dark3 ">
+        <div class="col col-20 ">Bike Name :</div>
+        <div class="col col-33">{{bikeDetails.REC_NAME}}</div>
+      </div>
+      <div class="row custom-dark3">
+        <div class="col col-20 ">Bike Model :</div>
+        <div class="col col-33">{{bikeDetails.REC_MODEL}}</div>
+      </div>
+      <div class="row custom-dark3">
+        <div class="col col-20 ">Bike cc :</div>
+        <div class="col col-33">{{bikeDetails.CC}}</div>
+      </div>
+      <div class="row custom-dark3">
+        <div class="col col-20">Recommended Oil :</div>
+        <div class="col col-33">{{bikeDetails.REC_RECOMMENDATION}}</div>
+      </div>
+      <!--<div class="row">
+        <div class="col col-10">{{bikeDetails.REC_NAME}}</div>
+        <div class="col col-10">{{bikeDetails.REC_MODEL}}</div>
+        <div class="col col-10">{{bikeDetails.CC}}</div>
+        <div class="col col-10">{{bikeDetails.REC_RECOMMENDATION}}</div>
+      </div>-->
+      <!--<div class="header col-box">
+        <p style="text-align: center" class="custom-dark3"> Bike Name : {{bikeDetails.REC_NAME}}</p>
+        <p> Bike Model : {{bikeDetails.REC_MODEL}}</p>
+        <p> Bike cc : {{bikeDetails.CC}}</p>
+        <p> Recommended Oil : {{bikeDetails.REC_RECOMMENDATION}}</p>
 
-        <input type="radio" name="reading" value="1" id="reading_1" />
-        <label for="reading_1">Sometimes</label>
-    </div>-->
-    <label class="item item-input item-select">
-      <div class="input-label">Choose Champion List</div>
-      <select name="distributor" ng-model="retailer.distributor" required/>
-      <option>A</option>
-      <option selected>B</option>
-      <option>C</option>
-      </select>
-    </label>
-    <button ng-click="" class="button button-full button-assertive ink">Submit</button>
-
+      </div>-->
+      <hr>
+    </div>
   </ion-content>
 </ion-view>

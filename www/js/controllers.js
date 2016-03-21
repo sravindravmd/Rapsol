@@ -144,7 +144,7 @@ angular.module('starter.controllers', [])
   $scope.homeCustomerLogin= function () {
     $state.go('app.customer_login');
   }
-}).controller('LoginCtrl', function($scope, $stateParams, $timeout, $http,ionicMaterialMotion, ionicMaterialInk,$state,API_ENDPOINT,userinfoService) {
+}).controller('LoginCtrl', function($scope, $stateParams, $timeout, $http,ionicMaterialMotion, ionicMaterialInk,$state,API_ENDPOINT,userinfoService,$ionicLoading,$ionicPopup) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -167,6 +167,20 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+
+      //loading functions
+
+    $scope.show = function() {
+      $ionicLoading.show({
+        template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+      });
+    };
+
+    $scope.hide = function(){
+      $ionicLoading.hide();
+    };
+
+
     $scope.firsttime=true;
       $scope.userlogin= function (mobile,password) {
         console.log(mobile,password)
@@ -212,11 +226,23 @@ angular.module('starter.controllers', [])
       }
 
       $scope.checkuser= function (mobile) {
+
+        // Start showing the progress
+        $scope.show($ionicLoading);
+
         userinfoService.setUsermobile(mobile)
         $http.get(API_ENDPOINT.url+'/services.php/firstuserlogin/'+mobile).then(function (data) {
 
           console.log('First login',data.data.Message.isfrstLogin);
           $scope.message=data.data.Message;
+
+          // Do something on success for example if you are doing a login
+          var alertPopup = $ionicPopup.alert({
+            title: 'Number verified successfully !',
+          });
+/*
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);*/
 
           if(data.data.Message.isfrstLogin==0){
             $scope.firsttime=true;
@@ -235,7 +261,7 @@ angular.module('starter.controllers', [])
 
               $state.go('app.otp');
 
-              alert(data);
+              //alert(data);
               // 'new_password='+createpass.password+'&confirm_password='+createpass.conPassword
 
             })
@@ -250,12 +276,21 @@ angular.module('starter.controllers', [])
         }).catch(function (error) {
           console.log(error);
 
-        })
+          // Do something on error
+          var alertPopup = $ionicPopup.alert({
+            title: 'verification failed!',
+            template: 'Please check your number!'
+          });
+
+        }).finally(function($ionicLoading) {
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);
+        });
 
 
       }
 
-      $scope.distributorLogin= function (distributor,distributorForm) {
+   /*   $scope.distributorLogin= function (distributor,distributorForm) {
        if(distributorForm.$valid){
          console.log(distributorForm,distributor);
          $state.go('app.distributor_login');
@@ -277,11 +312,11 @@ angular.module('starter.controllers', [])
 
       $scope.forgotPassword= function () {
         $state.go('app.forgot_password');
-      };
+      };*/
 
     })
 
-    .controller('RegCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$http,userinfoService) {
+    .controller('RegCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$http,userinfoService,API_ENDPOINT) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -322,7 +357,7 @@ angular.module('starter.controllers', [])
         }
 
       }
-      $http.get('http://10.10.10.58/gulf_v1/webservices/services.php/regionlist').then(function(results){
+      $http.get(API_ENDPOINT.url+'/services.php/regionlist').then(function(results){
        $scope.regions=results.data.regionList;
      console.log('regions', $scope.regions);
       }).catch(function (error) {
@@ -334,7 +369,7 @@ angular.module('starter.controllers', [])
 /*
         console.log($scope.retailer,$scope.retailer.STATE_PK_ID);
 */
-        $http.get('http://10.10.10.58/gulf_v1/webservices/services.php/statelist/'+reregion).then(function(results){
+        $http.get(API_ENDPOINT.url+'/services.php/statelist/'+reregion).then(function(results){
           $scope.states=results.data.States;
           console.log('sates for region',  $scope.states);
         })
@@ -342,7 +377,7 @@ angular.module('starter.controllers', [])
 
       $scope.changedstate= function (state) {
         console.log('sates for cites',state)
-        $http.get('http://10.10.10.58/gulf_v1/webservices/services.php/citylist/'+state).then(function(results){
+        $http.get(API_ENDPOINT.url+'/services.php/citylist/'+state).then(function(results){
           $scope.cities=results.data.cities;
           console.log('cities',  $scope.cities);
         })
@@ -350,7 +385,7 @@ angular.module('starter.controllers', [])
 
       $scope.changedcity= function (city) {
         console.log('city for distributor',city)
-        $http.get('http://10.10.10.58/gulf_v1/webservices/services.php/distributerlist/'+0).then(function(results){
+        $http.get(API_ENDPOINT.url+'/services.php/distributerlist/'+0).then(function(results){
           $scope.distributers=results.data.Distributers;
           console.log('distributers', $scope.distributers);
         })
@@ -363,7 +398,7 @@ angular.module('starter.controllers', [])
         console.log('reatiler form',retailer);
         $http({
           method:'POST',
-          url:'http://10.10.10.58/gulf_v1/webservices/services.php/registration',
+          url:API_ENDPOINT.url+'/services.php/registration',
           headers: {
             'Content-Type': "application/x-www-form-urlencoded"
           },
@@ -403,7 +438,7 @@ angular.module('starter.controllers', [])
           userinfoService.setRoleInfo(customer.roleid)
           $http({
             method:'POST',
-            url:'http://10.10.10.58/gulf_v1/webservices/services.php/registration',
+            url:API_ENDPOINT.url+'/services.php/registration',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -614,31 +649,51 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
 
-    .controller('DistProductDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
-        // Set Header
-        $scope.$parent.showHeader();
-        $scope.$parent.clearFabs();
-        $scope.isExpanded = false;
-        $scope.$parent.setExpanded(false);
-        $scope.$parent.setHeaderFab(false);
+  .controller('DistProductDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http,API_ENDPOINT) {
+    // Set Header
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
 
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.slideUp({
-                selector: '.slide-up'
-            });
-        }, 300);
+    // Set Motion
+    $timeout(function() {
+      ionicMaterialMotion.slideUp({
+        selector: '.slide-up'
+      });
+    }, 300);
 
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
+    $timeout(function() {
+      ionicMaterialMotion.fadeSlideInRight({
+        startVelocity: 3000
+      });
+    }, 700);
 
-        // Set Ink
-        ionicMaterialInk.displayEffect();
+    // Set Ink
+    ionicMaterialInk.displayEffect();
+
+    $http.get(API_ENDPOINT.url+'/services.php/segmentlist/0/0').then(function(results){
+      $scope.productsegments=results.data.segmentlist;
+      console.log('Product Segmet Details', $scope.productsegments);
+    }).catch(function (error) {
+      alert('Something went wrong!!!!')
     })
 
+    $scope.segmentDetail= function (productsegment) {
+      $http.get(API_ENDPOINT.url+'/services.php/productlist/1/0/0',+productsegment).then(function(results){
+        $scope.products=results.data.productlist;
+        console.log('Product List',  $scope.products);
+      })
+    }
+    $scope.productDetail= function (product) {
+
+      $scope.checked=true
+      $scope.selectedproduct=product;
+      console.log('selectedproduct',$scope.selectedproduct);
+
+    }
+  })
     .controller('DistOrderCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state) {
         // Set Header
         $scope.$parent.showHeader();
@@ -886,32 +941,39 @@ angular.module('starter.controllers', [])
         // Set Ink
         ionicMaterialInk.displayEffect();
     })
+  .controller('NewsCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, API_ENDPOINT) {
+    // Set Header
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
 
-    .controller('NewsCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
-        // Set Header
-        $scope.$parent.showHeader();
-        $scope.$parent.clearFabs();
-        $scope.isExpanded = false;
-        $scope.$parent.setExpanded(false);
-        $scope.$parent.setHeaderFab(false);
+    // Set Motion
+    $timeout(function() {
+      ionicMaterialMotion.slideUp({
+        selector: '.slide-up'
+      });
+    }, 300);
 
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.slideUp({
-                selector: '.slide-up'
-            });
-        }, 300);
+    $timeout(function() {
+      ionicMaterialMotion.fadeSlideInRight({
+        startVelocity: 3000
+      });
+    }, 700);
 
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
+    // Set Ink
+    ionicMaterialInk.displayEffect();
 
-        // Set Ink
-        ionicMaterialInk.displayEffect();
+    $http.get(API_ENDPOINT.url+'/services.php/newslimit/0/5').then(function (result) {
+      $scope.newlist=result.data.NewsList;
+      console.log( $scope.newlist);
+    }).catch(function (error) {
+
+      alert("Error on news request")
     })
 
+  })
     .controller('CustomerFeedbackCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
         // Set Header
         $scope.$parent.showHeader();
@@ -1009,7 +1071,7 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
 
-    .controller('ForgotPasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,$http,userinfoService,$state) {
+    .controller('ForgotPasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,$http,userinfoService,$state,API_ENDPOINT) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -1037,7 +1099,7 @@ angular.module('starter.controllers', [])
       $scope.forgotpass=function(mobile){
         $http({
           method:'POST',
-          url:'http://10.10.10.58/gulf_v1/webservices/services.php/forgotpassword/'+mobile,
+          url:API_ENDPOINT.url+'/services.php/forgotpassword/'+mobile,
           headers: {
             'Content-Type': "application/x-www-form-urlencoded"
           }
@@ -1527,7 +1589,7 @@ angular.module('starter.controllers', [])
      console.log('userId',userinfoService.getUserInfo().userId);
 
 
-      $http.get('http://10.10.10.58/gulf_v1/webservices/services.php/verifyOTP/'+userId+'/'+otp).then(function (data) {
+      $http.get(API_ENDPOINT.url+'/services.php/verifyOTP/'+userId+'/'+otp).then(function (data) {
 
         console.log(data.data.otpStatus);
 
@@ -1676,5 +1738,12 @@ angular.module('starter.controllers', [])
 
     }
 
-  })
+  }).controller('chooseChampionCtrl', function ($scope, $http,API_ENDPOINT) {
+
+  $http.get(API_ENDPOINT.url+'/services.php/recommendationbikes').then(function(results){
+    $scope.bikes=results.data.Bikes;
+    console.log('bikes', $scope.bikes);
+  }).catch(function (error) {
+    alert('Something went wrong!!!!')
+  })})
 ;
