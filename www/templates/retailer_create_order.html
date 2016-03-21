@@ -6,53 +6,82 @@
     <div name="product padding">
       <div class="list padding">
         <label class="item item-input item-select custom-dark3">
-          <div class="input-label">Select Segment Name</div>
+          <div class="input-label">Select Segment</div>
           <select name="retailCreateOrderSegment" ng-model="retailCreateOrderSegment" ng-change="retailsegmentDetail(retailCreateOrderSegment)" class="custom-dark2">
             <option class="custom-dark2" ng-repeat="retailCreateOrderSegment in retailCreateOrderSegments" >{{retailCreateOrderSegment.SEG_NAME}}</option>
           </select>
         </label>
       </div>
-      <div class="row padding">
-        <div class="col col-offset-0 col-30">Quantity</div>
-        <div class="col col-offset-0 col-30">
-          <button class="button button-small custom-dark1" title="Decrement" ng-click="decrement()">
-            <i class="icon ion-minus-round icon-right"></i>
-          </button>
+      </div>
+      <div class="list padding" >
+        <label class="item item-input item-select custom-dark3">
+          <div class="input-label">Select Product</div>
+          <select name="retailCreateProduct" ng-model="retailCreateProduct" ng-change="retailcreateproductDetail(retailCreateProduct)" class="custom-dark2" ng-disabled="disproduct">
+            <option class="custom-dark2" value="{{retailCreateProduct.PROD_PK_ID}}" ng-repeat="retailCreateProduct in retailCreateproducts" >{{retailCreateProduct.PROD_CODE}}</option>
+          </select>
+        </label>
+      </div>
+      <div class="list padding">
+          <label class="item item-input item-select custom-dark3">
+            <div class="input-label">Quantity</div>
+            <select ng-model="quantity" class="custom-dark2" ng-change="qty(quantity)" ng-disabled="disqty">
+              <option selected value="5" class="custom-dark2">5</option>
+              <option value="10"  class="custom-dark2" >10</option>
+              <option value="15" class="custom-dark2" >15</option>
+              <option value='20' class="custom-dark2">20</option>
+            </select>
+          </label>
         </div>
-        <div class="col col-20">
+       <!-- <div class="col col-20">
           <input type="number" placeholder=" Filter Quantity..." ng-model="qty" />
         </div>
-        <div class="col col-offset-10 col-20">
-          <button class="button button-small custom-dark3" title="Increment" ng-click="increment()">
-            <i class="icon ion-plus-round"></i>
-          </button>
+        <div class="col col-offset-10 col-20"></div>
+      </div>-->
+        <div class="header padding-top" >
+        <h4 class="title" style="text-align: center">Selected products</h4>
         </div>
-      </div>
-    </div>
-    <div ng-controller="CreateDistOrderCtrl as ctrl">
-      <div class="row header col-box">
-        <div class="col col-33">Product Name</div>
-        <div class="col col-33">Quantity</div>
-        <div class="col col-33">Action</div>
-      </div>
-      <div class="row" ng-repeat="data in ctrl.data">
-        <div class="col col-33">{{data.name}}</div>
-        <div class="col col-33">{{data.code}}</div>
-        <!--<div class="col"><button class="button-small" ng-click="ctrl.add($index)">Remove</button></div>-->
-        <div class="col col-33">
-          <a><i class="icon ion-close-circled"></i></a>
+
+          <div class="row header col-box">
+            <div class="col col-33">Unit Pack</div>
+            <div class="col col-33">Qty</div>
+            <div class="col col-33">Qty in Ltr</div>
+          </div>
+          <hr/>
+        <div class="row">
+          <div class="col col-33">{{product.PROD_UNIT_PACK}}</div>
+          <div class="col col-33">{{qtyltr}}</div>
+          <div class="col col-33">  {{product.PROD_LISTPRICE}}</div>
         </div>
-      </div>
-      <hr>
-    </div>
-    <div class="row">
-      <div class="col col-66"></div>
-      <!-- <div class="col"></div>
-       <div class="col"></div>
-       <div class="col"></div>-->
-      <div class="col">
-        <button class="button button-small custom-dark3">Create</button>
-      </div>
-    </div>
+
+
+      <div style="text-align: center"  class="padding-top"><button class="button button-small custom-dark1" ng-disabled="canbook"  ng-click="confirmorder()">order</button></div>
+
+    <!--</div>-->
+      <!--<hr/>-->
+    <!--<div>-->
+      <!--<div class="row header col-box">-->
+        <!--<div class="col col-33">SKU</div>-->
+        <!--<div class="col col-33">Qty</div>-->
+        <!--<div class="col col-33">Qty in Ltr</div>-->
+      <!--</div>-->
+      <!--<div class="row" ng-repeat="data in ctrl.data">-->
+        <!--<div class="col col-33">{{data.name}}</div>-->
+        <!--<div class="col col-33">{{quantity}}</div>-->
+        <!--&lt;!&ndash;<div class="col"><button class="button-small" ng-click="ctrl.add($index)">Remove</button></div>&ndash;&gt;-->
+        <!--<div class="col col-33">-->
+          <!--<a><i class="icon ion-close-circled"></i></a>-->
+        <!--</div>-->
+      <!--</div>-->
+
+    <!--</div>-->
+    <!--<div class="row">-->
+      <!--<div class="col col-66"></div>-->
+      <!--&lt;!&ndash; <div class="col"></div>-->
+       <!--<div class="col"></div>-->
+       <!--<div class="col"></div>&ndash;&gt;-->
+      <!--<div class="col">-->
+        <!--<button class="button button-small custom-dark3">Create</button>-->
+      <!--</div>-->
+    <!--</div>-->
   </ion-content>
 </ion-view>
