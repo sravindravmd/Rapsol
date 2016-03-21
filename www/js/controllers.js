@@ -484,7 +484,10 @@ angular.module('starter.controllers', [])
           }).success(function (data, status, headers, config) {
             userinfoService.setUserinfo(data);
             userinfoService.setUsermobile(customer.mobile)
-            $scope.regsuccess=true;
+              var alertPopup = $ionicPopup.alert({
+                title: 'Registration successful!',
+              });
+            //$scope.regsuccess=true;
            $timeout(callAtTimeout, 3000);
             console.log(data, status, headers, config)  })
             .error(function(data, status, headers, config){
@@ -1402,7 +1405,7 @@ angular.module('starter.controllers', [])
     };*!/
   })*/
 
-  .controller('brandStoriesCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+ /* .controller('brandStoriesCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -1426,7 +1429,7 @@ angular.module('starter.controllers', [])
     // Set Ink
     ionicMaterialInk.displayEffect();
 
-  })
+  })*/
 
   /*.controller('retailerFeedbackQueryCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
     // Set Header
@@ -1454,7 +1457,7 @@ angular.module('starter.controllers', [])
 
   })*/
 
-  .controller('ChangePasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+ /* .controller('ChangePasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -1478,7 +1481,7 @@ angular.module('starter.controllers', [])
     // Set Ink
     ionicMaterialInk.displayEffect();
 
-  })
+  })*/
   /*function MyCtrl($scope) {
       $scope.value= 'foo';
 
@@ -1626,29 +1629,53 @@ angular.module('starter.controllers', [])
 
 
   })
-  .controller('otpCtrl', function ($scope,$http,$state,userinfoService,API_ENDPOINT) {
+  .controller('otpCtrl', function ($scope,$http,$state,userinfoService,API_ENDPOINT,$ionicLoading,$ionicPopup,$ionicHistory) {
+    $ionicHistory.clearHistory();
 
-    $scope.userOtp="Use OTP: "+userinfoService.getUserInfo().otp
+    $scope.show = function() {
+      $ionicLoading.show({
+        template: '<p>Verifying...</p><ion-spinner class="spinner-energized"></ion-spinner>'
+      });
+    };
+
+    $scope.hide = function(){
+      $ionicLoading.hide();
+    };
+
+    $scope.userOtp="Use OTP: "+userinfoService.getUserInfo().otp;
 
     console.log("getting otp:",userinfoService.getUserInfo());
 
     $scope.verifyotp= function (otp) {
      var userId= userinfoService.getUserInfo().userId;
      console.log('userId',userinfoService.getUserInfo().userId);
-
+      // Start showing the progress
+      $scope.show($ionicLoading);
 
       $http.get(API_ENDPOINT.url+'/services.php/verifyOTP/'+userId+'/'+otp).then(function (data) {
+
+
 
         console.log(data.data.otpStatus);
 
         if(data.data.otpStatus.status==2){
-          alert(data.data.otpStatus.message+" "+"Please regenerate");
+
+          var alertPopup = $ionicPopup.alert({
+            title: data.data.otpStatus.message+"Please regenerate",
+          });
+         // alert(data.data.otpStatus.message+" "+"Please regenerate");
         } else if(data.data.otpStatus.status==1){
-          alert(data.data.otpStatus.message+" "+"Please regenerate");
+          var alertPopup = $ionicPopup.alert({
+            title: data.data.otpStatus.message+"Please regenerate",
+          });
+          //alert(data.data.otpStatus.message+" "+"Please regenerate");
         } else if(data.data.otpStatus.status==3){
           $state.go('app.create_password')
         } else if(data.data.otpStatus.status==0){
-          alert(data.data.otpStatus.message+" "+"Please regenerate");
+          //alert(data.data.otpStatus.message+" "+"Please regenerate");
+          var alertPopup = $ionicPopup.alert({
+            title: data.data.otpStatus.message+"Please regenerate",
+          });
         }
       /*  if("OTP Expired"==data.otpStatus.status){
           alert(data.otpStatus.status);
@@ -1657,8 +1684,14 @@ angular.module('starter.controllers', [])
 */
 
       }).catch(function (error) {
+        var alertPopup = $ionicPopup.alert({
+          title: "Something went Wrong....!!!",
+        });
 
-      })
+      }).finally(function($ionicLoading) {
+        // On both cases hide the loading
+        $scope.hide($ionicLoading);
+      });
 
     }
     $scope.regenrate= function () {
@@ -1690,11 +1723,25 @@ angular.module('starter.controllers', [])
     }
 
   })
-  .controller('CreatePasswordCtrl', function ($scope,$http,userinfoService,$state,API_ENDPOINT) {
+  .controller('CreatePasswordCtrl', function ($scope,$http,userinfoService,$state,API_ENDPOINT,$ionicPopup,$ionicLoading,$ionicHistory) {
 
-    $scope.createNewPassword= function (createpass ,createPassForm) {
+    $ionicHistory.clearHistory();
+    $scope.show = function() {
+      $ionicLoading.show({
+        template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+      });
+    };
+
+    $scope.hide = function(){
+      $ionicLoading.hide();
+    };
+
+
+$scope.createNewPassword= function (createpass ,createPassForm) {
       var userId= userinfoService.getUserInfo().userId;
       var mobile=userinfoService.getUsermobile();
+
+     $scope.show($ionicLoading);
       $http({
         method:'POST',
         url:API_ENDPOINT.url+'/services.php/firstusercredential',
@@ -1737,14 +1784,20 @@ angular.module('starter.controllers', [])
           }*/
 
         }).error(function (error) {
+          var alertPopup = $ionicPopup.alert({
+            title: 'Something went wrong...!',
+          });
 
-        })
-      /*  var roleId=userinfoService.getRoleInfo().roleid;
-        if(roleId==5){
-          $state.go('app.channel_partner');
-        } else if(roleId==4){
-          $state.go('app.retailer_home');
-        }*/
+        }).finally(function($ionicLoading) {
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);
+        });
+        /*  var roleId=userinfoService.getRoleInfo().roleid;
+          if(roleId==5){
+            $state.go('app.channel_partner');
+          } else if(roleId==4){
+            $state.go('app.retailer_home');
+          }*/
 
         // 'new_password='+createpass.password+'&confirm_password='+createpass.conPassword
 
@@ -1786,7 +1839,7 @@ angular.module('starter.controllers', [])
 
     }
 
-  }).controller('chooseChampionCtrl', function ($scope, $http,API_ENDPOINT) {
+  }).controller('chooseChampionCtrl', function ($scope, $http,API_ENDPOINT,$ionicLoading) {
 
   $http.get(API_ENDPOINT.url+'/services.php/recommendationbikes').then(function(results){
     /*$scope.bikes=results.data.Bikes;
