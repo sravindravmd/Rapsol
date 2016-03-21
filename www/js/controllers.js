@@ -1229,7 +1229,7 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
 
-    .controller('RetailerProductDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    .controller('RetailerProductDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, API_ENDPOINT) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -1252,6 +1252,28 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+
+      $http.get(API_ENDPOINT.url+'/services.php/segmentlist/0/0').then(function(results){
+        $scope.retailproductsegments=results.data.segmentlist;
+        console.log('Product Segmet Details', $scope.retailproductsegments);
+      }).catch(function (error) {
+        alert('Something went wrong!!!!')
+      })
+
+      $scope.retailsegmentDetail= function (retailproductsegment) {
+        $http.get(API_ENDPOINT.url+'/services.php/productlist/1/0/0',+retailproductsegment).then(function(results){
+          $scope.retailproducts=results.data.productlist;
+          console.log('Product List',  $scope.retailproducts);
+        })
+      }
+      $scope.retailproductDetail= function (retailproduct) {
+
+        $scope.checked=true
+        $scope.selectedproduct=retailproduct;
+        console.log('selectedproduct',$scope.selectedproduct);
+
+      }
+
     })
 
     .controller('RetailerCreatteCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {

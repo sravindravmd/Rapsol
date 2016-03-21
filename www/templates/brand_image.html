@@ -1,6 +1,6 @@
 <ion-view view-title="Brand Stories Images">
   <ion-content class="back_color1">
-    <div class="list card" >
+    <div class="list" >
       <div class="item item-image">
         <div class="list half">
           <div class="card card-gallery item item-text-wrap">
@@ -11,14 +11,14 @@
               </div>
             </a>
           </div>
-          <div class="card card-gallery item item-text-wrap">
+         <!-- <div class="card card-gallery item item-text-wrap">
             <a class="item item-icon-left" href="#">
               <div class="row">
                 <div class="col"><i class="icon ion-image"></i></div>
                 <div class="col">Name</div>
               </div>
             </a>
-          </div>
+          </div>-->
         </div>
 
         <div class="list half">
@@ -30,13 +30,26 @@
               </div>
             </a>
           </div>
-          <div class="card card-gallery item item-text-wrap">
+          <!--<div class="card card-gallery item item-text-wrap">
             <a class="item item-icon-left" href="#">
               <div class="row">
                 <div class="col"><i class="icon ion-image"></i></div>
                 <div class="col">Name</div>
               </div>
             </a>
+          </div>-->
+        </div>
+      </div>
+      <!--Popup -->
+      <div class="card">
+        <div class="item item-divider">
+          Fullscreen images
+        </div>
+        <div class="item item-text-wrap">
+          <div class="button-bar">
+            <a class="button" ng-click="showImage(1)">Small</a>
+            <a class="button" ng-click="showImage(2)">Medium</a>
+            <a class="button" ng-click="showImage(3)">Very large</a>
           </div>
         </div>
       </div>

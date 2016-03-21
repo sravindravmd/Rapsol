@@ -3,15 +3,15 @@
     <div class="tabs tabs-icon-top static">
       <p>Create Retailer Order</p>
     </div>
-    <ng-form name="product padding">
-      <label class="item item-input item-select">
-        <div class="input-label">Product Name</div>
-        <select ng-model="product">
-          <option selected value="A">A</option>
-          <option value="B" >B</option>
-          <option>C</option>
-        </select>
-      </label>
+    <div name="product padding">
+      <div class="list padding">
+        <label class="item item-input item-select custom-dark3">
+          <div class="input-label">Select Segment Name</div>
+          <select name="retailCreateOrderSegment" ng-model="retailCreateOrderSegment" ng-change="retailsegmentDetail(retailCreateOrderSegment)" class="custom-dark2">
+            <option class="custom-dark2" ng-repeat="retailCreateOrderSegment in retailCreateOrderSegments" >{{retailCreateOrderSegment.SEG_NAME}}</option>
+          </select>
+        </label>
+      </div>
       <div class="row padding">
         <div class="col col-offset-0 col-30">Quantity</div>
         <div class="col col-offset-0 col-30">
@@ -28,7 +28,7 @@
           </button>
         </div>
       </div>
-    </ng-form>
+    </div>
     <div ng-controller="CreateDistOrderCtrl as ctrl">
       <div class="row header col-box">
         <div class="col col-33">Product Name</div>
