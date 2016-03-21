@@ -1741,13 +1741,49 @@ angular.module('starter.controllers', [])
   }).controller('chooseChampionCtrl', function ($scope, $http,API_ENDPOINT) {
 
   $http.get(API_ENDPOINT.url+'/services.php/recommendationbikes').then(function(results){
+    /*$scope.bikes=results.data.Bikes;
+    console.log('bikes', $scope.bikes);
+  }).catch(function (error) {
+    alert('Something went wrong!!!!')
+  })*/
     $scope.bikes=results.data.Bikes;
     console.log('bikes', $scope.bikes);
   }).catch(function (error) {
     alert('Something went wrong!!!!')
-  })})
+  })
+    //$scope.choosebike= function () {}
+    $scope.choosebike= function (bike) {
+      console.log('choosed bike',bike)
+      $http.get(API_ENDPOINT.url+'/services.php/recommendationbikesrecom/'+bike).then(function(results){
+        $scope.bikeDetails=results.data[0];
+        console.log('bikeDetails',results);
+        console.log('indoi',results.data[0]);
+      })
+    }
+})
 
-  .controller('productKnowledgeCtrl', function ($scope, $http,API_ENDPOINT) {
+  .controller('productKnowledgeCtrl', function ($scope, $http,API_ENDPOINT, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
+
+    // Set Motion
+    $timeout(function() {
+      ionicMaterialMotion.slideUp({
+        selector: '.slide-up'
+      });
+    }, 300);
+
+    $timeout(function() {
+      ionicMaterialMotion.fadeSlideInRight({
+        startVelocity: 3000
+      });
+    }, 700);
+
+    // Set Ink
+    ionicMaterialInk.displayEffect();
     $http.get(API_ENDPOINT.url+'/services.php/productknowledge/0/0').then(function (result) {
       $scope.productKnowledges=result.data.productknowledge;
       console.log( $scope.productKnowledges);
