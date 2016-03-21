@@ -172,7 +172,7 @@ angular.module('starter.controllers', [])
 
     $scope.show = function() {
       $ionicLoading.show({
-        template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+        template: '<p>Loading...</p><ion-spinner class="spinner-energized" icon="spiral"></ion-spinner>'
       });
     };
 
@@ -184,15 +184,25 @@ angular.module('starter.controllers', [])
     $scope.firsttime=true;
       $scope.userlogin= function (mobile,password) {
         console.log(mobile,password)
-
+        $scope.show($ionicLoading);
         $http.get(API_ENDPOINT.url+'/services.php/userlogin/'+mobile+'/'+password).success(function (data) {
 
-          console.log('user info',data);
+          console.log('user info message',data.Message);
 
           var role=data.data.user.ROLE_FK_ID;
-          console.log('user info',data.data.message);
+          console.log(data.data.message.Message);
+          console.log('user info media ',data.data.message);
 
-          $scope.message=data.data.message;
+          $scope.message=data.Message;
+          if(data.Message!==undefined){
+          var alertPopup = $ionicPopup.alert({
+            title: $scope.message,
+          });
+          } else if(data.data.message!==undefined){
+            var alertPopup = $ionicPopup.alert({
+              title: data.data.message,
+            });
+          }
 
           $timeout(function () {
 
@@ -221,7 +231,14 @@ angular.module('starter.controllers', [])
 
         }).error(function (error) {
 
-        })
+          var alertPopup = $ionicPopup.alert({
+            title: $scope.message,
+          });
+
+        }).finally(function($ionicLoading) {
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);
+        });
 
       }
 
@@ -234,7 +251,7 @@ angular.module('starter.controllers', [])
         $http.get(API_ENDPOINT.url+'/services.php/firstuserlogin/'+mobile).then(function (data) {
 
           console.log('First login',data.data.Message.isfrstLogin);
-          $scope.message=data.data.Message;
+          $scope.messagechck=data.data.Message;
 
           // Do something on success for example if you are doing a login
           var alertPopup = $ionicPopup.alert({
@@ -316,7 +333,7 @@ angular.module('starter.controllers', [])
 
     })
 
-    .controller('RegCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$http,userinfoService,API_ENDPOINT) {
+    .controller('RegCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$http,userinfoService,API_ENDPOINT,$ionicPopup,$ionicLoading) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -339,6 +356,16 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+
+      $scope.show = function() {
+        $ionicLoading.show({
+          template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+        });
+      };
+
+      $scope.hide = function(){
+        $ionicLoading.hide();
+      };
 
       $scope.customer={};
       $scope.retailer={};
@@ -396,6 +423,9 @@ angular.module('starter.controllers', [])
         if(retailerRegForm.$valid)
           console.log('retailer',retailer);
         console.log('reatiler form',retailer);
+
+        // Start showing the progress
+        $scope.show($ionicLoading);
         $http({
           method:'POST',
           url:API_ENDPOINT.url+'/services.php/registration',
@@ -419,8 +449,15 @@ angular.module('starter.controllers', [])
           //console.log(success.users)
         })
           .error(function(data, status, headers, config){
+            var alertPopup = $ionicPopup.alert({
+              title: 'Registration  failed!',
+              template: 'Please check your mobile number'
+            });
           console.log(data, status, headers, config)
-        })
+        }).finally(function($ionicLoading) {
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);
+        });
 
         function callAtTimeout() {
           console.log("Timeout occurred");
@@ -436,6 +473,7 @@ angular.module('starter.controllers', [])
         if(customerRegForm.$valid){
           console.log("eneted in customer registration",customer);
           userinfoService.setRoleInfo(customer.roleid)
+          $scope.show($ionicLoading);
           $http({
             method:'POST',
             url:API_ENDPOINT.url+'/services.php/registration',
@@ -450,8 +488,16 @@ angular.module('starter.controllers', [])
            $timeout(callAtTimeout, 3000);
             console.log(data, status, headers, config)  })
             .error(function(data, status, headers, config){
+
+              var alertPopup = $ionicPopup.alert({
+                title: 'Registration  failed!',
+                template: 'Please check your mobile number'
+              });
             console.log(data, status, headers, config)
-          })
+          }).finally(function($ionicLoading) {
+            // On both cases hide the loading
+            $scope.hide($ionicLoading);
+          });
 
 
         }
@@ -462,6 +508,7 @@ angular.module('starter.controllers', [])
       }
 
     })
+/*
     .controller('DistLoginCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$ionicHistory) {
         // Set eader
 
@@ -497,6 +544,7 @@ angular.module('starter.controllers', [])
       }
 
     })
+*/
 
 /*    .controller('DistRegCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
         // Set Header
