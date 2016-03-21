@@ -1746,4 +1746,14 @@ angular.module('starter.controllers', [])
   }).catch(function (error) {
     alert('Something went wrong!!!!')
   })})
+
+  .controller('productKnowledgeCtrl', function ($scope, $http,API_ENDPOINT) {
+    $http.get(API_ENDPOINT.url+'/services.php/productknowledge/0/0').then(function (result) {
+      $scope.productKnowledges=result.data.productknowledge;
+      console.log( $scope.productKnowledges);
+    }).catch(function (error) {
+      alert("Error on Product Knowledge request")
+    })
+  })
+
 ;

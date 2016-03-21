@@ -1,0 +1,16 @@
+<ion-view view-title="Product Knowledge">
+  <ion-content ng-class="{expanded:$scope.isExpanded}" style="background-color: white">
+    <h2 class="has-header"></h2>
+    <ion-list ng-repeat="productKnowledge in productKnowledges" class="card">
+      <div class="item item-text-wrap">
+        <div class="row">
+          <div class="col col-50"><h2>{{productKnowledge.PRODK_TITILE}}</h2></div>
+        </div>
+
+        <img  class="item-image" ng-src={{productKnowledge.URL_URL}}>
+        <div class="item">
+          <p class="">{{productKnowledge.PRODK_DESC}}</p>
+        </div>
+      </div>
+  </ion-content>
+</ion-view>

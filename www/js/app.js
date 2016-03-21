@@ -436,7 +436,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
         views: {
           'menuContent': {
             templateUrl: 'templates/product_knowledge.html',
-            //controller: 'productKnowledgeCtrl'
+            controller: 'productKnowledgeCtrl'
           }
         }
       })
