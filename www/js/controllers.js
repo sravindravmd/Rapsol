@@ -196,11 +196,11 @@ angular.module('starter.controllers', [])
           $scope.message=data.Message;
           if(data.Message!==undefined){
           var alertPopup = $ionicPopup.alert({
-            title: $scope.message,
+            title: $scope.message
           });
           } else if(data.data.message!==undefined){
             var alertPopup = $ionicPopup.alert({
-              title: data.data.message,
+              title: data.data.message
             });
           }
 
@@ -255,7 +255,7 @@ angular.module('starter.controllers', [])
 
           // Do something on success for example if you are doing a login
           var alertPopup = $ionicPopup.alert({
-            title: 'Number verified successfully !',
+            title: 'Number verified successfully !'
           });
 /*
           // On both cases hide the loading
@@ -384,35 +384,46 @@ angular.module('starter.controllers', [])
         }
 
       }
+    $scope.show($ionicLoading);
       $http.get(API_ENDPOINT.url+'/services.php/regionlist').then(function(results){
+        $scope.hide($ionicLoading);
        $scope.regions=results.data.regionList;
      console.log('regions', $scope.regions);
       }).catch(function (error) {
         alert('Something went wrong!!!!')
 
-      })
+      }).finally(function($ionicLoading) {
+        // On both cases hide the loading
+        $scope.hide($ionicLoading);
+      });
 
       $scope.changedresion= function (reregion) {
+        $scope.show($ionicLoading);
 /*
         console.log($scope.retailer,$scope.retailer.STATE_PK_ID);
 */
         $http.get(API_ENDPOINT.url+'/services.php/statelist/'+reregion).then(function(results){
+          $scope.hide($ionicLoading);
           $scope.states=results.data.States;
           console.log('sates for region',  $scope.states);
         })
       }
 
       $scope.changedstate= function (state) {
+        $scope.show($ionicLoading);
         console.log('sates for cites',state)
         $http.get(API_ENDPOINT.url+'/services.php/citylist/'+state).then(function(results){
+          $scope.hide($ionicLoading);
           $scope.cities=results.data.cities;
           console.log('cities',  $scope.cities);
         })
       }
 
       $scope.changedcity= function (city) {
+        $scope.show($ionicLoading);
         console.log('city for distributor',city)
         $http.get(API_ENDPOINT.url+'/services.php/distributerlist/'+0).then(function(results){
+          $scope.hide($ionicLoading);
           $scope.distributers=results.data.Distributers;
           console.log('distributers', $scope.distributers);
         })
@@ -485,7 +496,7 @@ angular.module('starter.controllers', [])
             userinfoService.setUserinfo(data);
             userinfoService.setUsermobile(customer.mobile)
               var alertPopup = $ionicPopup.alert({
-                title: 'Registration successful!',
+                title: 'Registration successful!'
               });
             //$scope.regsuccess=true;
            $timeout(callAtTimeout, 3000);
@@ -1284,7 +1295,7 @@ angular.module('starter.controllers', [])
       var userId= userinfoService.getUserInfo().userId;
       $scope.show = function() {
         $ionicLoading.show({
-          template: '<p>Verifying...</p><ion-spinner class="spinner-energized"></ion-spinner>'
+          template: '<p>Loading...</p><ion-spinner class="spinner-energized"></ion-spinner>'
         });
       };
 
@@ -1354,7 +1365,7 @@ angular.module('starter.controllers', [])
           headers: {
             'Content-Type': "application/x-www-form-urlencoded"
           },
-          data:'userId='+172+'&productId='+productId+'&qty='+$scope.qtyltr
+          data:'userId='+176+'&productId='+productId+'&qty='+$scope.qtyltr
 
         }).success(function (data) {
           console.log(data);
@@ -1363,7 +1374,7 @@ angular.module('starter.controllers', [])
         }).error(function(){
           console.log('Something wrong')
           var alertPopup = $ionicPopup.alert({
-            title: 'Something wrong',
+            title: 'Something wrong'
           });
 
         }).finally(function($ionicLoading) {
@@ -1676,7 +1687,7 @@ angular.module('starter.controllers', [])
         $scope.data = {
             singleSelect: null,
             multipleSelect: [],
-            option1: 'option-1',
+            option1: 'option-1'
         };
     }])
   .controller('brandvideoCtrl', function ($scope,$http) {
@@ -1697,7 +1708,7 @@ angular.module('starter.controllers', [])
     $scope.playerVars = {
       rel: 0,
       showinfo: 0,
-      modestbranding: 0,
+      modestbranding: 0
     }
     $scope.anotherGoodOne = 'https://www.youtube.com/watch?v=18-xvIjH8T4';
    /* $scope.videos = [];
@@ -1755,12 +1766,12 @@ angular.module('starter.controllers', [])
         if(data.data.otpStatus.status==2){
 
           var alertPopup = $ionicPopup.alert({
-            title: data.data.otpStatus.message+"Please regenerate",
+            title: data.data.otpStatus.message+"Please regenerate"
           });
          // alert(data.data.otpStatus.message+" "+"Please regenerate");
         } else if(data.data.otpStatus.status==1){
           var alertPopup = $ionicPopup.alert({
-            title: data.data.otpStatus.message+"Please regenerate",
+            title: data.data.otpStatus.message+"Please regenerate"
           });
           //alert(data.data.otpStatus.message+" "+"Please regenerate");
         } else if(data.data.otpStatus.status==3){
@@ -1768,7 +1779,7 @@ angular.module('starter.controllers', [])
         } else if(data.data.otpStatus.status==0){
           //alert(data.data.otpStatus.message+" "+"Please regenerate");
           var alertPopup = $ionicPopup.alert({
-            title: data.data.otpStatus.message+"Please regenerate",
+            title: data.data.otpStatus.message+"Please regenerate"
           });
         }
       /*  if("OTP Expired"==data.otpStatus.status){
@@ -1779,7 +1790,7 @@ angular.module('starter.controllers', [])
 
       }).catch(function (error) {
         var alertPopup = $ionicPopup.alert({
-          title: "Something went Wrong....!!!",
+          title: "Something went Wrong....!!!"
         });
 
       }).finally(function($ionicLoading) {
@@ -1798,7 +1809,7 @@ angular.module('starter.controllers', [])
         method:'POST',
         url:API_ENDPOINT.url+'/services.php/getOTP',
         data:'userId='+userId,
-        //'http://10.10.10.58/gulf_v1/webservices/services.php/forgotpassword/'+mobile,
+
         headers: {
           'Content-Type': "application/x-www-form-urlencoded"
         }
@@ -1879,7 +1890,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
         }).error(function (error) {
           var alertPopup = $ionicPopup.alert({
-            title: 'Something went wrong...!',
+            title: 'Something went wrong...!'
           });
 
         }).finally(function($ionicLoading) {
@@ -1933,9 +1944,19 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
     }
 
-  }).controller('chooseChampionCtrl', function ($scope, $http,API_ENDPOINT,$ionicLoading) {
+  }).controller('chooseChampionCtrl', function ($scope, $http,API_ENDPOINT,$ionicLoading,$ionicPopup) {
 
-  $http.get(API_ENDPOINT.url+'/services.php/recommendationbikes').then(function(results){
+    $scope.show = function() {
+      $ionicLoading.show({
+        template: '<p>Loading please wait...</p><ion-spinner class="spinner-energized"></ion-spinner>'
+      }); };
+
+    $scope.hide = function(){   $ionicLoading.hide(); };
+    $scope.show($ionicLoading);
+
+
+    $http.get(API_ENDPOINT.url+'/services.php/recommendationbikes').then(function(results){
+      $scope.show($ionicLoading);
     /*$scope.bikes=results.data.Bikes;
     console.log('bikes', $scope.bikes);
   }).catch(function (error) {
@@ -1944,20 +1965,30 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
     $scope.bikes=results.data.Bikes;
     console.log('bikes', $scope.bikes);
   }).catch(function (error) {
-    alert('Something went wrong!!!!')
-  })
+      var alertPopup = $ionicPopup.alert({   title: "Error on request" });
+  }).finally(function($ionicLoading) {
+        // On both cases hide the loading
+        $scope.hide($ionicLoading);
+      });
     //$scope.choosebike= function () {}
     $scope.choosebike= function (bike) {
+      $scope.show($ionicLoading);
       console.log('choosed bike',bike)
       $http.get(API_ENDPOINT.url+'/services.php/recommendationbikesrecom/'+bike).then(function(results){
+        $scope.show($ionicLoading);
         $scope.bikeDetails=results.data[0];
         console.log('bikeDetails',results);
         console.log('indoi',results.data[0]);
-      })
+      }).catch(function (error) {
+        var alertPopup = $ionicPopup.alert({   title: "Error on request" });
+      }).finally(function($ionicLoading) {
+        // On both cases hide the loading
+        $scope.hide($ionicLoading);
+      });
     }
 })
 
-  .controller('productKnowledgeCtrl', function ($scope, $http,API_ENDPOINT, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+  .controller('productKnowledgeCtrl', function ($scope, $http,API_ENDPOINT, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,$ionicLoading,$ionicPopup) {
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.isExpanded = false;
@@ -1979,12 +2010,27 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
     // Set Ink
     ionicMaterialInk.displayEffect();
+
+    $scope.show = function() { 
+      $ionicLoading.show({ 
+        template: '<p>Loading please wait...</p><ion-spinner class="spinner-energized"></ion-spinner>' 
+      }); };
+
+    $scope.hide = function(){   $ionicLoading.hide(); };
+    $scope.show($ionicLoading);
+
+
     $http.get(API_ENDPOINT.url+'/services.php/productknowledge/0/0').then(function (result) {
+
       $scope.productKnowledges=result.data.productknowledge;
       console.log( $scope.productKnowledges);
     }).catch(function (error) {
-      alert("Error on Product Knowledge request")
-    })
+
+      var alertPopup = $ionicPopup.alert({   title: "Error on Product Knowledge request" });
+    }).finally(function($ionicLoading) {
+      // On both cases hide the loading
+      $scope.hide($ionicLoading);
+    });
   })
 
 ;
