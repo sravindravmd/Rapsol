@@ -24,7 +24,44 @@
     <div class="row card list">
       <div class="col padding" ng-repeat="item in products| filter:product" ng-show="checked">
 
-        <p>Product Code : <strong>{{item.PROD_CODE}}</strong></p>
+        <div class="row">
+          <div class="col custom-dark3">Product Code :</div>
+          <div class="col"><strong>{{item.PROD_CODE}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col custom-dark1">Product Description :</div>
+          <div class="col"><strong>{{item.PROD_DESC}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col custom-dark3">Product MRP :</div>
+          <div class="col"><strong>{{item.PROD_MRF}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col custom-dark1">Product Sales Unit Measurement :</div>
+          <div class="col"><strong>{{item.PROD_SALESUNITMEASURE}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col custom-dark3">Product Unit Pack :</div>
+          <div class="col"><strong>{{item.PROD_UNIT_PACK}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col custom-dark1">Product Quantity :</div>
+          <div class="col"><strong>{{item.PROD_QTY}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col custom-dark3">Product Last Price :</div>
+          <div class="col"><strong>{{item.PROD_LISTPRICE}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col custom-dark1">Product DPL :</div>
+          <div class="col"><strong>{{item.PROD_DLP}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col custom-dark3">Segment Name :</div>
+          <div class="col"><strong>{{item.SEG_NAME}}</strong></div>
+        </div>
+
+        <!--<p>Product Code : <strong>{{item.PROD_CODE}}</strong></p>
         <p>Product Description :<strong>{{item.PROD_DESC}}</strong></p>
         <p>Product MRP : <strong>{{item.PROD_MRF}}</strong></p>
         <p>Product Sales Unit Measurement : <strong>{{item.PROD_SALESUNITMEASURE}}</strong></p>
@@ -32,8 +69,9 @@
         <p>Product Quantity : <strong>{{item.PROD_QTY}}</strong></p>
         <p>Product Last Price :<strong> {{item.PROD_LISTPRICE}}</strong></p>
         <p>Product DPL : <strong>{{item.PROD_DLP}}</strong></p>
-        <p>Segment Name : <strong>{{item.SEG_NAME}}</strong></p>
+        <p>Segment Name : <strong>{{item.SEG_NAME}}</strong></p>-->
       </div>
+
       <!--<a class="item card item-thumbnail-left">
           &lt;!&ndash;<img src="img/1.jpg">&ndash;&gt;
           &lt;!&ndash;<h3>Product Name :</h3>&ndash;&gt;
