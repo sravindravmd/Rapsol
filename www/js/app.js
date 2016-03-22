@@ -472,6 +472,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
           }
         }
       })
+      .state('app.logout', {
+        url: '/logout',
+        views: {
+          'menuContent': {
+            //templateUrl: 'templates/target_details.html'
+            controller: 'LogoutCtrl'
+          }
+        }
+      })
+
     ;
 
     // if none of the above states are matched, use this as the fallback

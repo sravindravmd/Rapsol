@@ -2033,4 +2033,8 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
     });
   })
 
+  .controller('LogoutCtrl', function () {
+
+  })
+
 ;
