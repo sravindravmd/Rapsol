@@ -1229,7 +1229,7 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
 
-    .controller('RetailerProductDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    .controller('RetailerProductDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, API_ENDPOINT) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -1252,9 +1252,31 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+
+      $http.get(API_ENDPOINT.url+'/services.php/segmentlist/0/0').then(function(results){
+        $scope.retailproductsegments=results.data.segmentlist;
+        console.log('Product Segmet Details', $scope.retailproductsegments);
+      }).catch(function (error) {
+        alert('Something went wrong!!!!')
+      })
+
+      $scope.retailsegmentDetail= function (retailproductsegment) {
+        $http.get(API_ENDPOINT.url+'/services.php/productlist/1/0/0',+retailproductsegment).then(function(results){
+          $scope.retailproducts=results.data.productlist;
+          console.log('Product List',  $scope.retailproducts);
+        })
+      }
+      $scope.retailproductDetail= function (retailproduct) {
+
+        $scope.checked=true
+        $scope.selectedproduct=retailproduct;
+        console.log('selectedproduct',$scope.selectedproduct);
+
+      }
+
     })
 
-    .controller('RetailerCreatteCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    .controller('RetailerCreatteCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http,API_ENDPOINT,$ionicLoading,$ionicPopup,userinfoService) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -1277,8 +1299,101 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
-    })
+    $scope.disproduct=true;
+    $scope.disqty=true;
 
+      var userId= userinfoService.getUserInfo().userId;
+      $scope.show = function() {
+        $ionicLoading.show({
+          template: '<p>Verifying...</p><ion-spinner class="spinner-energized"></ion-spinner>'
+        });
+      };
+
+      $scope.hide = function(){
+        $ionicLoading.hide();
+      };
+      $scope.show($ionicLoading);
+
+      $http.get(API_ENDPOINT.url+'/services.php/segmentlist/0/0').then(function(results){
+        $scope.retailCreateOrderSegments=results.data.segmentlist;
+        console.log('Create Product Segmet Details', $scope.retailCreateOrderSegments);
+      }).catch(function (error) {
+        alert('Something went wrong!!!!')
+      }).finally(function($ionicLoading) {
+        // On both cases hide the loading
+        $scope.hide($ionicLoading);
+      });
+      $scope.canbook=true;
+      $scope.retailsegmentDetail= function (retailCreateProduct) {
+        $scope.show($ionicLoading);
+        $scope.disproduct=false;
+        $http.get(API_ENDPOINT.url+'/services.php/productlist/1/0/0').then(function(results){
+          $scope.retailCreateproducts=results.data.productlist;
+          console.log('Product List', $scope.retailCreateproducts);
+        }).catch(function (error) {
+          alert('Something went wrong!!!!')
+        }).finally(function($ionicLoading) {
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);
+        });
+      }
+      $scope.retailcreateproductDetail = function (product) {
+        $scope.disqty=false;
+
+        console.log('product id ',product)
+        $scope.show($ionicLoading);
+
+        $http.get(API_ENDPOINT.url+'/services.php/product/'+product).then(function(results){
+          $scope.product=results.data.Product;
+
+          $scope.productID=product;
+          console.log('Product List', JSON.stringify($scope.product));
+        }).catch(function (error) {
+          alert('Something went wrong!!!!')
+        }).finally(function($ionicLoading) {
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);
+        });
+
+      }
+
+      $scope.qty= function (qty) {
+        $scope.qtyltr=($scope.product.PROD_UNIT_PACK) * qty;
+        $scope.canbook=false;
+
+      }
+
+      $scope.confirmorder= function () {
+
+        var productId=$scope.product.PROD_PK_ID;
+        var qty=$scope.qtyltr;
+
+        $scope.show($ionicLoading);
+        $http({
+          method:'POST',
+          url:API_ENDPOINT.url+'/services.php/orderplace',
+          headers: {
+            'Content-Type': "application/x-www-form-urlencoded"
+          },
+          data:'userId='+176+'&productId='+productId+'&qty='+$scope.qtyltr
+
+        }).success(function (data) {
+          console.log(data);
+          alert('order succssfull');
+          console.log('data',data);
+        }).error(function(){
+          console.log('Something wrong')
+          var alertPopup = $ionicPopup.alert({
+            title: 'Something wrong',
+          });
+
+        }).finally(function($ionicLoading) {
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);
+        });
+
+      }
+    })
   .controller('customerLoginCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state) {
     // Set Header
     $scope.$parent.showHeader();
