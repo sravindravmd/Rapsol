@@ -3,10 +3,88 @@
     <div class="tabs tabs-icon-top static">
       <p>Create Distributor Order</p>
     </div>
-    <!--<div class="list">
+
+    <div name="product padding">
+      <div class="list padding">
+        <label class="item item-input item-select custom-dark3">
+          <div class="input-label">Select Segment</div>
+          <select name="distCreateOrderSegment" ng-model="distCreateOrderSegment" ng-change="distsegmentDetail(distCreateOrderSegment)" class="custom-dark2">
+            <option class="custom-dark2" ng-repeat="distCreateOrderSegment in distCreateOrderSegments" >{{distCreateOrderSegment.SEG_NAME}}</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="list padding" >
+      <label class="item item-input item-select custom-dark3">
+        <div class="input-label">Select Product</div>
+        <select name="distCreateProduct" ng-model="distCreateProduct" ng-change="distcreateproductDetail(distCreateProduct)" class="custom-dark2" ng-disabled="disproduct">
+          <option class="custom-dark2" value="{{distCreateProduct.PROD_PK_ID}}" ng-repeat="distCreateProduct in distCreateProducts" >{{distCreateProduct.PROD_CODE}}</option>
+        </select>
+      </label>
+    </div>
+    <div class="list padding">
+      <label class="item item-input item-select custom-dark3">
+        <div class="input-label">Quantity</div>
+        <select ng-model="quantity" class="custom-dark2" ng-change="dqty(quantity)" ng-disabled="distqty">
+          <option selected value="5" class="custom-dark2">5</option>
+          <option value="10"  class="custom-dark2" >10</option>
+          <option value="15" class="custom-dark2" >15</option>
+          <option value='20' class="custom-dark2">20</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="header padding-top" >
+      <h4 class="title" style="text-align: center">Selected products</h4>
+    </div>
+
+    <div class="row header col-box">
+      <div class="col col-33">Unit Pack</div>
+      <div class="col col-33">Qty</div>
+      <div class="col col-33">Qty in Ltr</div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col col-33">{{product.PROD_UNIT_PACK}}</div>
+      <div class="col col-33">{{qtyltr}}</div>
+      <div class="col col-33">  {{product.PROD_LISTPRICE}}</div>
+    </div>
+
+
+    <div style="text-align: center"  class="padding-top"><button class="button button-small custom-dark1" ng-disabled="canbook"  ng-click="distconfirmorder()">order</button></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--&lt;!&ndash;<div class="list">
         <a class="item"><h2>Product Name :</h2></a>
         <a class="item"><h2>Quantity :</h2></a>
-    </div>-->
+    </div>&ndash;&gt;
     <ng-form name="product padding">
       <label class="item item-input item-select">
         <div class="input-label">Product Name</div>
@@ -16,14 +94,14 @@
           <option>C</option>
         </select>
       </label>
-      <!--<label class="item item-input item-select">
+      &lt;!&ndash;<label class="item item-input item-select">
           <div class="input-label">Quantity</div>
           <select ng-model="product.qty">
               <option selected value="10">10</option>
               <option value="20" >20</option>
               <option>C</option>
           </select>
-      </label>-->
+      </label>&ndash;&gt;
 
       <div class="row padding">
         <div class="col col-offset-0 col-30">Quantity</div>
@@ -41,7 +119,7 @@
           </button>
         </div>
       </div>
-      <!--<div class="input-label">Quantity</div>
+      &lt;!&ndash;<div class="input-label">Quantity</div>
       <div class="row" >
           <div class=''>
               <list>
@@ -55,7 +133,7 @@
               </list>
           </div>
           <div class="col col-10"></div>
-      </div>-->
+      </div>&ndash;&gt;
       <div class="row">
         <div class="col"></div>
 
@@ -74,7 +152,7 @@
       <div class="row" ng-repeat="data in ctrl.data">
         <div class="col col-33">{{data.name}}</div>
         <div class="col col-33">{{data.code}}</div>
-        <!--<div class="col"><button class="button-small" ng-click="ctrl.add($index)">Remove</button></div>-->
+        &lt;!&ndash;<div class="col"><button class="button-small" ng-click="ctrl.add($index)">Remove</button></div>&ndash;&gt;
         <div class="col col-33">
           <a><i class="icon ion-close-circled"></i></a>
         </div>
@@ -83,12 +161,12 @@
     </div>
     <div class="row">
       <div class="col col-34"></div>
-      <!-- <div class="col"></div>
+      &lt;!&ndash; <div class="col"></div>
        <div class="col"></div>
-       <div class="col"></div>-->
+       <div class="col"></div>&ndash;&gt;
       <div class="col">
         <button class="button button-small custom-dark3">Create</button>
       </div>
-    </div>
+    </div>-->
   </ion-content>
 </ion-view>

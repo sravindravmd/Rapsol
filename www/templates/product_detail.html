@@ -1,33 +1,63 @@
-<ion-view view-title="Product Detail">
-    <ion-content ng-class="{expanded:$scope.isExpanded}">
-        <div class="tabs tabs-icon-top static">
-            <p>Product Detail</p>
-        </div>
-        <div class="list animate-fade-slide-in-right">
-            <a class="item item-thumbnail-left">
-                <img src="img/jon-snow.jpg">
+<ion-view view-title="Retailer Product Detail" xmlns="http://www.w3.org/1999/html">
+  <ion-content ng-class="{expanded:$scope.isExpanded}">
+
+    <div class="list padding">
+      <label class="item item-input item-select custom-dark3">
+        <div class="input-label">Select Segment Name</div>
+        <select name="productsegment" ng-model="productsegment" ng-change="productsegmentDetail(productsegment)" class="custom-dark2">
+          <option class="custom-dark2" ng-repeat="productsegment in productsegments" >{{productsegment.SEG_NAME}}</option>
+        </select>
+      </label>
+    </div>
+    <div class="list padding">
+      <label class="item item-input item-select custom-dark3">
+        <div class="input-label">Select Product</div>
+        <select name="product" ng-model="product" ng-change="productDetail(product)" class="custom-dark2">
+          <option class="custom-dark2" ng-repeat="product in products" >{{product.PROD_CODE}}</option>
+        </select>
+      </label>
+    </div>
+    <p ng-repeat="item in products| filter:product" ng-show="checked">
+      <!--{{products| filter:product}}
+      -->
+    </p>
+    <div class="row card list">
+      <div class="col padding" ng-repeat="item in products| filter:product" ng-show="checked">
+
+        <p>Product Code : <strong>{{item.PROD_CODE}}</strong></p>
+        <p>Product Description :<strong>{{item.PROD_DESC}}</strong></p>
+        <p>Product MRP : <strong>{{item.PROD_MRF}}</strong></p>
+        <p>Product Sales Unit Measurement : <strong>{{item.PROD_SALESUNITMEASURE}}</strong></p>
+        <p>Product Unit Pack : <strong>{{item.PROD_UNIT_PACK}}</strong></p>
+        <p>Product Quantity : <strong>{{item.PROD_QTY}}</strong></p>
+        <p>Product Last Price :<strong> {{item.PROD_LISTPRICE}}</strong></p>
+        <p>Product DPL : <strong>{{item.PROD_DLP}}</strong></p>
+        <p>Segment Name : <strong>{{item.SEG_NAME}}</strong></p>
+      </div>
+      <!--<a class="item card item-thumbnail-left">
+          &lt;!&ndash;<img src="img/1.jpg">&ndash;&gt;
+          &lt;!&ndash;<h3>Product Name :</h3>&ndash;&gt;
+          <h3>MRP :</h3>
+          <h3>List Price :</h3>
+          <h3>Discount :</h3>
+          <h3>SKU :</h3>
+      </a>--><!--
+            <a class="item card item-thumbnail-left">
+                <img src="img/1.jpg">
                 <h3>Product Name :</h3>
                 <h3>MRP :</h3>
                 <h3>List Price :</h3>
                 <h3>Discount :</h3>
                 <h3>SKU :</h3>
             </a>
-            <a class="item item-thumbnail-left">
-                <img src="img/jon-snow.jpg">
+            <a class="item card item-thumbnail-left">
+                <img src="img/1.jpg">
                 <h3>Product Name :</h3>
                 <h3>MRP :</h3>
                 <h3>List Price :</h3>
                 <h3>Discount :</h3>
                 <h3>SKU :</h3>
-            </a>
-            <a class="item item-thumbnail-left">
-                <img src="img/jon-snow.jpg">
-                <h3>Product Name :</h3>
-                <h3>MRP :</h3>
-                <h3>List Price :</h3>
-                <h3>Discount :</h3>
-                <h3>SKU :</h3>
-            </a>
-        </div>
-    </ion-content>
+            </a>-->
+    </div>
+  </ion-content>
 </ion-view>

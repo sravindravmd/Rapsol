@@ -130,27 +130,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             }
         })
 
-        .state('app.distributor_product_detail', {
-            url: '/distributor_product_detail',
+        .state('app.product_detail', {
+            url: '/product_detail',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/distributor_product_detail.html',
-                    controller: 'DistProductDetailCtrl'
+                    templateUrl: 'templates/product_detail.html',
+                    controller: 'ProductDetailCtrl'
                 }
             }
         })
 
-        .state('app.distributor_order', {
-            url: '/distributor_order',
+        .state('app.order', {
+            url: '/order',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/distributor_order.html',
-                    controller: 'DistOrderCtrl'
+                    templateUrl: 'templates/order.html',
+                    controller: 'OrderCtrl'
                 }
             }
         })
 
-        .state('app.distributor_create_order', {
+        /*.state('app.distributor_create_order', {
             url: '/distributor_create_order',
             views: {
                 'menuContent': {
@@ -158,7 +158,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                     controller: 'CreateDistOrderCtrl'
                 }
             }
-        })
+        })*/
 
         .state('app.distributor_order_detail', {
             url: '/distributor_order_detail',
@@ -315,22 +315,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             }
         })
 
-        .state('app.retailer_product_detail', {
+        /*.state('app.retailer_product_detail', {
             url: '/retailer_product_detail',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/retailer_product_detail.html',
+                    templateUrl: 'templates/product_detail.html',
                     controller: 'RetailerProductDetailCtrl'
                 }
             }
-        })
+        })*/
 
-        .state('app.retailer_create_order', {
-            url: '/retailer_product_detail',
+        .state('app.create_order', {
+            url: '/create_order',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/retailer_create_order.html',
-                    controller: 'RetailerCreatteCtrl'
+                    templateUrl: 'templates/create_order.html',
+                    controller: 'CreateCtrl'
                 }
             }
         })

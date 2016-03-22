@@ -653,7 +653,7 @@ angular.module('starter.controllers', [])
         $state.go('app.distributor_my_profile');
       };
       $scope.distributorProductDetail= function () {
-        $state.go('app.distributor_product_detail');
+        $state.go('app.product_detail');
       };
       $scope.distTarget= function () {
         $state.go('app.target_os_p');
@@ -671,7 +671,7 @@ angular.module('starter.controllers', [])
         $state.go('app.change_password');
       };
       $scope.distributorOrder= function () {
-        $state.go('app.distributor_create_order');
+        $state.go('app.order');
       };
     })
 
@@ -700,7 +700,7 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
 
-  .controller('DistProductDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http,API_ENDPOINT) {
+  .controller('ProductDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http,API_ENDPOINT) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -731,21 +731,20 @@ angular.module('starter.controllers', [])
       alert('Something went wrong!!!!')
     })
 
-    $scope.segmentDetail= function (productsegment) {
+    $scope.productsegmentDetail= function (productsegment) {
       $http.get(API_ENDPOINT.url+'/services.php/productlist/1/0/0',+productsegment).then(function(results){
         $scope.products=results.data.productlist;
         console.log('Product List',  $scope.products);
       })
     }
     $scope.productDetail= function (product) {
-
       $scope.checked=true
       $scope.selectedproduct=product;
       console.log('selectedproduct',$scope.selectedproduct);
 
     }
   })
-    .controller('DistOrderCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state) {
+    .controller('OrderCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -770,13 +769,13 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
 
       $scope.distributorOrder= function () {
-        $state.go('app.distributor_create_order');
+        $state.go('app.create_order');
       };
     })
 
-    .controller('CreateDistOrderCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    /*.controller('CreateDistOrderCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
 
-      $scope.qty = 1;
+      /!*$scope.qty = 1;
       $scope.increment = function(){
         $scope.qty ++;
       }
@@ -787,28 +786,8 @@ angular.module('starter.controllers', [])
         $scope.addOrder= function (product) {
            // alert("<<<<<<<<<<<<111111");
            alert("details",product);
-        }
+        }*!/
 
-        var ctrl = this;
-       /* $scope.addOrder= function (product) {
-            console.log(product);
-
-        }*/
-        /*ctrl.add = add;*/
-        ctrl.data = [
-            {
-                name: "AiA",
-                code: "AI101",
-                limit: 25000,
-                account: "Life Insurance"
-            },
-            {
-                name: "Cargills",
-                code: "CF001",
-                limit: 30000,
-                account: "Food City"
-            }
-        ];
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -831,7 +810,7 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
-    })
+    })*/
 
     .controller('DistOrderDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
         // Set Header
@@ -1078,7 +1057,7 @@ angular.module('starter.controllers', [])
         $state.go('app.retailer_my_profile');
       };
       $scope.retailerProductDetail= function () {
-        $state.go('app.retailer_product_detail');
+        $state.go('app.product_detail');
       };
       $scope.retailerOrder= function () {
         $state.go('app.retailer_order');
@@ -1229,7 +1208,7 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
 
-    .controller('RetailerProductDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, API_ENDPOINT) {
+    /*.controller('RetailerProductDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, API_ENDPOINT) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -1274,9 +1253,9 @@ angular.module('starter.controllers', [])
 
       }
 
-    })
+    })*/
 
-    .controller('RetailerCreatteCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http,API_ENDPOINT,$ionicLoading,$ionicPopup,userinfoService) {
+    .controller('CreateCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http,API_ENDPOINT,$ionicLoading,$ionicPopup,userinfoService) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -1375,7 +1354,7 @@ angular.module('starter.controllers', [])
           headers: {
             'Content-Type': "application/x-www-form-urlencoded"
           },
-          data:'userId='+176+'&productId='+productId+'&qty='+$scope.qtyltr
+          data:'userId='+172+'&productId='+productId+'&qty='+$scope.qtyltr
 
         }).success(function (data) {
           console.log(data);
@@ -1484,7 +1463,7 @@ angular.module('starter.controllers', [])
     ionicMaterialInk.displayEffect();
 
     $scope.retailerCreateOrder= function () {
-      $state.go('app.retailer_create_order');
+      $state.go('app.create_order');
     };
     /*$scope.distributorProfile= function () {
       $state.go('app.retailer_order');
