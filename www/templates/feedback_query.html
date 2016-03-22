@@ -27,8 +27,8 @@
       </div>
     </ng-form>
     <ng-form name="queryForm" ng-show="choose == 'query'">
-      <label class="item-input margn_top"><input placeholder="Name" type="text" name="fname" ng-model="query.fname" required/></label>
-      <label class="item-input margn_top"><input placeholder="Mobile Number" type="tel" name="mobile" ng-model="query.mobile" required/></label>
+      <!--<label class="item-input margn_top"><input placeholder="Name" type="text" name="fname" ng-model="query.fname" required/></label>
+      <label class="item-input margn_top"><input placeholder="Mobile Number" type="tel" name="mobile" ng-model="query.mobile" required/></label>-->
       <label class="item-input margn_top"><input placeholder="Email Id" type="email" name="email" ng-model="query.email" required/></label>
       <label class="item-input margn_top card">
         <textarea type="text" placeholder="Message Text" rows="4" name="message" ng-model="query"></textarea>
@@ -37,8 +37,8 @@
       <button ng-disabled="queryForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submit()">Send</button>
       <div style="text-align: center">
         <div ng-show="queryForm.$invalid">
-          <p ng-show="queryForm.name.$error.required && queryForm.$dirty">Name required</p>
-          <p ng-show="queryForm.mobile.$error.required && queryForm.$dirty">Mobile Number required</p>
+         <!-- <p ng-show="queryForm.name.$error.required && queryForm.$dirty">Name required</p>
+          <p ng-show="queryForm.mobile.$error.required && queryForm.$dirty">Mobile Number required</p>-->
           <p ng-show="queryForm.email.$error.required && queryForm.$dirty">Email required</p>
         </div>
       </div>

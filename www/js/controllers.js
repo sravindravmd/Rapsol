@@ -938,8 +938,8 @@ angular.module('starter.controllers', [])
       $http.get(API_ENDPOINT.url+'/services.php/notilimit/0/5').then(function (result) {
 
 
-          $scope.notifications=result.data.NotificationList;
-        console.log( $scope.notifications);
+          $scope.notifications1=result.data.NotificationList;
+        console.log( $scope.notifications1);
     }).catch(function (error) {
 
         alert("Error on notifocation request")
