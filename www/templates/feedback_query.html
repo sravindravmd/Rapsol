@@ -16,7 +16,7 @@
       <div >
         <div class="list list-inset card" style=" border: none;">
           <label class="item item-input item-stacked-label item-divider card">
-            <textarea type="text" placeholder="Message Text" rows="4" name="message" ng-model="feedback"></textarea>
+            <textarea type="text" placeholder="Message Text" rows="4" name="message" ng-model="feedback" style="text-align:center"></textarea>
           </label>
         </div>
 
@@ -31,7 +31,7 @@
       <label class="item-input margn_top"><input placeholder="Mobile Number" type="tel" name="mobile" ng-model="query.mobile" required/></label>-->
       <label class="item-input margn_top"><input placeholder="Email Id" type="email" name="email" ng-model="query.email" required/></label>
       <label class="item-input margn_top card">
-        <textarea type="text" placeholder="Message Text" rows="4" name="message" ng-model="query"></textarea>
+        <textarea type="text" placeholder="Message Text" rows="4" name="message" ng-model="query" style="text-align:center"></textarea>
       </label>
       <br>
       <button ng-disabled="queryForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submit()">Send</button>
