@@ -19,7 +19,7 @@
             <textarea type="text" placeholder="Message Text" rows="4" name="message" ng-model="feedback" style="text-align:center"></textarea>
           </label>
         </div>
-
+        <br>
         <button ng-disabled="feedbackForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submit(message)">Submit</button>
       </div>
       <div ng-show="feedbackForm.$invalid">
@@ -39,7 +39,7 @@
         <div ng-show="queryForm.$invalid">
          <!-- <p ng-show="queryForm.name.$error.required && queryForm.$dirty">Name required</p>
           <p ng-show="queryForm.mobile.$error.required && queryForm.$dirty">Mobile Number required</p>-->
-          <p ng-show="queryForm.email.$error.required && queryForm.$dirty">Email required</p>
+          <p ng-show="queryForm.msg.$error.required && queryForm.$dirty">Email required</p>
         </div>
       </div>
     </ng-form>
