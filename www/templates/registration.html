@@ -32,22 +32,22 @@
       </ng-form>
       <ng-form name="retailerRegForm" ng-show="retailershow">
           <div class="list padding">
-            <label class="item item-input item-select">
+            <label class="item item-input item-select custom-dark3">
               <div class="input-label">Select Region</div>
-              <select name="region" ng-model="retailer.region" ng-change="changedresion(retailer.region)">
+              <select name="region" ng-model="retailer.region" ng-change="changedresion(retailer.region)" class="custom-dark2">
               <option value="{{region.REGION_PK_ID}}"  ng-repeat="region in regions" >{{region.REGION_NAME}}</option>
 
               </select>
             </label>
-            <label class="item item-input item-select">
+            <label class="item item-input item-select custom-dark1">
               <div class="input-label">Select State</div>
-              <select name="state" ng-model="retailer.state"  ng-change="changedstate(retailer.state)">
+              <select name="state" ng-model="retailer.state"  ng-change="changedstate(retailer.state)" class="custom-dark4">
               <option  value="{{state.STATE_PK_ID}}" ng-repeat="state in states">{{state.STATE_NAME}}</option>
               </select>
             </label>
-            <label class="item item-input item-select">
+            <label class="item item-input item-select custom-dark3">
               <div class="input-label">Select City</div>
-              <select name="city" ng-model="retailer.city"   ng-change="changedcity(retailer.city)">
+              <select name="city" ng-model="retailer.city"   ng-change="changedcity(retailer.city)" class="custom-dark2">
               <option value="{{city.CITY_PK_ID}}" ng-repeat="city in cities">{{city.CITY_NAME}}</option>
 
               </select>
@@ -60,9 +60,9 @@
               <option>C</option>
               </select>
             </label>-->
-            <label class="item item-input item-select">
+            <label class="item item-input item-select custom-dark1">
               <div class="input-label">Distributor</div>
-              <select name="distributor" ng-model="retailer.distributor" required ng-change="changeddist(retailer.distributor)">
+              <select name="distributor" ng-model="retailer.distributor" required ng-change="changeddist(retailer.distributor)" class="custom-dark4">
               <option ng-repeat="distibuter in distributers" value="{{distibuter.DET_MEMBER_PK_ID}}">{{distibuter.FIRST_NAME}}</option>
 
               </select>
@@ -90,7 +90,7 @@
             <p ng-show="retailerRegForm.email.$error.required && retailerRegForm.$dirty">Email required</p>
             <p ng-show="retailerRegForm.email.$valid">Not valid email!</p>
             <p ng-show="retailerRegForm.dob.$error.required && retailerRegForm.$dirty">Date Of Birth Number required</p>
-            <p ng-show="retailerRegForm.fname.$error.required && retailerRegForm.$dirty">Retailer Name Number required</p>
+            <p ng-show="retailerRegForm.fname.$error.required && retailerRegForm.$dirty">Retailer Name required</p>
             <p ng-show="retailerRegForm.firmname.$error.required && retailerRegForm.$dirty">Firm Name required</p>
             <p ng-show="retailerRegForm.city.$error.required && retailerRegForm.$dirty">City required</p>
             <!--<p ng-show="retailerRegForm.depot.$error.required && retailerRegForm.$dirty">Depot required</p>-->
