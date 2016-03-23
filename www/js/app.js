@@ -187,7 +187,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             views: {
                 'menuContent': {
                     templateUrl: 'templates/channel_partner.html',
-                    controller: 'ChannelPartnerCtrl'
+                    controller: 'DistHomeCtrl'
                 }
             }
         })
@@ -237,7 +237,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             views: {
                 'menuContent': {
                     templateUrl: 'templates/retailer_home.html',
-                    controller: 'RetailerHomeCtrl'
+                    controller: 'DistHomeCtrl'
                 }
             }
         })

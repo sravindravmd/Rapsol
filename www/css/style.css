@@ -369,7 +369,7 @@ a:link {
   padding-top: 150px;
 }
 .back_color1{
-  background-color: #ffffff;
+  background-color: #f2f2f2;
 }
 
 .custom-dark4{
@@ -377,5 +377,5 @@ a:link {
   background-color:#66a3ff !important;
 }
 .header_top{
- margin-top: 120px;
+ margin-top: 3em;
 }

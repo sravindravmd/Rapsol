@@ -13,16 +13,16 @@
       </div>
     </div>
     <ng-form name="feedbackForm" ng-show="choose == 'feedback'">
-      <div >
-        <div class="card" style=" border: none;">
-          <label class="item item-input item-stacked-label item-divider">
-            <i class="icon ion-email placeholder-icon"></i>
-            <textarea type="text" placeholder="Message Text" rows="4" name="message" ng-model="feedback" style="text-align:center"></textarea>
+      <label class="item-input margn_top"><input placeholder="Write Subject" type="text" name="subject" ng-model="subject" /></label>
+      <p class="padding-top" style="text-align: center">Write your feedback </p>
+      <div class="card">
+          <label class="item-input margn_top">
+            <textarea type="text" placeholder="Feedback Text" rows="4" name="message" ng-model="feedback" style="text-align:center"></textarea>
           </label>
         </div>
         <br>
         <button ng-disabled="feedbackForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submit(message)">Submit</button>
-      </div>
+
       <div ng-show="feedbackForm.$invalid">
         <p ng-show="feedbackForm.message.$error.required && feedbackForm.$dirty">Message is required</p>
       </div>
@@ -31,8 +31,9 @@
       <!--<label class="item-input margn_top"><input placeholder="Name" type="text" name="fname" ng-model="query.fname" required/></label>
       <label class="item-input margn_top"><input placeholder="Mobile Number" type="tel" name="mobile" ng-model="query.mobile" required/></label>-->
       <label class="item-input margn_top"><input placeholder="Email Id" type="email" name="email" ng-model="query.email" /></label>
+      <p class="padding-top" style="text-align: center">Write your Query </p>
       <label class="item-input margn_top card">
-        <textarea type="text" placeholder="Message Text" rows="4" name="message" ng-model="query.msg" style="text-align:center"></textarea>
+        <textarea type="text" placeholder="Query Text" rows="4" name="message" ng-model="query.msg" style="text-align:center"></textarea>
       </label>
       <br>
       <button ng-disabled="queryForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submit()">Send</button>

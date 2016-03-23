@@ -659,11 +659,20 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+      $scope.news= function () {
+        $state.go('app.news');
+      };
+      $scope.productKnowledge= function () {
+        $state.go('app.product_knowledge');
+      };
+      $scope.chooseChampion= function () {
+        $state.go('app.choose_champion');
+      };
 
-      $scope.distributorProfile= function () {
+      $scope.profile= function () {
         $state.go('app.distributor_my_profile');
       };
-      $scope.distributorProductDetail= function () {
+      $scope.productDetail= function () {
         $state.go('app.product_detail');
       };
       $scope.distTarget= function () {
@@ -681,9 +690,10 @@ angular.module('starter.controllers', [])
       $scope.changePassword= function () {
         $state.go('app.change_password');
       };
-      $scope.distributorOrder= function () {
+      $scope.createOrder= function () {
         $state.go('app.order');
       };
+
     })
 
     .controller('DistProfileCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
@@ -873,9 +883,12 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+
+
+
     })
 
-    .controller('ChannelPartnerCtrl', function($scope, $state, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    /*.controller('ChannelPartnerCtrl', function($scope, $state, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -920,7 +933,7 @@ angular.module('starter.controllers', [])
       $scope.dashBoard= function () {
         $state.go('app.dashboard');
       };
-    })
+    })*/
 
     .controller('notificationCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,$http,API_ENDPOINT ) {
         // Set Header
@@ -1040,7 +1053,7 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
 
-    .controller('RetailerHomeCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state) {
+    /*.controller('RetailerHomeCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -1085,7 +1098,7 @@ angular.module('starter.controllers', [])
       $scope.changePassword= function () {
         $state.go('app.change_password');
       };
-    })
+    })*/
 
     .controller('RetailerProfileCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
         // Set Header
