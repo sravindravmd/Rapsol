@@ -81,9 +81,10 @@ p {
     bottom: 0;
 }
 .home-back{
-    background: url(../img/006.png) center;
-  /*background-size: 80px 60px;*/
-  background-repeat: no-repeat;
+  top:0px;
+    background: url(../img/006.png) center no-repeat;
+  background-size:cover;
+
 }
 
 .menu-icon{
@@ -365,7 +366,7 @@ a:link {
   text-decoration: none;
 }
 .padding_top{
-  padding-top: 90px;
+  padding-top: 150px;
 }
 .back_color1{
   background-color: #ffffff;
