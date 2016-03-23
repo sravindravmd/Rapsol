@@ -1163,7 +1163,7 @@ angular.module('starter.controllers', [])
       }
     })
 
-    .controller('brandStoriesCtrl', function($http,$scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,brandstoryService,API_ENDPOINT) {
+    .controller('brandStoriesCtrl', function($http,$scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,API_ENDPOINT) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -1186,12 +1186,22 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
-      $http.get(API_ENDPOINT.url+'/brand_story.php/brandstory/0/5').then(function (result) {
+      $http.get(API_ENDPOINT.url+'/services.php/brandstory/0/5').then(function (result) {
 
         console.log(result.data);
         $scope.brandstory=result.data.brandstory;
+       $scope.brandstory1.BRDS_YOUURL=null;
+
+
 
       });
+
+      $scope.playerVars = {
+        rel: 0,
+        showinfo: 0,
+        modestbranding: 0
+      }
+      $scope.anotherGoodOne = 'https://www.youtube.com/watch?v=18-xvIjH8T4';
     })
 
     .controller('feedbackQueryCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
