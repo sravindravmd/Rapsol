@@ -13,16 +13,16 @@
       </div>
     </div>
     <ng-form name="feedbackForm" ng-show="choose == 'feedback'">
-      <div >
-        <div class="card" style=" border: none;">
-          <p style="text-align: center"> Please write your feenback </p>
+      <label class="item-input margn_top"><input placeholder="Write Subject" type="text" name="subject" ng-model="subject" /></label>
+        <div class="card">
+          <p style="text-align: center">Write your feedback </p>
           <label class="item-input margn_top">
             <textarea type="text" placeholder="Message Text" rows="4" name="message" ng-model="feedback" style="text-align:center"></textarea>
           </label>
         </div>
         <br>
         <button ng-disabled="feedbackForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submit(message)">Submit</button>
-      </div>
+
       <div ng-show="feedbackForm.$invalid">
         <p ng-show="feedbackForm.message.$error.required && feedbackForm.$dirty">Message is required</p>
       </div>
