@@ -1163,7 +1163,7 @@ angular.module('starter.controllers', [])
       }
     })
 
-    .controller('brandStoriesCtrl', function($http,$scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,API_ENDPOINT) {
+    .controller('brandStoriesCtrl', function($http,$scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,API_ENDPOINT,$ionicLoading) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
