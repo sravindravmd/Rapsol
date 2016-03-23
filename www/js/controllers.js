@@ -1213,7 +1213,7 @@ angular.module('starter.controllers', [])
         showinfo: 0,
         modestbranding: 0
       }
-      $scope.anotherGoodOne = 'https://www.youtube.com/watch?v=18-xvIjH8T4';
+      $scope.anotherGoodOne = 'https://youtu.be/o8G7Nm-zqc4';
     })
 
     .controller('feedbackQueryCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
