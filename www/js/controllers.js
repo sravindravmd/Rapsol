@@ -127,22 +127,12 @@ angular.module('starter.controllers', [])
 
 .controller('HomeCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk, $state) {
   // Set Header
-    $scope.$parent.hideHeader();
-   var hadhide= function () {
-
-    }
-    hadhide;
-
- //$scope.$parent.showHeader();
-    /*$scope.$parent.clearFabs();
-    $timeout(function() {
-
-    }, 0);*/
-  /*$scope.$parent.clearFabs();
+  $scope.$parent.showHeader();
+  $scope.$parent.clearFabs();
   $scope.isExpanded = false;
   $scope.$parent.setExpanded(false);
   $scope.$parent.setHeaderFab(false);
-*/
+
     ionicMaterialInk.displayEffect();
 
   $scope.homeLogin= function () {
@@ -932,7 +922,7 @@ angular.module('starter.controllers', [])
       };
     })
 
-    .controller('notificationCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,$http,API_ENDPOINT ,$ionicLoading,$ionicPopup) {
+    .controller('notificationCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,$http,API_ENDPOINT ) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -956,25 +946,15 @@ angular.module('starter.controllers', [])
         // Set Ink
         ionicMaterialInk.displayEffect();
 
-    $scope.show = function() { 
-      $ionicLoading.show({ 
-        template: '<p>Loading...</p><ion-spinner class="spinner-energized"></ion-spinner>' 
-      }); 
-    };  
-      $scope.hide = function(){ 
-        $ionicLoading.hide();
-               };
-    $scope.show($ionicLoading);
       $http.get(API_ENDPOINT.url+'/services.php/notilimit/0/5').then(function (result) {
-        $scope.hide($ionicLoading);
 
-        $scope.notifications1=result.data.NotificationList;
+
+          $scope.notifications1=result.data.NotificationList;
         console.log( $scope.notifications1);
     }).catch(function (error) {
+
         alert("Error on notifocation request")
-      }).finally(function($ionicLoading) { 
-        $scope.hide($ionicLoading); 
-      });
+      })
 
       })
 
@@ -1060,8 +1040,7 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
 
-    .controller('RetailerHomeCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$ionicHistory) {
-    $ionicHistory.clearHistory();
+    .controller('RetailerHomeCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -1184,7 +1163,7 @@ angular.module('starter.controllers', [])
       }
     })
 
-    .controller('brandStoriesCtrl', function($http,$scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,brandstoryService,API_ENDPOINT) {
+    .controller('brandStoriesCtrl', function($http,$scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,API_ENDPOINT,$ionicLoading) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -1207,12 +1186,34 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+
+      $scope.show = function() {
+        $ionicLoading.show({
+          template: '<p>Loading...</p><ion-spinner class="spinner-energized"></ion-spinner>'
+        });
+      };
+
+      $scope.hide = function(){
+        $ionicLoading.hide();
+      };
+      $scope.show($ionicLoading);
       $http.get(API_ENDPOINT.url+'/services.php/brandstory/0/5').then(function (result) {
 
         console.log(result.data);
         $scope.brandstory=result.data.brandstory;
+      }).catch(function (error) {
 
+      }).finally(function($ionicLoading) {
+        // On both cases hide the loading
+        $scope.hide($ionicLoading);
       });
+
+      $scope.playerVars = {
+        rel: 0,
+        showinfo: 0,
+        modestbranding: 0
+      }
+      $scope.anotherGoodOne = 'https://youtu.be/o8G7Nm-zqc4';
     })
 
     .controller('feedbackQueryCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
@@ -1501,6 +1502,216 @@ angular.module('starter.controllers', [])
       $state.go('app.retailer_order');
     };*/
   })
+
+  /*.controller('retailerNotificationCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    // Set Header
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
+
+    // Set Motion
+    $timeout(function() {
+      ionicMaterialMotion.slideUp({
+        selector: '.slide-up'
+      });
+    }, 300);
+
+    $timeout(function() {
+      ionicMaterialMotion.fadeSlideInRight({
+        startVelocity: 3000
+      });
+    }, 700);
+
+    // Set Ink
+    ionicMaterialInk.displayEffect();
+
+   /!* $scope.distributorProfile= function () {
+      $state.go('app.retailer_notification');
+    };*!/
+  })*/
+
+ /* .controller('brandStoriesCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    // Set Header
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
+
+    // Set Motion
+    $timeout(function() {
+      ionicMaterialMotion.slideUp({
+        selector: '.slide-up'
+      });
+    }, 300);
+
+    $timeout(function() {
+      ionicMaterialMotion.fadeSlideInRight({
+        startVelocity: 3000
+      });
+    }, 700);
+
+    // Set Ink
+    ionicMaterialInk.displayEffect();
+
+  })*/
+
+  /*.controller('retailerFeedbackQueryCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    // Set Header
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
+
+    // Set Motion
+    $timeout(function() {
+      ionicMaterialMotion.slideUp({
+        selector: '.slide-up'
+      });
+    }, 300);
+
+    $timeout(function() {
+      ionicMaterialMotion.fadeSlideInRight({
+        startVelocity: 3000
+      });
+    }, 700);
+
+    // Set Ink
+    ionicMaterialInk.displayEffect();
+
+  })*/
+
+  .controller('ChangePasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    // Set Header
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
+
+    // Set Motion
+    $timeout(function() {
+      ionicMaterialMotion.slideUp({
+        selector: '.slide-up'
+      });
+    }, 300);
+
+    $timeout(function() {
+      ionicMaterialMotion.fadeSlideInRight({
+        startVelocity: 3000
+      });
+    }, 700);
+
+    // Set Ink
+    ionicMaterialInk.displayEffect();
+
+  })
+  /*function MyCtrl($scope) {
+      $scope.value= 'foo';
+
+      $scope.$watch('value', function(value) {
+          console.log(value);
+      });
+  }*/
+    /*.controller('RadioCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+        // Set Header
+        $scope.$parent.showHeader();
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.slideUp({
+                selector: '.slide-up'
+            });
+        }, 300);
+
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+    })*/
+
+    /*.controller('RadioCtrl', function($scope) {
+    $scope.active = 'breakfast';
+    $scope.setActive = function(type) {
+        $scope.active = type;
+    };
+    $scope.isActive = function(type) {
+        return type === $scope.active;
+    };
+})
+    .controller('NameCtrl', function ($scope){
+        $scope.firstName = 'John';
+        $scope.lastName = 'Smith';
+    });*/
+
+    /*.controller('LoginCtrl', function($scope) {
+        $scope.wks =  {number: 1, validity: true}
+    })
+    .directive('isNumber', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope) {
+            scope.$watch('wks.number', function(newValue,oldValue) {
+                var arr = String(newValue).split("");
+                if (arr.length === 0) return;
+                if (arr.length === 1 && (arr[0] == '-' || arr[0] === '.' )) return;
+                if (arr.length === 2 && newValue === '-.') return;
+                if (isNaN(newValue)) {
+                    scope.wks.number = oldValue;
+                }
+            });
+        }
+    };
+})*/
+    /*.controller('MyCtrl', function($scope) {
+
+        var ctrl = this;
+
+        $scope.addOrder= function (product) {
+            console.log(product);
+
+        }
+        /!*ctrl.add = add;*!/
+        ctrl.data = [
+            {
+                name: "AiA",
+                code: "AI101",
+                limit: 25000,
+                account: "Life Insurance"
+            },
+            {
+                name: "Cargills",
+                code: "CF001",
+                limit: 30000,
+                account: "Food City"
+            }
+        ]
+
+        ////////
+        /!*function add(index) {
+            window.alert("Added: " + index);
+        }*!/
+    })*/
+
+
+    .controller('ExampleController', ['$scope', function($scope) {
+        $scope.data = {
+            singleSelect: null,
+            multipleSelect: [],
+            option1: 'option-1'
+        };
+    }])
   .controller('brandvideoCtrl', function ($scope,$http) {
 
  /*    $scope.videos = [
@@ -1845,6 +2056,16 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
   })
 
   .controller('LogoutCtrl', function () {
+
+    $scope.home1= function () {
+      $state.go('app.home');
+    };
+    $scope.home2= function () {
+      $state.go('app.home');
+    };
+    $scope.home3= function () {
+      $state.go('app.home');
+    }
 
   })
 
