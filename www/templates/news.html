@@ -1,16 +1,18 @@
-<ion-view view-title="Welcome to Repsol">
+<ion-view view-title="News">
     <ion-content ng-class="{expanded:$scope.isExpanded}">
         <div class="tabs tabs-icon-top static">
-            <p>News</p>
+            <p>&nbsp;</p>
         </div>
       <ion-list ng-repeat="new in newlist" class="card">
         <div class="item item-text-wrap">
-          <div class="row">
+          <div class="row custom-dark3">
             <div class="col col-50"><h2>{{new.NEWS_TITILE}}</h2></div>
             <div class="col col-offset-10 col-50"><p>{{new.ADD_DATE}}</p></div>
           </div>
+          <hr/>
           <img  class="item-image" ng-src={{new.URL_URL}}>
-          <div class="item">
+          <hr/>
+          <div class="item custom-dark2">
             <p class="">{{new.NEWS_DESC}}</p>
           </div>
         </div>

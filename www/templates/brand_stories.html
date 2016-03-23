@@ -1,69 +1,97 @@
 <ion-view view-title="Brand Stories">
-  <ion-content class="back_color1">
+  <ion-content>
 
-      <div class="padding"></div>
+      <!--<div class="padding"></div>-->
 
 
-    <!--<ion-list ng-repeat="brandstory in brandstorys" class="card">
-      <div class="item item-text-wrap">
-        <div class="row">
-          <div class="col col-50"><h2>{{brandstory.BRDS_NAME}}</h2></div>
-          <div class="col col-offset-10 col-50"><p>{{brandstory.ADD_DATE}}</p></div>
-        </div>
+    <!--&lt;!&ndash;<ion-list ng-repeat="brandstory in brandstorys" class="card">-->
+      <!--<div class="item item-text-wrap">-->
+        <!--<div class="row">-->
+          <!--<div class="col col-50"><h2>{{brandstory.BRDS_NAME}}</h2></div>-->
+          <!--<div class="col col-offset-10 col-50"><p>{{brandstory.ADD_DATE}}</p></div>-->
+        <!--</div>-->
+        <!--<div class="embed-responsive embed-responsive-16by9">-->
+          <!--<youtube-video class="embed-responsive-item" video-url="{{brandstory.BRDS_YOUURL}}"></youtube-video>-->
+          <!--&lt;!&ndash;<youtube-video class="embed-responsive-item" video-url="anotherGoodOne" player-vars="playerVars">-->
+          <!--</youtube-video>&ndash;&gt;-->
+        <!--</div>-->
+        <!--<img  class="item-image" ng-src="{{brandstory.URL_URL}}">-->
+        <!--<div class="item">-->
+          <!--<p class="">{{brandstory.BRDS_DESC}}</p>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--&lt;!&ndash;<ion-item class="card" ng-repeat="notification in notifications">-->
+        <!--<h2 style="background-color: white">{{notification.ADD_DATE}}</h2>-->
+        <!--<div class="card card-gallery item item-text-wrap">-->
+          <!--<div class="ink dark-bg">-->
+            <!--<h2 style="background-color: #a2a2a2">{{notification.NOTI_NAME}}</h2>-->
+            <!--<img class="item-thumbnail-left" ng-src="{{notification.URL_URL}}">-->
+          <!--</div>-->
+          <!--<div class="item" style="background-color: #dddddd">-->
+            <!--<p class="">{{notification.NOTI_DESC}}</p>L-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</ion-item>&ndash;&gt;-->
+    <!--</ion-list>&ndash;&gt;-->
+    <!--<div class="padding-top">-->
+    <!--<div class="list half">-->
+      <!--<div class="card card-gallery item item-text-wrap">-->
+        <!--<div class="ink dark-bg">-->
+          <!--<a  href="#/app/brand_video">-->
+          <!--<h2 class="custom-dark3">Video <i class="icon ion-play"></i></h2>-->
+          <!--<img class="full-image" src="img/youtube1.png">-->
+          <!--</a>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="card card-gallery item item-text-wrap">-->
+        <!--<div class="ink dark-bg">-->
+          <!--<a  href="#/app/brand_image">-->
+            <!--<h2 class="custom-dark1">Images <i class="icon ion-image"></i></h2>-->
+            <!--<img class="full-image" src="img/sansa-snowcastle3.jpg">-->
+          <!--</a>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="list half">-->
+      <!--<div class="card card-gallery item item-text-wrap">-->
+        <!--<div class="ink dark-bg">-->
+          <!--<a  href="#/app/brand_pdf">-->
+          <!--<h2 class="custom-dark3">PDF <i class="icon ion-document-text"></i></h2>-->
+          <!--<img class="full-image" src="img/sansa-snowcastle3.jpg">-->
+          <!--</a>-->
+        <!--</div>-->
+
+      <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div class="list card" ng-repeat=" brnd in brandstory">
+      <div class="item item-divider" style="background-color: #01BCFF">
+       <h2 class="text-center"style="color:ghostwhite;">{{brnd.BRDS_NAME}}</h2>
+      </div>
+      <p class=" item item-text-wrap">{{brnd.BRDS_DESC}}Repsol S.A. is an integrated global energy company based in Madrid, Spain. It carries out upstream and downstream activities throughout the entire world. It has more than 24,000 employees worldwide.</p>
+      <div class="item item-image">
         <div class="embed-responsive embed-responsive-16by9">
-          <youtube-video class="embed-responsive-item" video-url="{{brandstory.BRDS_YOUURL}}"></youtube-video>
-          &lt;!&ndash;<youtube-video class="embed-responsive-item" video-url="anotherGoodOne" player-vars="playerVars">
-          </youtube-video>&ndash;&gt;
+            <img ng-src="http://www.repsol.com/creatividad/productos_y_servicios/lubricantes/gama_moto/es_en/img/Moto2.png">
+         <!--<img ng-src="brnd.URL_URL">-->
         </div>
-        <img  class="item-image" ng-src="{{brandstory.URL_URL}}">
-        <div class="item">
-          <p class="">{{brandstory.BRDS_DESC}}</p>
-        </div>
-      </div>
-      &lt;!&ndash;<ion-item class="card" ng-repeat="notification in notifications">
-        <h2 style="background-color: white">{{notification.ADD_DATE}}</h2>
-        <div class="card card-gallery item item-text-wrap">
-          <div class="ink dark-bg">
-            <h2 style="background-color: #a2a2a2">{{notification.NOTI_NAME}}</h2>
-            <img class="item-thumbnail-left" ng-src="{{notification.URL_URL}}">
-          </div>
-          <div class="item" style="background-color: #dddddd">
-            <p class="">{{notification.NOTI_DESC}}</p>L
-          </div>
-        </div>
-      </ion-item>&ndash;&gt;
-    </ion-list>-->
-    <div class="padding-top">
-    <div class="list half">
-      <div class="card card-gallery item item-text-wrap">
-        <div class="ink dark-bg">
-          <a  href="#/app/brand_video">
-          <h2 class="custom-dark3">Video <i class="icon ion-play"></i></h2>
-          <img class="full-image" src="img/youtube1.png">
-          </a>
+        <h2 class="padding-top">Video</h2>
+        <div class="embed-responsive embed-responsive-16by9">
+          <youtube-video class="embed-responsive-item" video-url="anotherGoodOne"></youtube-video>
+          <!--<img ng-src="http://www.repsol.com/creatividad/productos_y_servicios/lubricantes/gama_moto/es_en/img/Moto2.png">-->
+          <!--<youtube-video class="embed-responsive-item" video-url="anotherGoodOne" player-vars="playerVars">
+          </youtube-video>-->
         </div>
       </div>
-      <div class="card card-gallery item item-text-wrap">
-        <div class="ink dark-bg">
-          <a  href="#/app/brand_image">
-            <h2 class="custom-dark1">Images <i class="icon ion-image"></i></h2>
-            <img class="full-image" src="img/sansa-snowcastle3.jpg">
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="list half">
-      <div class="card card-gallery item item-text-wrap">
-        <div class="ink dark-bg">
-          <a  href="#/app/brand_pdf">
-          <h2 class="custom-dark3">PDF <i class="icon ion-document-text"></i></h2>
-          <img class="full-image" src="img/sansa-snowcastle3.jpg">
-          </a>
+      <div class="item item-text-wrap" ng-if="brnd.">
+        <a class="item item-icon-left assertive" href="#">
+          <i class="icon ion-document-text"></i>
+         For more info, Read PDF
+        </a>
         </div>
 
       </div>
-    </div>
     </div>
   </ion-content>
 </ion-view>
