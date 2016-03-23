@@ -1562,7 +1562,7 @@ angular.module('starter.controllers', [])
 
   })*/
 
- /* .controller('ChangePasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+  .controller('ChangePasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -1586,7 +1586,7 @@ angular.module('starter.controllers', [])
     // Set Ink
     ionicMaterialInk.displayEffect();
 
-  })*/
+  })
   /*function MyCtrl($scope) {
       $scope.value= 'foo';
 
@@ -2034,6 +2034,16 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
   })
 
   .controller('LogoutCtrl', function () {
+
+    $scope.home1= function () {
+      $state.go('app.home');
+    };
+    $scope.home2= function () {
+      $state.go('app.home');
+    };
+    $scope.home3= function () {
+      $state.go('app.home');
+    }
 
   })
 
