@@ -1615,7 +1615,7 @@ angular.module('starter.controllers', [])
 
   })*/
 
-  .controller('ChangePasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,API_ENDPOINT) {
+  .controller('ChangePasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,API_ENDPOINT,userinfoService,$http) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -1638,6 +1638,28 @@ angular.module('starter.controllers', [])
 
     // Set Ink
     ionicMaterialInk.displayEffect();
+
+    $scope.changePassword= function (changepass,changePassForm) {
+      var oldpassword=changepass.currentpassword;
+      var newpassword=changepass.password;
+      var confirmpassword=changepass.conpassword;
+      $http({
+        method:'POST',
+        url:API_ENDPOINT.url+'/services.php/changepassword',
+        data:'userId='+userinfoService.getUserFKID.FKID+'&oldpassword='+oldpassword+'&newpassword='+newpassword+'&confirmpassword'+confirmpassword,
+        headers: {
+          'Content-Type': "application/x-www-form-urlencoded"
+        }
+      }).success(function (data) {
+        alert('succefully changed passed');
+        console.log('succefully changed passed',data);
+      }).error(function (error) {
+        alert('failed to  change the passed',error);
+      })
+
+    }
+
+
 
 
   })
