@@ -6,16 +6,23 @@
 
     <ion-list ng-repeat="notification in notifications1" class="card">
       <div class="item item-text-wrap">
-        <div class="row">
+        <div class="row custom-dark3">
           <div class="col col-50"><h2>{{notification.NOTI_NAME}}</h2></div>
           <div class="col col-offset-10 col-50"><p>{{notification.ADD_DATE}}</p></div>
         </div>
-
+          <hr/>
         <img  class="item-image" ng-src={{notification.URL_URL}}>
-      <div class="item">
+        <hr>
+      <div class="item custom-dark2">
         <p class="">{{notification.NOTI_DESC}}</p>
       </div>
       </div>
+
+      <!--
+      <div class="bar bar-subheader">
+  <h2 class="title">Sub Header</h2>
+</div>
+       -->
       <!--<ion-item class="card" ng-repeat="notification in notifications">
         <h2 style="background-color: white">{{notification.ADD_DATE}}</h2>
         <div class="card card-gallery item item-text-wrap">
