@@ -1176,7 +1176,7 @@ angular.module('starter.controllers', [])
       }
     })
 
-    .controller('brandStoriesCtrl', function($http,$scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,brandstoryService,API_ENDPOINT) {
+    .controller('brandStoriesCtrl', function($http,$scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,API_ENDPOINT,$ionicLoading) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -1199,12 +1199,34 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
-      $http.get(API_ENDPOINT.url+'/brand_story.php/brandstory/0/5').then(function (result) {
+
+      $scope.show = function() {
+        $ionicLoading.show({
+          template: '<p>Loading...</p><ion-spinner class="spinner-energized"></ion-spinner>'
+        });
+      };
+
+      $scope.hide = function(){
+        $ionicLoading.hide();
+      };
+      $scope.show($ionicLoading);
+      $http.get(API_ENDPOINT.url+'/services.php/brandstory/0/5').then(function (result) {
 
         console.log(result.data);
         $scope.brandstory=result.data.brandstory;
+      }).catch(function (error) {
 
+      }).finally(function($ionicLoading) {
+        // On both cases hide the loading
+        $scope.hide($ionicLoading);
       });
+
+      $scope.playerVars = {
+        rel: 0,
+        showinfo: 0,
+        modestbranding: 0
+      }
+      $scope.anotherGoodOne = 'https://youtu.be/o8G7Nm-zqc4';
     })
 
     .controller('feedbackQueryCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
