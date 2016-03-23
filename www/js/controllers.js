@@ -6,6 +6,14 @@ angular.module('starter.controllers', [])
     var role={};
     var user={};
     return{
+      setUserFKID: function (fkid) {
+        user.FKID=fkid;
+        console.log('setting FKID',fkid)
+      },
+      getUserFKID: function () {
+        return user
+        console.log('getting FKID',fkid)
+      },
       setRoleInfo:function(roleid){
       //  role.roleid=roleid;
         role.roleid=roleid;
@@ -187,8 +195,10 @@ angular.module('starter.controllers', [])
         $scope.show($ionicLoading);
         $http.get(API_ENDPOINT.url+'/services.php/userlogin/'+mobile+'/'+password).success(function (data) {
 
-          console.log('user info message',data.Message);
+          console.log('user info message',data);
 
+          var FKID=data.data.user.MEMBER_FK_ID;
+          userinfoService.setUserFKID(FKID)
           var role=data.data.user.ROLE_FK_ID;
           console.log(data.data.message.Message);
           console.log('user info media ',data.data.message);
@@ -1328,6 +1338,9 @@ angular.module('starter.controllers', [])
     $scope.disqty=true;
 
       var userId= userinfoService.getUserInfo().userId;
+      var FKuserId=userinfoService.getUserFKID().FKID;
+
+
       $scope.show = function() {
         $ionicLoading.show({
           template: '<p>Loading...</p><ion-spinner class="spinner-energized"></ion-spinner>'
@@ -1392,6 +1405,11 @@ angular.module('starter.controllers', [])
 
         var productId=$scope.product.PROD_PK_ID;
         var qty=$scope.qtyltr;
+        if(userId!==undefined){
+          FKuserId=userId;
+        }
+
+        console.log('user fkid',FKuserId);
 
         $scope.show($ionicLoading);
         $http({
@@ -1400,7 +1418,7 @@ angular.module('starter.controllers', [])
           headers: {
             'Content-Type': "application/x-www-form-urlencoded"
           },
-          data:'userId='+176+'&productId='+productId+'&qty='+$scope.qtyltr
+          data:'userId='+FKuserId+'&productId='+productId+'&qty='+$scope.qtyltr
 
         }).success(function (data) {
           console.log(data);
@@ -1597,7 +1615,7 @@ angular.module('starter.controllers', [])
 
   })*/
 
-  .controller('ChangePasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+  .controller('ChangePasswordCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,API_ENDPOINT) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -1620,6 +1638,7 @@ angular.module('starter.controllers', [])
 
     // Set Ink
     ionicMaterialInk.displayEffect();
+
 
   })
   /*function MyCtrl($scope) {
