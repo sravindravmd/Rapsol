@@ -1186,14 +1186,26 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+
+      $scope.show = function() {
+        $ionicLoading.show({
+          template: '<p>Loading...</p><ion-spinner class="spinner-energized"></ion-spinner>'
+        });
+      };
+
+      $scope.hide = function(){
+        $ionicLoading.hide();
+      };
+      $scope.show($ionicLoading);
       $http.get(API_ENDPOINT.url+'/services.php/brandstory/0/5').then(function (result) {
 
         console.log(result.data);
         $scope.brandstory=result.data.brandstory;
-       $scope.brandstory1.BRDS_YOUURL=null;
+      }).catch(function (error) {
 
-
-
+      }).finally(function($ionicLoading) {
+        // On both cases hide the loading
+        $scope.hide($ionicLoading);
       });
 
       $scope.playerVars = {
