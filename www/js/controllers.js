@@ -133,7 +133,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('HomeCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk, $state) {
+.controller('HomeCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk, $state,$rootScope, $cordovaNetwork,$ionicPopup) {
   // Set Header
   $scope.$parent.showHeader();
   $scope.$parent.clearFabs();
@@ -142,6 +142,63 @@ angular.module('starter.controllers', [])
   $scope.$parent.setHeaderFab(false);
 
     ionicMaterialInk.displayEffect();
+
+   /* var type = $cordovaNetwork.getNetwork();
+
+    var isOnline = $cordovaNetwork.isOnline();
+
+    var isOffline = $cordovaNetwork.isOffline();
+
+
+    // listen for Online event
+    $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+      var isOnline = networkState;
+    })
+
+    // listen for Offline event
+    $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+      var isOffline = networkState;
+    })
+    console.log('network status',+"Online"+isOnline,+"offline"+isOffline);
+    if(isOffline==true && isOnline==false){
+      var alertPopup = $ionicPopup.alert({
+        title: "Please turn on internet"
+      });
+
+    }*/
+
+    /*document.addEventListener("deviceready", function () {
+
+      $scope.network = $cordovaNetwork.getNetwork();
+      $scope.isOnline = $cordovaNetwork.isOnline();
+      $scope.$apply();
+
+      // listen for Online event
+      $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+        $scope.isOnline = true;
+        $scope.network = $cordovaNetwork.getNetwork();
+
+        $scope.$apply();
+      })
+
+      // listen for Offline event
+      $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+        console.log("got offline");
+        $scope.isOnline = false;
+        $scope.network = $cordovaNetwork.getNetwork();
+
+        $scope.$apply();
+      })
+
+      console.log('network status',$scope.isOnline);
+      if($scope.isOnline==false){
+        var alertPopup = $ionicPopup.alert({
+          title: "Please turn on internet"
+        });
+
+      }
+
+    }, false)*/;
 
   $scope.homeLogin= function () {
     $state.go('app.login');
@@ -242,7 +299,7 @@ angular.module('starter.controllers', [])
         }).error(function (error) {
 
           var alertPopup = $ionicPopup.alert({
-            title: $scope.message,
+            title: $scope.message
           });
 
         }).finally(function($ionicLoading) {
@@ -1186,13 +1243,17 @@ angular.module('starter.controllers', [])
       }
     })
 
-    .controller('brandStoriesCtrl', function($http,$scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,API_ENDPOINT,$ionicLoading) {
+    .controller('brandStoriesCtrl', function($http,$scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,API_ENDPOINT,$ionicLoading,$cordovaSocialSharing) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
+
+    $scope.shareAnywhere = function(brnd) {
+      $cordovaSocialSharing.share("Nice brand here", brnd.BRDS_NAME,null, "https://youtu.be/o8G7Nm-zqc4");
+    }
 
         // Set Motion
         $timeout(function() {
@@ -1237,6 +1298,7 @@ angular.module('starter.controllers', [])
         modestbranding: 0
       }
       $scope.anotherGoodOne = 'https://youtu.be/o8G7Nm-zqc4';
+
     })
 
     .controller('feedbackQueryCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
@@ -1639,14 +1701,23 @@ angular.module('starter.controllers', [])
     // Set Ink
     ionicMaterialInk.displayEffect();
 
+
     $scope.changePassword= function (changepass,changePassForm) {
+      console.log('FKID ! ',userinfoService.getUserFKID().FKID);
       var oldpassword=changepass.currentpassword;
+
+      console.log('curpass',oldpassword)
       var newpassword=changepass.password;
+      console.log('newpass',newpassword)
+
       var confirmpassword=changepass.conpassword;
+      console.log('confirm',confirmpassword)
+
+
       $http({
         method:'POST',
         url:API_ENDPOINT.url+'/services.php/changepassword',
-        data:'userId='+userinfoService.getUserFKID.FKID+'&oldpassword='+oldpassword+'&newpassword='+newpassword+'&confirmpassword'+confirmpassword,
+        data:'userId='+userinfoService.getUserFKID().FKID+'&oldpassword='+oldpassword+'&newpassword='+newpassword+'&confirmpassword='+confirmpassword,
         headers: {
           'Content-Type': "application/x-www-form-urlencoded"
         }

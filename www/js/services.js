@@ -13,6 +13,30 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
  return null
 })
 
+/*.factory('networkService', function ($rootScope) {
+
+    return{
+      getNetwork: function () {
+
+        var isOnline = $cordovaNetwork.isOnline()
+
+        var isOffline = $cordovaNetwork.isOffline()
+
+
+        // listen for Online event
+        $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+          var onlineState = networkState;
+        })
+
+        // listen for Offline event
+        $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+          var offlineState = networkState;
+        })
+      }
+    }
+
+  })*/;
+
 
 /*.service('AuthService', function($q, $http, API_ENDPOINT) {
   var LOCAL_TOKEN_KEY = 'yourTokenKey';
