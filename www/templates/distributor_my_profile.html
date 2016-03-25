@@ -3,7 +3,7 @@
     <div class="tabs tabs-icon-top static">
       <p>My Profile</p>
     </div>
-    <div class="list">
+    <div class="list" ng-repeat="profile in profiles">
       <!--<a class="item"><h2>Region :</h2></a>
       <a class="item"><h2>State :</h2></a>
       &lt;!&ndash;<a class="item"><h2>Depot :</h2></a>&ndash;&gt;
@@ -18,43 +18,63 @@
       <a class="item"><h2>Date Of Anniversary :</h2></a>-->
       <div class="row padding">
         <div class="col-50">Region :</div>
-        <div class="col-50"> {{}}</div>
+        <div class="col-50"> {{profile.REGION_NAME}}</div>
       </div>
       <div class="row padding">
         <div class="col-50">City :</div>
-        <div class="col-50">{{}}</div>
+        <div class="col-50">{{profile.CITY_NAME}}</div>
       </div>
       <div class="row padding">
         <div class="col-50">Firm Name :</div>
-        <div class="col-50">{{}}</div>
+        <div class="col-50">{{profile.FIRM_NAME}}</div>
       </div>
-      <div class="row padding">
+      <!--<div class="row padding">
         <div class="col-50">Distributor Code :</div>
         <div class="col-50">{{}}</div>
       </div>
       <div class="row padding">
         <div class="col-50">Distributor Name :</div>
         <div class="col-50">{{}}</div>
+      </div>-->
+      <div class="row padding">
+        <div class="col-50">First Name :</div>
+        <div class="col-50">{{profile.FIRST_NAME}}</div>
+      </div>
+      <div class="row padding">
+        <div class="col-50">Middle Name :</div>
+        <div class="col-50">{{profile.MIDDLE_NAME}}</div>
+      </div>
+      <div class="row padding">
+        <div class="col-50">Last Name :</div>
+        <div class="col-50">{{profile.LAST_NAME}}</div>
+      </div>
+      <div class="row padding">
+        <div class="col-50">Full Name :</div>
+        <div class="col-50">{{profile.FULL_NAME}}</div>
       </div>
       <div class="row padding">
         <div class="col-50">Mobile Number 1 :</div>
-        <div class="col-50">{{}}</div>
+        <div class="col-50">{{profile.MOBILE_PHONE}}</div>
       </div>
       <div class="row padding">
         <div class="col-50">Mobile Number 2 :</div>
-        <div class="col-50">{{}}</div>
+        <div class="col-50">{{profile.MOBILE2}}</div>
       </div>
       <div class="row padding">
         <div class="col-50">Email Id :</div>
-        <div class="col-50"></div>
+        <div class="col-50">{{profile.EMAIL_ID}}</div>
       </div>
       <div class="row padding">
         <div class="col-50">Date Of Birth :</div>
-        <div class="col-50">{{}}</div>
+        <div class="col-50">{{profile.DOB}}</div>
       </div>
-      <div class="row padding">
+      <!--<div class="row padding">
         <div class="col-50">Date Of Anniversary :</div>
-        <div class="col-50">{{}}</div>
+        <div class="col-50">{{profile.DOB}}</div>
+      </div>-->
+      <div class="row padding">
+        <div class="col-50">Address Line1 :</div>
+        <div class="col-50">{{profile.ADDRESS_LINE1}}</div>
       </div>
     </div>
 

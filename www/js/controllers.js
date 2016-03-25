@@ -763,7 +763,7 @@ angular.module('starter.controllers', [])
 
     })
 
-    .controller('DistProfileCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    .controller('DistProfileCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, API_ENDPOINT) {
         // Set Header
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -786,6 +786,15 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+
+      $http.get(API_ENDPOINT.url+'/services.php/viewprofile/1').then(function(results){
+        $scope.profiles=results.data.userDetails;
+        alert("thhhhhh",$scope.profiles)
+        console.log('User Profile Details', $scope.profiles);
+      }).catch(function (error) {
+        alert('Something went wrong!!!!')
+      })
+
     })
 
   .controller('ProductDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http,API_ENDPOINT) {
