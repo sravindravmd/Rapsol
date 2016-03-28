@@ -82,7 +82,7 @@ p {
 }
 .home-back{
   top:0px;
-    background: url(../img/006.png) center no-repeat;
+    background: url(../img/006.png) center no-repeat fixed;
   background-size:cover;
 
 }

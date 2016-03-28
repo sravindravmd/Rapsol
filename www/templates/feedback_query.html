@@ -13,15 +13,15 @@
       </div>
     </div>
     <ng-form name="feedbackForm" ng-show="choose == 'feedback'">
-      <label class="item-input margn_top"><input placeholder="Write Subject" type="text" name="subject" ng-model="subject" /></label>
-      <p class="padding-top" style="text-align: center">Write your feedback </p>
+      <label class="item-input margn_top"><input placeholder="Write Subject" type="text" name="subject" ng-model="feedback.subject" required/></label>
+      <p class="padding-top" style="text-align: left">Write your feedback </p>
       <div class="card">
           <label class="item-input margn_top">
-            <textarea type="text" placeholder="Feedback Text" rows="4" name="message" ng-model="feedback" style="text-align:center"></textarea>
+            <textarea type="text" placeholder="Feedback Text" rows="4" name="message" ng-model="feedback.message" style="text-align:center" required></textarea>
           </label>
         </div>
         <br>
-        <button ng-disabled="feedbackForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submit(message)">Submit</button>
+        <button ng-disabled="feedbackForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submitFeedback(feedback)">Submit</button>
 
       <div ng-show="feedbackForm.$invalid">
         <p ng-show="feedbackForm.message.$error.required && feedbackForm.$dirty">Message is required</p>
@@ -30,13 +30,13 @@
     <ng-form name="queryForm" ng-show="choose == 'query'">
       <!--<label class="item-input margn_top"><input placeholder="Name" type="text" name="fname" ng-model="query.fname" required/></label>
       <label class="item-input margn_top"><input placeholder="Mobile Number" type="tel" name="mobile" ng-model="query.mobile" required/></label>-->
-      <label class="item-input margn_top"><input placeholder="Email Id" type="email" name="email" ng-model="query.email" /></label>
-      <p class="padding-top" style="text-align: center">Write your Query </p>
+      <label class="item-input margn_top"><input placeholder="Email Id" type="text" name="Subject" ng-model="query.subject" required/></label>
+      <p class="padding-top" style="text-align: left">Write your Query </p>
       <label class="item-input margn_top card">
-        <textarea type="text" placeholder="Query Text" rows="4" name="message" ng-model="query.msg" style="text-align:center"></textarea>
+        <textarea type="text" placeholder="Query Text" rows="4" name="message" ng-model="query.question" style="text-align:center" required></textarea>
       </label>
       <br>
-      <button ng-disabled="queryForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submit()">Send</button>
+      <button ng-disabled="queryForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submitQuery(query)">Send</button>
       <div style="text-align: center">
         <div ng-show="queryForm.$invalid">
          <!-- <p ng-show="queryForm.name.$error.required && queryForm.$dirty">Name required</p>

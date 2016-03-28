@@ -1,5 +1,5 @@
 <ion-view view-title="SignUp">
-  <ion-content ng-class="{expanded:isExpanded}" class="back_color1">
+  <ion-content class="back_color1">
     <div class="hero no-header flat">
       <div class="app-icon"></div>
       <div class="list padding">
@@ -63,7 +63,7 @@
             <label class="item item-input item-select custom-dark1">
               <div class="input-label">Distributor</div>
               <select name="distributor" ng-model="retailer.distributor" required ng-change="changeddist(retailer.distributor)" class="custom-dark4">
-              <option ng-repeat="distibuter in distributers" value="{{distibuter.DET_MEMBER_PK_ID}}">{{distibuter.FIRST_NAME}}</option>
+              <option ng-repeat="distibuter in distributers" value="{{distibuter.DET_MEMBER_PK_ID}}">{{distibuter.MEMBER_CODE}}</option>
 
               </select>
             </label>
