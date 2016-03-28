@@ -5,7 +5,7 @@
       <label class="item item-input item-select custom-dark3">
         <div class="input-label">Select Segment Name</div>
         <select name="productsegment" ng-model="productsegment" ng-change="productsegmentDetail(productsegment)" class="custom-dark2">
-          <option class="custom-dark2" ng-repeat="productsegment in productsegments" >{{productsegment.SEG_NAME}}</option>
+          <option class="custom-dark2"  value="{{productsegment.SEG_PK_ID}}" ng-repeat="productsegment in productsegments" >{{productsegment.SEG_NAME}}</option>
         </select>
       </label>
     </div>
@@ -13,7 +13,7 @@
       <label class="item item-input item-select custom-dark3">
         <div class="input-label">Select Product</div>
         <select name="product" ng-model="product" ng-change="productDetail(product)" class="custom-dark2">
-          <option class="custom-dark2" ng-repeat="product in products" >{{product.PROD_CODE}}</option>
+          <option class="custom-dark2"  ng-repeat="product in products" >{{product.PROD_CODE}}</option>
         </select>
       </label>
     </div>

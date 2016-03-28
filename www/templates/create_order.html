@@ -8,7 +8,7 @@
         <label class="item item-input item-select custom-dark3">
           <div class="input-label">Select Segment</div>
           <select name="retailCreateOrderSegment" ng-model="retailCreateOrderSegment" ng-change="retailsegmentDetail(retailCreateOrderSegment)" class="custom-dark2">
-            <option class="custom-dark2" ng-repeat="retailCreateOrderSegment in retailCreateOrderSegments" >{{retailCreateOrderSegment.SEG_NAME}}</option>
+            <option class="custom-dark2" value="{{retailCreateOrderSegment.SEG_PK_ID}}" ng-repeat="retailCreateOrderSegment in retailCreateOrderSegments" >{{retailCreateOrderSegment.SEG_NAME}}</option>
           </select>
         </label>
       </div>

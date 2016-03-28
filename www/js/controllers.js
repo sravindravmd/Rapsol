@@ -466,7 +466,7 @@ angular.module('starter.controllers', [])
     $http.get(API_ENDPOINT.url+'/services.php/segmentlist/0/0').then(function(results){
       $scope.productsegments=results.data.segmentlist;
       $scope.hide($ionicLoading);
-     // console.log('Product Segmet Details', $scope.productsegments);
+      console.log('Product Segmet Details', $scope.productsegments);
     }).catch(function (error) {
       alert('Something went wrong!!!!')
     }).finally(function($ionicLoading) { 
@@ -477,7 +477,7 @@ angular.module('starter.controllers', [])
         $scope.show($ionicLoading);
 
         console.log('product segment',productsegment)
-      $http.get(API_ENDPOINT.url+'/services.php/productlist/'+1+'/0/0',+productsegment).then(function(results){
+      $http.get(API_ENDPOINT.url+'/services.php/productlist/'+productsegment+'/0/0').then(function(results){
         $scope.products=results.data.productlist;
         $scope.hide($ionicLoading)
         console.log('Product List',  $scope.products);
@@ -790,7 +790,7 @@ angular.module('starter.controllers', [])
       $scope.retailsegmentDetail= function (retailCreateProduct) {
         $scope.show($ionicLoading);
         $scope.disproduct=false;
-        $http.get(API_ENDPOINT.url+'/services.php/productlist/'+1+'/0/0').then(function(results){
+        $http.get(API_ENDPOINT.url+'/services.php/productlist/'+retailCreateProduct+'/0/0').then(function(results){
           $scope.retailCreateproducts=results.data.productlist;
           console.log('Product List', $scope.retailCreateproducts);
         }).catch(function (error) {
