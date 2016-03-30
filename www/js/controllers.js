@@ -90,15 +90,52 @@ angular.module('starter.controllers', [])
         $scope.show($ionicLoading);
         $http.get(API_ENDPOINT.url+'/services.php/userlogin/'+mobile+'/'+password).success(function (data) {
 
-          console.log('user info message',data);
+          console.log('user info message',data.Message);
+          switch (data.Message){
 
-          var FKID=data.data.user.MEMBER_FK_ID;
-          userinfoService.setUserFKID(FKID)
-          var role=data.data.user.ROLE_FK_ID;
-          console.log(data.data.message.Message);
-          console.log('user info media ',data.data.message);
+            case 'Invliad credentials':
 
-          $scope.message=data.Message;
+              var alertPopup = $ionicPopup.alert({
+                title: 'Invalid credentials'
+              });
+                  break;
+
+
+          }
+
+          switch(data.data.message){
+            case 'Succesfully logined In.': var FKID=data.data.user.MEMBER_FK_ID;
+              userinfoService.setUserFKID(FKID)
+              var role=data.data.user.ROLE_FK_ID;
+              console.log(data.data.message.Message);
+              console.log('user info media ',data.data.message);
+
+              $timeout(function () {
+
+                if(role==5){
+                  $state.go('app.channel_partner');
+                } else if(role==4){
+                  $state.go('app.retailer_home');
+                } else if(role==3){
+                  $state.go('app.distributor_home')
+                } else if(role==2){
+                  alert('No state craeted for L1')
+                }
+                else if(role==6){
+                  alert('No state craeted L2')
+                }else if(role==7){
+                  alert('No state craeted L3')
+                }
+
+              },300)
+              break;
+
+          }
+
+
+
+/*
+          $scope.message=data.data.Message;
           if(data.Message!==undefined){
           var alertPopup = $ionicPopup.alert({
             title: $scope.message
@@ -107,26 +144,9 @@ angular.module('starter.controllers', [])
             var alertPopup = $ionicPopup.alert({
               title: data.data.message
             });
-          }
+          }*/
 
-          $timeout(function () {
 
-            if(role==5){
-              $state.go('app.channel_partner');
-            } else if(role==4){
-              $state.go('app.retailer_home');
-            } else if(role==3){
-              $state.go('app.distributor_home')
-            } else if(role==2){
-              alert('No state craeted for L1')
-            }
-            else if(role==6){
-              alert('No state craeted L2')
-            }else if(role==7){
-              alert('No state craeted L3')
-            }
-
-          },300)
           /*
            if(data.data.user.ROLE_FK_ID==5){
            $state.go('app.channel_partner');
@@ -156,12 +176,18 @@ angular.module('starter.controllers', [])
         $http.get(API_ENDPOINT.url+'/services.php/firstuserlogin/'+mobile).then(function (data) {
 
           console.log('First login',data.data.Message.isfrstLogin);
-          $scope.messagechck=data.data.Message;
 
+          if(data.data.Message.isfrstLogin==undefined){
+            var alertPopup = $ionicPopup.alert({
+              title: 'Invalid number'
+            });
+          }
+        /*  $scope.messagechck=data.data.Message;
+*/
           // Do something on success for example if you are doing a login
-          var alertPopup = $ionicPopup.alert({
+         /* var alertPopup = $ionicPopup.alert({
             title: 'Number verified successfully !'
-          });
+          });*/
 /*
           // On both cases hide the loading
           $scope.hide($ionicLoading);*/

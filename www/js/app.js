@@ -33,20 +33,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             StatusBar.styleDefault();
         }
     });
-})
+})/*.config(['$ionicConfigProvider', function($ionicConfigProvider) {
 
-/*.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
-
-    // Turn off caching for demo simplicity's sake
-    $ionicConfigProvider.views.maxCache(0);*/
-    .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
-   // $httpProvider.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-
-
-    /*
-    // Turn off back button text
-    $ionicConfigProvider.backButton.previousTitleText(false);
-    */
+  }])*/
+  .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
 
     $stateProvider
 

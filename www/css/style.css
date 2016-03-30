@@ -1,5 +1,6 @@
-/* General
-==================================*/
+/*
+/!* General
+==================================*!/
 h1 {
     color: #fff;
     text-shadow: 0 1px 0px #000;
@@ -7,8 +8,8 @@ h1 {
 }
 
 
-/* Utilities
-==================================*/
+/!* Utilities
+==================================*!/
 .title-bordered {
     border-top: solid 2px #bbb;
     padding-top: 30px;
@@ -24,8 +25,8 @@ p {
 }
 
 
-/* Menu
-==================================*/
+/!* Menu
+==================================*!/
 .menu .bar.bar-header.expanded {
     transition: all .5s ease-in-out;
 }
@@ -59,6 +60,7 @@ p {
 .menu-open .ion-navicon:before {
     content: "\f2ca";
 }
+*/
 
 
 /* Login
@@ -385,4 +387,13 @@ a:link {
 .my_profile_css{
   text-align: left;
 
+}
+.title-image{
+  margin-top: 8px;
+  height: 27px;
+}
+
+.my-back-button {
+  content: url('http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/black-ink-grunge-stamps-textures-icons-arrows/003683-black-ink-grunge-stamp-textures-icon-arrows-double-arrowhead-left.png');
+  width: 48px;
 }
