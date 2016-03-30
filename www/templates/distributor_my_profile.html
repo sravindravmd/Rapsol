@@ -1,7 +1,7 @@
 <ion-view view-title="Profile Info.">
-  <ion-content class="" scroll="false">
+  <ion-content class="">
     <div class="card" style="background-color: #e6e6e6">
-      <div class="item item-divider" style="background-color: #dddddd">
+      <!--<div class="item item-divider" style="background-color: #dddddd">
         <h2 class="" style="color: black; text-align: center">{{profile.FIRST_NAME}}</h2>
       </div>
       <div class="item item-divider row">
@@ -19,21 +19,54 @@
       <div class=" row">
         <div class="col col-center my_profile_css">Mobile Number 1 : <strong style="padding-left: 5px;color: #1bb556">{{profile.MOBILE_PHONE}}</strong></div>
         <div class="col col-center">Mobile Number 2 :<strong style="padding-left: 5px;color: #1bb556">{{profile.MOBILE2}}</strong></div>
+      </div>-->
+      <div class="list">
+        <div class="item item-divider" style="background-color: #dddddd">
+          <h2 class="" style="color: black; text-align: center">{{profile.FULL_NAME}}</h2>
+        </div>
+        <div class="row padding">
+          <div class="col-50">First Name :</div>
+          <div class="col-50 my_profile_css">{{profile.FIRST_NAME}}</div>
+        </div>
+        <div class="row padding">
+          <div class="col-50">Middle Name :</div>
+          <div class="col-50 my_profile_css">{{profile.MIDDLE_NAME}}</div>
+        </div>
+        <div class="row padding">
+          <div class="col-50">Last Name :</div>
+          <div class="col-50 my_profile_css">{{profile.LAST_NAME}}</div>
+        </div>
+        <div class="row padding">
+          <div class="col-50">Mobile Number 1 :</div>
+          <div class="col-50 my_profile_css">{{profile.MOBILE_PHONE}}</div>
+        </div>
+        <div class="row padding">
+          <div class="col-50">Mobile Number 2 :</div>
+          <div class="col-50 my_profile_css">{{profile.MOBILE2}}</div>
+        </div>
+        <div class="row padding">
+          <div class="col-50">Email Id :</div>
+          <div class="col-50 my_profile_css">{{profile.EMAIL_ID}}</div>
+        </div>
+        <div class="row padding">
+          <div class="col-50">Date Of Birth :</div>
+          <div class="col-50 my_profile_css">{{profile.DOB}}</div>
+        </div>
+        <div class="row padding">
+          <div class="col-50">Region :</div>
+          <div class="col-50 my_profile_css"> {{profile.REGION_NAME}}</div>
+        </div>
+        <div class="row padding">
+          <div class="col-50">City :</div>
+          <div class="col-50 my_profile_css">{{profile.CITY_NAME}}</div>
+        </div>
+        <div class="row padding">
+          <div class="col-50">Firm Name :</div>
+          <div class="col-50 my_profile_css">{{profile.FIRM_NAME}}</div>
+        </div>
+        <div class="row padding">
+          <div class="col-50">Address Line1 :</div>
+          <div class="col-50 my_profile_css">{{profile.ADDRESS_LINE1}}</div>
+        </div>
       </div>
-
     </div>
-    <!--<div class="list">
-    <div class="row padding">
-    <div class="col-50">Region :</div>
-    <div class="col-50"> {{profile.REGION_NAME}}</div>
-    </div>
-    <div class="row padding">
-    <div class="col-50">City :</div>
-    <div class="col-50">{{profile.CITY_NAME}}</div>
-    </div>
-    <div class="row padding">
-    <div class="col-50">Firm Name :</div>
-    <div class="col-50">{{profile.FIRM_NAME}}</div>
-    </div>
-    &lt;!&ndash;<div class="row padding">
-    <div class="col-50">Distributor Code :</div>
