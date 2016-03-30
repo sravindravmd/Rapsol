@@ -85,7 +85,22 @@ p {
 .home-back{
   top:0px;
     background: url(../img/006.png) center no-repeat fixed;
+    -webkit-background: url(../img/006.png) center no-repeat fixed;
+    -o-background: url(../img/006.png) center no-repeat fixed;
+    background-size:cover;
+    -webkit-background-size:cover;
+    -o-background-size:cover;
+
+
+}
+.viewbackground{
+  top:0px;
+  background: url(../img/screen.png) center no-repeat fixed;
+  -webkit-background: url(../img/screen.png) center no-repeat fixed;
+  -o-background: url(../img/screen.png) center no-repeat fixed;
   background-size:cover;
+  -webkit-background-size:cover;
+  -o-background-size:cover;
 
 }
 
@@ -396,4 +411,11 @@ a:link {
 .my-back-button {
   content: url('http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/black-ink-grunge-stamps-textures-icons-arrows/003683-black-ink-grunge-stamp-textures-icon-arrows-double-arrowhead-left.png');
   width: 48px;
+}
+
+.product_margin{
+  margin-top: 3px !important;
+}
+.product_font{
+  color: blue;
 }

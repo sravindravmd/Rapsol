@@ -1,3 +1,4 @@
+<!--
 <ion-view view-title="Choose Champion">
   <ion-content ng-class="{expanded:$scope.isExpanded}">
     <div class="tabs tabs-icon-top static">
@@ -29,20 +30,62 @@
         <div class="col custom-dark1">Recommended Oil :</div>
         <div class="col custom-dark2">{{bikeDetails.REC_RECOMMENDATION}}</div>
       </div>
-      <!--<div class="row">
+      &lt;!&ndash;<div class="row">
         <div class="col col-10">{{bikeDetails.REC_NAME}}</div>
         <div class="col col-10">{{bikeDetails.REC_MODEL}}</div>
         <div class="col col-10">{{bikeDetails.CC}}</div>
         <div class="col col-10">{{bikeDetails.REC_RECOMMENDATION}}</div>
-      </div>-->
-      <!--<div class="header col-box">
+      </div>&ndash;&gt;
+      &lt;!&ndash;<div class="header col-box">
         <p style="text-align: center" class="custom-dark3"> Bike Name : {{bikeDetails.REC_NAME}}</p>
         <p> Bike Model : {{bikeDetails.REC_MODEL}}</p>
         <p> Bike cc : {{bikeDetails.CC}}</p>
         <p> Recommended Oil : {{bikeDetails.REC_RECOMMENDATION}}</p>
 
-      </div>-->
+      </div>&ndash;&gt;
 
     </div>
+  </ion-content>
+</ion-view>
+-->
+
+
+<ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
+  <ion-content>
+    <div class="tabs tabs-icon-top static">
+      <h3 class="padding">Champion's Choice</h3>
+    </div>
+ <!--   <div class="list padding">
+      <label class="item item-input item-select custom-dark3">
+        <div class="input-label">Select Type</div>
+        <select name="bikeType" ng-model="bikeType" ng-change="selectBikeType(bikeType)" class="custom-dark2">
+          <option class="custom-dark2" ng-repeat="bikeType in bikeTypes" >{{bike.name}}</option>
+        </select>
+      </label>
+    </div>-->
+    <div class="list padding">
+      <label class="item item-input item-select custom-dark2">
+        <div class="input-label" style="color:white;font-size: 1.5em">Select Brand</div>
+        <select name="bikeBrand" style="color:white;font-size: 1.5em" ng-model="bikeBrand" ng-change="selectBikeBrand(bikeBrand)" class="custom-dark2">
+          <option class="custom-dark2" value="{{bikeBrand.name}}" ng-repeat="bikeBrand in bikeBrands" >{{bikeBrand.name}}</option>
+        </select>
+      </label><br/>
+      <label class="item item-input item-select custom-dark2">
+        <div class="input-label" style="color:white;font-size: 1.5em">Select Model</div>
+        <select name="bikeModel" style="color:white;font-size: 1.5em" ng-model="bikeModel" ng-change="selectBikeModel(bikeModel)" class="custom-dark2">
+          <option class="custom-dark2"  ng-repeat="bikeModel in models" >{{bikeModel.REC_MODEL}}</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="padding" ng-show="showrecommendation">
+      <div class="row">
+        <div class="col custom-dark3" style="text-align: center;font-size: 1em">Repsol Recommendation Oil</div>
+      </div>
+      <div class="row">
+        <div class="col custom-dark4 padding" style="text-align: center;height: 45px; font-size: 1.3em">{{recmds[0].REC_RECOMMENDATION}}</div>
+      </div>
+    </div>
+
   </ion-content>
 </ion-view>

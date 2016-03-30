@@ -49,5 +49,35 @@
       <br>
       <button ng-disabled="queryForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submitQuery(query)">Send</button>
     </ng-form>
+
+    <!--<ion-list>
+      <ion-item ng-repeat="qmg in queryfeedbackmsg">
+        <div class="row">
+          <div class="col" style="text-align: left;font-size: 1em">{{qmg.QUESTION}}</div>
+        </div>
+        <div class="row">
+          <div class="col" style="text-align: left;font-size: 1em"></div>
+        </div>
+      </ion-item>
+    </ion-list>
+
+    <div class="padding">
+      <div class="row">
+        <div class="col custom-dark3" style="text-align: left;font-size: 1em">Repsol Recommendation Oil</div>
+      </div>
+      <div class="row">
+       <p>{{}}</p>
+      </div>
+    </div>-->
+    <div class="padding-top padding-left" ng-show="choose == 'query'">
+      <h4>Previous Queries</h4>
+
+    <div class="list card" ng-repeat=" qmg in queryfeedbackmsg" >
+      <div class="item item-divider" style="background-color:#656565">
+        <h2 class="text-left"style="color:ghostwhite;padding-top: 0.5em">Question: <strong>{{qmg.QUESTION}}</strong></h2>
+      </div>
+      <p class=" item item-text-wrap" style="color: green">Answer: <strong ng-show="qmg.ANSWER==null"> Not yet Answered</strong> <strong>{{qmg.ANSWER}}</strong>{{qmg.ANSWER}}</p>
+    </div>
+    </div>
   </ion-content>
 </ion-view>

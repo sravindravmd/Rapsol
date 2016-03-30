@@ -107,6 +107,7 @@ angular.module('starter.controllers', [])
             case 'Succesfully logined In.': var FKID=data.data.user.MEMBER_FK_ID;
               userinfoService.setUserFKID(FKID)
               var role=data.data.user.ROLE_FK_ID;
+              userinfoService.setRoleInfo(role);
               console.log(data.data.message.Message);
               console.log('user info media ',data.data.message);
 
@@ -693,6 +694,28 @@ angular.module('starter.controllers', [])
 
     $scope.hide = function(){   $ionicLoading.hide(); };
 
+
+    $scope.show($ionicLoading);
+
+    function lodeprevquery(){
+      $http.get(API_ENDPOINT.url+'/services.php/viewqueryReply/0/'+userId).then(function (result) {
+
+
+        $scope.queryfeedbackmsg=result.data.queries
+
+        console.log(result.data.queries);
+        console.log($scope.queryfeedbackmsg);
+
+      }).catch(function (error) {
+
+      }).finally(function($ionicLoading) {
+        // On both cases hide the loading
+        $scope.hide($ionicLoading);
+      });
+    }
+    lodeprevquery();
+
+
     $scope.feedback={};
 
     $scope.submitFeedback= function (feedback) {
@@ -749,17 +772,20 @@ angular.module('starter.controllers', [])
         headers: {
           'Content-Type': "application/x-www-form-urlencoded"
         },
-        data:'userId='+userId+'&subject='+$scope.query.subject+'&feedback='+$scope.query.question
+        data:'userId='+userId+'&subject='+$scope.query.subject+'&question='+$scope.query.question
 
       }).success(function (data) {
         $scope.meesagefeed=data.status.message;
         $scope.hide($ionicLoading);
+
         console.log('query info',userId,query)
+        console.log('calling lodeprevquery');
+        lodeprevquery();
 
         console.log(data);
         if(data.status==1){
           var alertPopup = $ionicPopup.alert({
-            title: "query Successfully submitted"
+            title: "Query Successfully submitted"
           })
           $scope.query.subject="";
           $scope.query.message="";
@@ -787,6 +813,7 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     $scope.disproduct=true;
     $scope.disqty=true;
+    $scope.oqin=0;
 
       var userId= userinfoService.getUserInfo().userId;
       var FKuserId=userinfoService.getUserFKID().FKID;
@@ -828,15 +855,20 @@ angular.module('starter.controllers', [])
       }
       $scope.retailcreateproductDetail = function (product) {
         $scope.disqty=false;
+       var roleId=userinfoService.getRoleInfo().roleid;
+        $scope.rlid=userinfoService.getRoleInfo().roleid;
+        //$scope.rlid=4;
 
         console.log('product id ',product)
         $scope.show($ionicLoading);
 
-        $http.get(API_ENDPOINT.url+'/services.php/product/'+product).then(function(results){
-          $scope.product=results.data.Product;
+        $http.get(API_ENDPOINT.url+'/services.php/product/'+product+'/'+roleId).then(function(results){
+          $scope.products=results.data.Product;
 
-          $scope.productID=product;
-          console.log('Product List', JSON.stringify($scope.product));
+          $scope.lppl=$scope.products.PROD_BILLING_PRICE_PER_LITER-$scope.products.proDis;
+
+          //$scope.productID=product;
+          console.log('Product List', JSON.stringify($scope.products));
         }).catch(function (error) {
           alert('Something went wrong!!!!')
         }).finally(function($ionicLoading) {
@@ -1237,24 +1269,56 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
     $scope.hide = function(){   $ionicLoading.hide(); };
     $scope.show($ionicLoading);
 
+    $scope.showrecommendation=false;
+    $http.get(API_ENDPOINT.url+'/services.php/recommendation').then(function(results){
 
-    $http.get(API_ENDPOINT.url+'/services.php/recommendationbikes').then(function(results){
-      $scope.show($ionicLoading);
-    /*$scope.bikes=results.data.Bikes;
-    console.log('bikes', $scope.bikes);
-  }).catch(function (error) {
-    alert('Something went wrong!!!!')
-  })*/
-    $scope.bikes=results.data.Bikes;
-    console.log('bikes', $scope.bikes);
+
+    $scope.bikeBrands=results.data.recommedList;
+    console.log('BRANDS', $scope.bikeBrands);
   }).catch(function (error) {
       var alertPopup = $ionicPopup.alert({   title: "Error on request" });
   }).finally(function($ionicLoading) {
         // On both cases hide the loading
         $scope.hide($ionicLoading);
       });
+
+    $scope.selectBikeBrand= function (brandname) {
+      $scope.show($ionicLoading);
+      $http.get(API_ENDPOINT.url+'/services.php/recommendations/'+brandname).then(function(results){
+        $scope.showrecommendation=false;
+
+
+        $scope.models=results.data.models;
+        console.log('models',$scope.models);
+      }).catch(function (error) {
+        var alertPopup = $ionicPopup.alert({   title: "Error on request" });
+      }).finally(function($ionicLoading) {
+        // On both cases hide the loading
+        $scope.hide($ionicLoading);
+      });
+
+    }
+
+    $scope.selectBikeModel= function (mds) {
+      console.log('<<<<<<',mds)
+      $scope.show($ionicLoading);
+      $http.get(API_ENDPOINT.url+'/services.php/recommendationbikesrecom/'+mds).then(function(results){
+        $scope.showrecommendation=true;
+
+
+        $scope.recmds=results.data.recomded;
+        console.log('recmds',$scope.recmds.REC_RECOMMENDATION);
+        console.log('recmds',$scope.recmds[0].REC_RECOMMENDATION);
+      }).catch(function (error) {
+        var alertPopup = $ionicPopup.alert({   title: "Error on request" });
+      }).finally(function($ionicLoading) {
+        // On both cases hide the loading
+        $scope.hide($ionicLoading);
+      });
+
+    }
     //$scope.choosebike= function () {}
-    $scope.choosebike= function (bike) {
+/*    $scope.choosebike= function (bike) {
       $scope.show($ionicLoading);
       console.log('choosed bike',bike)
       $http.get(API_ENDPOINT.url+'/services.php/recommendationbikesrecom/'+bike).then(function(results){
@@ -1268,7 +1332,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
         // On both cases hide the loading
         $scope.hide($ionicLoading);
       });
-    }
+    }*/
 })
 
   .controller('productKnowledgeCtrl', function ($scope, $http,API_ENDPOINT, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,$ionicLoading,$ionicPopup) {
