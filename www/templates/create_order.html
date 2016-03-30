@@ -1,5 +1,5 @@
-<ion-view view-title="Name">
-  <ion-content ng-class="{expanded:$scope.isExpanded}">
+<ion-view view-title="Order">
+  <ion-content>
     <div class="tabs tabs-icon-top static">
       <p>Create Order</p>
     </div>
@@ -50,38 +50,11 @@
         <div class="row">
           <div class="col col-33">{{product.PROD_UNIT_PACK}}</div>
           <div class="col col-33">{{qtyltr}}</div>
-          <div class="col col-33">  {{product.PROD_LISTPRICE}}</div>
+          <div class="col col-33">  {{qtyltr * product.PROD_UNIT_PACK}}</div>
         </div>
 
 
       <div style="text-align: center"  class="padding-top"><button class="button button-small custom-dark1" ng-disabled="canbook"  ng-click="confirmorder()">order</button></div>
 
-    <!--</div>-->
-      <!--<hr/>-->
-    <!--<div>-->
-      <!--<div class="row header col-box">-->
-        <!--<div class="col col-33">SKU</div>-->
-        <!--<div class="col col-33">Qty</div>-->
-        <!--<div class="col col-33">Qty in Ltr</div>-->
-      <!--</div>-->
-      <!--<div class="row" ng-repeat="data in ctrl.data">-->
-        <!--<div class="col col-33">{{data.name}}</div>-->
-        <!--<div class="col col-33">{{quantity}}</div>-->
-        <!--&lt;!&ndash;<div class="col"><button class="button-small" ng-click="ctrl.add($index)">Remove</button></div>&ndash;&gt;-->
-        <!--<div class="col col-33">-->
-          <!--<a><i class="icon ion-close-circled"></i></a>-->
-        <!--</div>-->
-      <!--</div>-->
-
-    <!--</div>-->
-    <!--<div class="row">-->
-      <!--<div class="col col-66"></div>-->
-      <!--&lt;!&ndash; <div class="col"></div>-->
-       <!--<div class="col"></div>-->
-       <!--<div class="col"></div>&ndash;&gt;-->
-      <!--<div class="col">-->
-        <!--<button class="button button-small custom-dark3">Create</button>-->
-      <!--</div>-->
-    <!--</div>-->
   </ion-content>
 </ion-view>

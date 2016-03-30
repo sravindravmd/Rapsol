@@ -56,10 +56,10 @@ angular.module('starter.controllers', [])
 .controller('HomeCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk, $state,$rootScope, $cordovaNetwork,$ionicPopup) {
 
   $scope.homeLogin= function () {
-    $state.go('app.login');
+    $state.go('main.login');
   };
   $scope.homeRegistration= function () {
-    $state.go('app.registration');
+    $state.go('main.registration');
   };
 
 }).controller('LoginCtrl', function($scope, $stateParams, $timeout, $http,ionicMaterialMotion, ionicMaterialInk,$state,API_ENDPOINT,userinfoService,$ionicLoading,$ionicPopup,$ionicHistory) {
@@ -305,7 +305,7 @@ angular.module('starter.controllers', [])
           headers: {
             'Content-Type': "application/x-www-form-urlencoded"
           },
-          data:'city='+retailer.city+'&distributor='+retailer.distributor+'&dob='+'12/12/2090'+'&email='+retailer.email+'&fname='+retailer.fname+'&mobile='+retailer.mobile+'&region='+retailer.region+'&roleid='+retailer.roleid+'&state='+retailer.state+'&firmname='+retailer.firmname
+          data:'city='+retailer.city+'&distributor='+retailer.distributor+'&dob='+retailer.dob+'&email='+retailer.email+'&fname='+retailer.fname+'&mobile='+retailer.mobile+'&region='+retailer.region+'&roleid='+retailer.roleid+'&state='+retailer.state+'&firmname='+retailer.firmname
 
           /*'city='+'12'+'&distributor='+'16'+'&dob='+'12/12/1091'+'&email='+'g@rg.com'+
           '&fname='+'13'+'&mobile='+'4213432499'+'&region='+'3'+'&roleid='+'4'+
@@ -552,7 +552,7 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
   .controller('NewsCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, API_ENDPOINT,$ionicLoading) {
-
+    $scope.imageurl=API_ENDPOINT.url;
     // Set Ink
     ionicMaterialInk.displayEffect();
     $scope.show = function() {
@@ -1276,9 +1276,12 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
     $ionicHistory.clearHistory();
 
-      $state.go('app.home');
+      $state.go('main.home');
 
 
+
+  })
+  .controller('MainCtrl', function ($scope) {
 
   })
 

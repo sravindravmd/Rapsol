@@ -1,19 +1,20 @@
 <ion-view view-title="Notification">
-    <ion-content ng-class="{expanded:$scope.isExpanded}" style="background-color: white">
-      <h2 class="has-header">
+  <ion-content ng-class="{expanded:$scope.isExpanded}" style="background-color: white">
+    <h2 class="has-header">
 
-      </h2>
+    </h2>
 
     <ion-list ng-repeat="notification in notifications1" class="card">
       <div class="item item-text-wrap">
+        <div class="row"><div class="col"><p style="text-align: right">{{notification.ADD_DATE}}</p></div></div>
         <div class="row custom-dark3">
           <div class="col"><p style="color: #e6e6e6">{{notification.NOTI_NAME}}</p></div>
         </div>
-        <div class="col" style="text-align: right"><p>{{notification.ADD_DATE}}</p></div>
+
         <img  class="item-image" ng-src={{notification.URL_URL}}>
-      <div class="item custom-dark2">
-        <p class="">{{notification.NOTI_DESC}}</p>
-      </div>
+        <div class="item custom-dark2">
+          <p class="">{{notification.NOTI_DESC}}</p>
+        </div>
       </div>
 
       <!--
@@ -35,35 +36,35 @@
       </ion-item>-->
     </ion-list>
 
-      <!--  <div class="tabs tabs-icon-top static">
-            <p>Notification</p>
-        </div>
-        <div  class="card card-gallery item item-text-wrap">
-            <div class="ink dark-bg">
-                <h2>{{notifications.ADD_DATE}}</h2>
-                <img class="full-image" src="img/4.jpg">
-            </div>
-            <div class="item" style="background-color: #dddddd">
-                <p>Text TextTextTextText</p>
-            </div>
-        </div>
-        <div class="card card-gallery item item-text-wrap">
-            <div class="ink dark-bg">
-                <h2>Hmm. Hope nobody destroys this!</h2>
-                <img class="full-image" src="img/4.jpg">
-            </div>
-            <div class="item" style="background-color: #dddddd">
-                <p>Text TextTextTextText</p>
-            </div>
-        </div>
-        <div  class="card card-gallery item item-text-wrap">
-            <div class="ink dark-bg">
-                <h2>Hmm. Hope nobody destroys this!</h2>
-                <img class="full-image" src="img/4.jpg">
-            </div>
-            <div class="item" style="background-color: #dddddd">
-                <p>Text TextTextTextText</p>
-            </div>
-        </div>-->
-    </ion-content>
+    <!--  <div class="tabs tabs-icon-top static">
+          <p>Notification</p>
+      </div>
+      <div  class="card card-gallery item item-text-wrap">
+          <div class="ink dark-bg">
+              <h2>{{notifications.ADD_DATE}}</h2>
+              <img class="full-image" src="img/4.jpg">
+          </div>
+          <div class="item" style="background-color: #dddddd">
+              <p>Text TextTextTextText</p>
+          </div>
+      </div>
+      <div class="card card-gallery item item-text-wrap">
+          <div class="ink dark-bg">
+              <h2>Hmm. Hope nobody destroys this!</h2>
+              <img class="full-image" src="img/4.jpg">
+          </div>
+          <div class="item" style="background-color: #dddddd">
+              <p>Text TextTextTextText</p>
+          </div>
+      </div>
+      <div  class="card card-gallery item item-text-wrap">
+          <div class="ink dark-bg">
+              <h2>Hmm. Hope nobody destroys this!</h2>
+              <img class="full-image" src="img/4.jpg">
+          </div>
+          <div class="item" style="background-color: #dddddd">
+              <p>Text TextTextTextText</p>
+          </div>
+      </div>-->
+  </ion-content>
 </ion-view>

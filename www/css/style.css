@@ -379,3 +379,10 @@ a:link {
 .header_top{
  margin-top: 3em;
 }
+.error_msg_color{
+  color: red
+}
+.my_profile_css{
+  text-align: left;
+
+}

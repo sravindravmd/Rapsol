@@ -1,6 +1,6 @@
 <ion-view view-title="SignUp">
   <ion-content class="back_color1">
-    <div class="hero no-header flat">
+    <div class="">
       <div class="app-icon"></div>
       <div class="list padding">
         <div class="row">
@@ -76,7 +76,7 @@
             <label class="item-input margn_top"><input placeholder="Retailer Name" type="text" name="fname" ng-model="retailer.fname" required/></label>
             <label class="item-input margn_top"><input placeholder="Mobile Number" type="tel" name="mobile" ng-model="retailer.mobile" required/></label>
             <label class="item-input margn_top"><input placeholder="Email Id" type="email" name="email" ng-model="retailer.email" required/></label>
-            <label class="item-input margn_top"><input placeholder="Date of Birth DD/MM/YYYY"  type="text" name="dob" ng-model="retailer.dob" required/></label><br>
+            <label class="item-input margn_top"><input placeholder="Date of Birth"  type="text" name="dob" ng-model="retailer.dob" date-parser="dd/MM/yyyy" onfocus="(this.type='date')" required/></label><br>
             <div>
               <button ng-disabled="retailerRegForm.$invalid" class="button button-full custom-dark1 ink"  ng-click="retailerRegistration(retailer,retailerRegForm)">Submit</button>
              <!-- <button class="button button-full custom-dark1 ink"  ng-click="retailerRegistration(retailer,retailerRegForm)">Submit</button>-->
@@ -85,18 +85,18 @@
           </div>
         <div style="text-align: center">
           <div ng-show="retailerRegForm.$invalid">
-            <p ng-show="retailerRegForm.name.$error.required && retailerRegForm.$dirty">Name required</p>
-            <p ng-show="retailerRegForm.mobile.$error.required && retailerRegForm.$dirty">Mobile Number required</p>
-            <p ng-show="retailerRegForm.email.$error.required && retailerRegForm.$dirty">Email required</p>
-            <p ng-show="retailerRegForm.email.$valid">Not valid email!</p>
-            <p ng-show="retailerRegForm.dob.$error.required && retailerRegForm.$dirty">Date Of Birth Number required</p>
-            <p ng-show="retailerRegForm.fname.$error.required && retailerRegForm.$dirty">Retailer Name required</p>
-            <p ng-show="retailerRegForm.firmname.$error.required && retailerRegForm.$dirty">Firm Name required</p>
-            <p ng-show="retailerRegForm.city.$error.required && retailerRegForm.$dirty">City required</p>
+            <p ng-show="retailerRegForm.name.$error.required && retailerRegForm.$dirty" class="error_msg_color">Name required</p>
+            <p ng-show="retailerRegForm.mobile.$error.required && retailerRegForm.$dirty" class="error_msg_color">Mobile Number required</p>
+            <p ng-show="retailerRegForm.email.$error.required && retailerRegForm.$dirty" class="error_msg_color">Email required</p>
+            <p ng-show="retailerRegForm.email.$valid" class="error_msg_color">Not valid email!</p>
+            <p ng-show="retailerRegForm.dob.$error.required && retailerRegForm.$dirty" class="error_msg_color">Date Of Birth Number required</p>
+            <p ng-show="retailerRegForm.fname.$error.required && retailerRegForm.$dirty" class="error_msg_color">Retailer Name required</p>
+            <p ng-show="retailerRegForm.firmname.$error.required && retailerRegForm.$dirty" class="error_msg_color">Firm Name required</p>
+            <p ng-show="retailerRegForm.city.$error.required && retailerRegForm.$dirty" class="error_msg_color">City required</p>
             <!--<p ng-show="retailerRegForm.depot.$error.required && retailerRegForm.$dirty">Depot required</p>-->
-            <p ng-show="retailerRegForm.state.$error.required && retailerRegForm.$dirty">State required</p>
-            <p ng-show="retailerRegForm.region.$error.required && retailerRegForm.$dirty">Region required</p>
-            <p ng-show="retailerRegForm.distributor.$error.required && retailerRegForm.$dirty">Distributor required</p>
+            <p ng-show="retailerRegForm.state.$error.required && retailerRegForm.$dirty" class="error_msg_color">State required</p>
+            <p ng-show="retailerRegForm.region.$error.required && retailerRegForm.$dirty" class="error_msg_color">Region required</p>
+            <p ng-show="retailerRegForm.distributor.$error.required && retailerRegForm.$dirty" class="error_msg_color">Distributor required</p>
           </div>
         </div>
       </ng-form>

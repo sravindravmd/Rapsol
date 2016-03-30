@@ -56,30 +56,35 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
         templateUrl: 'templates/menu.html',
         controller: 'AppCtrl'
     })
-
-        .state('app.registration', {
+      .state('main', {
+        url: '/main',
+        abstract: true,
+        templateUrl: 'templates/main.html',
+        controller: 'MainCtrl'
+      })
+        .state('main.registration', {
             url: '/registration',
             views: {
-                'menuContent': {
+                'mainContent': {
                     templateUrl: 'templates/registration.html',
                     controller: 'RegCtrl'
                 }
             }
         })
-        .state('app.home', {
+        .state('main.home', {
             url: '/home',
             views: {
-                'menuContent': {
+                'mainContent': {
                     templateUrl: 'templates/home.html',
                     controller: 'HomeCtrl'
                 }
             }
         })
 
-    .state('app.login', {
+    .state('main.login', {
         url: '/login',
         views: {
-            'menuContent': {
+            'mainContent': {
                 templateUrl: 'templates/login.html',
                 controller: 'LoginCtrl'
             }
@@ -500,5 +505,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
     ;
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/home');
+    $urlRouterProvider.otherwise('/main/home');
 });
