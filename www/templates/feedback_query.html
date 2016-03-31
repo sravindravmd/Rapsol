@@ -13,12 +13,12 @@
       </div>
     </div>
     <ng-form name="feedbackForm" ng-show="choose == 'feedback'">
-      <div style="text-align: center">
+      <!--<div style="text-align: center">
         <div ng-show="feedbackForm.$invalid">
           <p ng-show="feedbackForm.subject.$error.required && feedbackForm.$dirty" class="error_msg_color">Subject required</p>
           <p ng-show="feedbackForm.message.$error.required && feedbackForm.$dirty" class="error_msg_color">Feedback required</p>
         </div>
-      </div>
+      </div>-->
       <label class="item-input margn_top"><input placeholder="Write Subject" type="text" name="subject" ng-model="feedback.subject" required/></label>
       <div class="card">
         <label class="item-input margn_top">
@@ -31,12 +31,12 @@
 
     </ng-form>
     <ng-form name="queryForm" ng-show="choose == 'query'">
-      <div style="text-align: center">
+      <!--<div style="text-align: center">
         <div ng-show="queryForm.$invalid">
           <p ng-show="queryForm.subject.$error.required && queryForm.$dirty" class="error_msg_color">Subject required</p>
           <p ng-show="queryForm.question.$error.required && queryForm.$dirty" class="error_msg_color">Query required</p>
         </div>
-      </div>
+      </div>-->
       <label class="item-input margn_top"><input placeholder="Write Subject" type="text" name="subject" ng-model="query.subject" required/></label>
       <!--<label class="item-input margn_top card">
         <textarea type="text" placeholder="Write your Query" rows="4" name="message" ng-model="query.question" style="text-align:center" required></textarea>

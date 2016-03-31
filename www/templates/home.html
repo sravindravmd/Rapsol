@@ -1,7 +1,8 @@
+<!--
 <ion-view hide-nav-bar="true" view-title="Home">
     <ion-content class="home-back has-header">
-        <!--<div class="bar custom-dark">
-        </div>-->
+        &lt;!&ndash;<div class="bar custom-dark">
+        </div>&ndash;&gt;
         <div class="hero no-header flat padding">
             <div class="app-icon" style="margin-top: 200px;"></div>
             <div class="content"></div>
@@ -11,4 +12,17 @@
           <button ng-click="homeRegistration()" class="button button-block custom-dark2 ink">Registration</button>
           </div>
     </ion-content>
+</ion-view>
+-->
+
+<ion-view hide-nav-bar="true">
+  <ion-content class="splash padding" scroll="false">
+    <div class="brading">
+      <img src="../img/logo.png">
+    </div>
+    <div class="padding" style="bottom: 50px; position: fixed; text-align: center;">
+      <button ng-click="homeLogin()" class="button button-block custom-dark1 ink">Login</button>
+      <button ng-click="homeRegistration()" class="button button-block custom-dark2 ink">Registration</button>
+    </div>
+  </ion-content>
 </ion-view>

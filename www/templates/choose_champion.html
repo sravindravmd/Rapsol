@@ -65,13 +65,14 @@
     </div>-->
     <div class="list padding">
       <label class="item item-input item-select custom-dark2">
-        <div class="input-label" style="color:white;font-size: 1.5em">Select Brand</div>
+        <div class="input-label item-text-wrap" style="color:white;font-size: 1.5em">Select Brand</div>
         <select name="bikeBrand" style="color:white;font-size: 1.5em" ng-model="bikeBrand" ng-change="selectBikeBrand(bikeBrand)" class="custom-dark2">
+          <!--<option value="Select Brand" selected>Select Brand</option>-->
           <option class="custom-dark2" value="{{bikeBrand.name}}" ng-repeat="bikeBrand in bikeBrands" >{{bikeBrand.name}}</option>
         </select>
       </label><br/>
       <label class="item item-input item-select custom-dark2">
-        <div class="input-label" style="color:white;font-size: 1.5em">Select Model</div>
+        <div class="input-label item-text-wrap" style="color:white;font-size: 1.5em">Select Model</div>
         <select name="bikeModel" style="color:white;font-size: 1.5em" ng-model="bikeModel" ng-change="selectBikeModel(bikeModel)" class="custom-dark2">
           <option class="custom-dark2"  ng-repeat="bikeModel in models" >{{bikeModel.REC_MODEL}}</option>
         </select>
@@ -84,7 +85,11 @@
       </div>
       <div class="row">
         <div class="col custom-dark4 padding" style="text-align: center;height: 45px; font-size: 1.3em">{{recmds[0].REC_RECOMMENDATION}}</div>
+      </div> <div class="row">
+        <div class="col custom-dark4 padding" style="text-align: center;height: 45px; font-size: 1.3em">CC: {{recmds[0].CC}}</div>
       </div>
+
+
     </div>
 
   </ion-content>

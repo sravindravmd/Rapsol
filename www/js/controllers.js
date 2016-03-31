@@ -6,6 +6,14 @@ angular.module('starter.controllers', [])
     var role={};
     var user={};
     return{
+      setUsername: function (username) {
+        user.Username=username;
+        console.log('setting Username',username)
+      },
+      getUsername: function () {
+        return user
+        console.log('getting Username', user.Username)
+      },
       setUserFKID: function (fkid) {
         user.FKID=fkid;
         console.log('setting FKID',fkid)
@@ -99,13 +107,15 @@ angular.module('starter.controllers', [])
                 title: 'Invalid credentials'
               });
                   break;
-
-
           }
+
+          console.log('data.data.user',data.data.user)
 
           switch(data.data.message){
             case 'Succesfully logined In.': var FKID=data.data.user.MEMBER_FK_ID;
+              var username=data.data.user.FULL_NAME;
               userinfoService.setUserFKID(FKID)
+              userinfoService.setUsername(username)
               var role=data.data.user.ROLE_FK_ID;
               userinfoService.setRoleInfo(role);
               console.log(data.data.message.Message);
@@ -120,12 +130,15 @@ angular.module('starter.controllers', [])
                 } else if(role==3){
                   $state.go('app.distributor_home')
                 } else if(role==2){
-                  alert('No state craeted for L1')
+                  //alert('No state craeted for L1')
+                  $state.go('app.slm1_home');
                 }
                 else if(role==6){
-                  alert('No state craeted L2')
+                  //alert('No state craeted L2')
+                  $state.go('app.slm2_home');
                 }else if(role==7){
-                  alert('No state craeted L3')
+                  //alert('No state craeted L3')
+                  $state.go('app.slm1_home');
                 }
 
               },300)
@@ -417,10 +430,10 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
 
-    .controller('DistHomeCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$ionicHistory) {
+    .controller('DistHomeCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$ionicHistory,userinfoService) {
       $ionicHistory.clearHistory();
 
-
+      $scope.Username=userinfoService.getUsername().Username;
         // Set Ink
         ionicMaterialInk.displayEffect();
       $scope.news= function () {
@@ -464,11 +477,16 @@ angular.module('starter.controllers', [])
         // Set Ink
         ionicMaterialInk.displayEffect();
       var userId;
+    $scope.rlid=userinfoService.getRoleInfo().roleid;
+   // $scope.rlid=3;
+
       if(userinfoService.getUserFKID().FKID==undefined){
         userId=userinfoService.getUserInfo().userId;
       } else{
         userId=userinfoService.getUserFKID().FKID;
       }
+
+
       $http.get(API_ENDPOINT.url+'/services.php/viewprofile/'+userId).then(function(results){
         $scope.profile=results.data.userDetails;
         //alert("thhhhhh",$scope.profiles)
@@ -760,10 +778,11 @@ angular.module('starter.controllers', [])
 
 
     }
+    $scope.query={};
 
     $scope.submitQuery= function (query) {
 
-      $scope.query={};
+
       $scope.show($ionicLoading);
 
       $http({
@@ -780,15 +799,15 @@ angular.module('starter.controllers', [])
 
         console.log('query info',userId,query)
         console.log('calling lodeprevquery');
-        lodeprevquery();
 
         console.log(data);
         if(data.status==1){
           var alertPopup = $ionicPopup.alert({
             title: "Query Successfully submitted"
+
           })
           $scope.query.subject="";
-          $scope.query.message="";
+          $scope.query.question="";
         }
 
         console.log('data',data);
@@ -801,6 +820,7 @@ angular.module('starter.controllers', [])
       }).finally(function($ionicLoading) {
         // On both cases hide the loading
         $scope.hide($ionicLoading);
+        lodeprevquery();
       });
     }
 
@@ -814,6 +834,9 @@ angular.module('starter.controllers', [])
     $scope.disproduct=true;
     $scope.disqty=true;
     $scope.oqin=0;
+    var roleId=userinfoService.getRoleInfo().roleid;
+    $scope.rlid=userinfoService.getRoleInfo().roleid;
+    //$scope.rlid=4;
 
       var userId= userinfoService.getUserInfo().userId;
       var FKuserId=userinfoService.getUserFKID().FKID;
@@ -855,9 +878,7 @@ angular.module('starter.controllers', [])
       }
       $scope.retailcreateproductDetail = function (product) {
         $scope.disqty=false;
-       var roleId=userinfoService.getRoleInfo().roleid;
-        $scope.rlid=userinfoService.getRoleInfo().roleid;
-        //$scope.rlid=4;
+
 
         console.log('product id ',product)
         $scope.show($ionicLoading);
@@ -878,16 +899,10 @@ angular.module('starter.controllers', [])
 
       }
 
-      $scope.qty= function (qty) {
-        $scope.qtyltr=($scope.product.PROD_UNIT_PACK) * qty;
-        $scope.canbook=false;
 
-      }
+      $scope.confirmorderForRetailer= function () {
 
-      $scope.confirmorder= function () {
-
-        var productId=$scope.product.PROD_PK_ID;
-        var qty=$scope.qtyltr;
+        var productId= $scope.products.PROD_PK_ID;
         if(userId!==undefined){
           FKuserId=userId;
         }
@@ -901,7 +916,7 @@ angular.module('starter.controllers', [])
           headers: {
             'Content-Type': "application/x-www-form-urlencoded"
           },
-          data:'userId='+FKuserId+'&productId='+productId+'&qty='+$scope.qtyltr
+          data:'userId='+FKuserId+'&productId='+productId+'&qty='+$scope.oqin+'&roleid='+roleId
 
         }).success(function (data) {
           console.log(data);
@@ -1307,7 +1322,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
 
         $scope.recmds=results.data.recomded;
-        console.log('recmds',$scope.recmds.REC_RECOMMENDATION);
+        console.log('recmds',$scope.recmds);
         console.log('recmds',$scope.recmds[0].REC_RECOMMENDATION);
       }).catch(function (error) {
         var alertPopup = $ionicPopup.alert({   title: "Error on request" });

@@ -131,6 +131,34 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 }
             }
         })
+      .state('app.slm1_home', {
+        url: '/slm1_home',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/slm1_home.html',
+            controller: 'DistHomeCtrl'
+          }
+        }
+      })
+      .state('app.slm2_home', {
+        url: '/slm2_home',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/slm2_home.html',
+            controller: 'DistHomeCtrl'
+          }
+        }
+      })
+      .state('app.slm3_home', {
+        url: '/slm3_home',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/slm3_home.html',
+            controller: 'DistHomeCtrl'
+          }
+        }
+      })
+
 
         .state('app.distributor_my_profile', {
             url: '/distributor_my_profile',

@@ -1,13 +1,15 @@
 <ion-view view-title="Product Knowledge">
-  <ion-content ng-class="{expanded:$scope.isExpanded}" style="background-color: white">
+  <ion-content  style="background-color: white">
+    <!--ng-class="{expanded:$scope.isExpanded}"-->
     <h2 class="has-header"></h2>
-    <ion-list ng-repeat="productKnowledge in productKnowledges" class="card">
+    <ion-list ng-repeat="productKnowledge in productKnowledges" class="">
       <div class="item item-text-wrap">
         <div class="row custom-dark3">
-          <div class="col col-50"><h2>{{productKnowledge.PRODK_TITILE}}</h2></div>
+          <div class="col"><h2>{{productKnowledge.PRODK_TITILE}}</h2></div>
         </div>
 
-        <img  class="item-image" ng-src={{productKnowledge.URL_URL}}>
+        <!--<img  class="item-image" ng-src={{productKnowledge.URL_URL}}>-->
+        <img class="item-image full-image" ng-src="{{'http://labs.govasool.com/repsol_v1/upload_files/Productknowledge/'+productKnowledge.URL_URL}}">
         <div class="item custom-dark2">
           <p class="">{{productKnowledge.PRODK_DESC}}</p>
         </div>
