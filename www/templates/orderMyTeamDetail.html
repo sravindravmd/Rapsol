@@ -1,16 +1,49 @@
 <ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
   <ion-content>
-    <h2 style="text-align: center">Order Details</h2>
+    <h3 class="padding-top" style="text-align: center">Order Details</h3>
     <ion-list >
       <ion-item>
 
         <div class="list padding-left padding-right">
-          <div class="item item-divider" style="background-color: #01BCFF">
-            <h2 class="text-center"style="color:ghostwhite;">Order Id : {{OrderDtl.ORD_PK_ID}}</h2>
+          <div class="item item-divider custom-dark3 row">
+            <h2 class="text-center col"style="color:ghostwhite;">Order Id : {{OrderDtl.ORD_PK_ID}}</h2>
           </div>
 
           <div class="item item-text-wrap">
-            <div class="row">
+            <div class="row custom-dark3">
+              <div class="col"><strong>Product Code :</strong> {{OrderDtl.PROD_CODE}}</div>
+              <div class="col"><strong>Date :</strong> {{OrderDtl.ADD_DATE}}</div>
+            </div>
+            <div class="card">
+              <div class="row padding-top">
+                <div class="col"><strong>Product Name :</strong> {{OrderDtl.PROD_NAME}}</div>
+              </div>
+              <div class="row">
+                <div class="col"><strong>Product DLP :</strong> {{OrderDtl.PROD_DLP}}</div>
+                <div class="col"><strong>Landing Price :</strong>{{OrderDtl.landingprice}}</div>
+              </div>
+              <div class="row">
+                <div class="col"><strong>Pro duct UOM :</strong> {{OrderDtl.PROD_UOM}}</div>
+                <div class="col"><strong>Is Offers :</strong>{{OrderDtl.IS_OFFER}}</div>
+              </div>
+              <div class="row">
+                <div class="col"><strong>Product Quantity :</strong> {{OrderDtl.PROD_QTY}}</div>
+                <div class="col"><strong>Product Offers :</strong> {{OrderDtl.IS_OFFER}}</div>
+              </div>
+              <div class="row ">
+                <div class="col"><strong>Add Amount :</strong> {{OrderDtl.ORD_AMOUNT}}</div>
+                <div class="col"><strong>Product Discount :</strong> {{OrderDtl.PROD_DISCOUNT}}</div>
+              </div>
+              <div class="row ">
+                <div class="col"><strong>Segment Name : </strong> {{OrderDtl.SEG_NAME}}</div>
+                <div class="col"><strong>Segment Name :</strong> {{OrderDtl.PROD_SKU_SIZE}}</div>
+              </div>
+              <div class="row">
+                <div class="col"><strong>Product Description :</strong> {{OrderDtl.PROD_DESC}}</div>
+              </div>
+            </div>
+
+            <!--<div class="row">
               <div class="col"><strong>Product Name :</strong> {{OrderDtl.PROD_NAME}}</div>
             </div>
             <div class="row">
@@ -36,16 +69,16 @@
             </div>
             <div class="row">
               <div class="col"><strong>Product Quantity :</strong>{{OrderDtl.PROD_QTY}}</div>
-            </div>
+            </div>-->
             <div class="row padding-top" style="text-align: center">
               <div class="col">
-                <button class="button button-small button-positive" ng-disabled="approvestatus" ng-click="Approve(OrderDtl.ORD_PK_ID)">
+                <button class="button button-small button-positive" ng-disabled="approvestatus" ng-click="Approve()">
                   Approve
                 </button>
               </div>
               <div class="col">
-                <button class="button button-small button-assertive" ng-disabled="approvestatus"  ng-click="DisApprove(OrderDtl.ORD_PK_ID)">
-                  DisApprove
+                <button class="button button-small button-assertive" ng-disabled="approvestatus"  ng-click="DisApprove()">
+                  Reject
                 </button>
               </div>
             </div>

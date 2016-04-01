@@ -77,6 +77,15 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
         return JSON.parse(window.localStorage.getItem('user'));
         //return user;
 
+      },
+
+      removeUserInfo: function () {
+        window.localStorage.removeItem('user');
+        window.localStorage.removeItem('mobile');
+        window.localStorage.removeItem('role');
+        window.localStorage.removeItem('userFKID');
+
+        return window.localStorage.removeItem('username');
       }
     }
   })
@@ -99,13 +108,8 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
   .factory('OrderHistoryService', function ($http,API_ENDPOINT,userinfoService) {
     var OrderHis=[];
    var roldeId= userinfoService.getRoleInfo().roleid;
-    var userId=userinfoService.getUserInfo().userId;
+    var userId=userinfoService.getUserFKID().FKID;
 
-
-
-    if(userinfoService.getUserInfo().userId==undefined){
-      userId=userinfoService.getUserFKID().FKID;
-    }
     console.log('OrderHistoryService role',roldeId)
     console.log('OrderHistoryService UserId',userId)
 
@@ -124,7 +128,7 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
       },
       getOrderDtl: function (OrderId) {
         for(i=0;i<OrderHis.length;i++){
-          if(OrderHis[i].ORD_PK_ID=OrderId){
+          if(OrderHis[i].ORD_PK_ID==OrderId){
             return OrderHis[i];
           }
         }

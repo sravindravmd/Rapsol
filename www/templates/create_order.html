@@ -28,7 +28,7 @@
           <div class="col custom-dark2"><strong class="product_font">{{products.PROD_CODE}}</strong></div>
         </div>
         <div class="row product_margin">
-          <div class="col custom-dark1">SKU Size :</div>
+          <div class="col custom-dark3">SKU Size :</div>
           <div class="col custom-dark2"><strong class="product_font">{{products.PROD_SKU_SIZE}}</strong></div>
         </div>
         <div class="row product_margin">
@@ -36,7 +36,7 @@
           <div class="col custom-dark2"><strong class="product_font">{{products.PROD_UOM}}</strong></div>
         </div>
         <div class="row product_margin">
-          <div class="col custom-dark1">MRP Per Pack :</div>
+          <div class="col custom-dark3">MRP Per Pack :</div>
           <div class="col custom-dark2"><strong class="product_font">{{products.PROD_MRF}}</strong></div>
         </div>
         <div class="row product_margin" ng-if="rlid==3">
@@ -44,7 +44,7 @@
           <div class="col custom-dark2"><strong class="product_font">{{products.PROD_BILLING_PRICE_PER_LITER}}</strong></div>
         </div>
         <div class="row product_margin" ng-if="rlid==3">
-          <div class="col custom-dark1">Product Discount Per Liter :</div>
+          <div class="col custom-dark3">Product Discount Per Liter :</div>
           <div class="col custom-dark2"><strong class="product_font">{{products.proDis}}</strong></div>
         </div>
         <div class="row product_margin" ng-if="rlid==3">
@@ -83,8 +83,8 @@
       </div>
 
     </div>
-      <div style="text-align: center"  class="padding-top"><button class="button button-small custom-dark1" ng-disabled="oqin<=0" ng-show="rlid==4" ng-click="confirmorderForRetailer(oqin)">order</button></div>
-      <div style="text-align: center"  class="padding-top"><button class="button button-small custom-dark1" ng-disabled="canbook"  ng-show="rlid==3" ng-click="confirmorderForDistributor()">order</button></div>
+      <div style="text-align: center"  class="padding-top"><button class="button button-small custom-dark1" ng-disabled="oqin<=0" ng-show="rlid==4" ng-click="confirmorderForRetailer(oqin)">Order</button></div>
+      <div style="text-align: center"  class="padding-top"><button class="button button-small custom-dark1" ng-disabled="oqin<=0"  ng-show="rlid==3" ng-click="confirmorderForDistributor(oqin)">Order</button></div>
 
   </ion-content>
 </ion-view>

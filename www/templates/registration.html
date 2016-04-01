@@ -3,12 +3,13 @@
     <div class="">
       <div><h2></h2></div>
       <div class="list" style="padding-top: 10em">
+
         <div class="row">
           <!--<div class="col col-20"></div>-->
-          <div class="col col-30 font_color" style="text-align: center"><input type="radio" name="roleid" id="cust" value='5' ng-model="customer.roleid" ng-change="toggle(customer.roleid)" />
+          <div class="col col-offset-10 col-30 font_color" style="text-align: center"><input type="radio" name="roleid" id="cust" class="radio" value='5' ng-model="customer.roleid" ng-change="toggle(customer.roleid)" />
             <label for="cust"> Customer </label>
           </div>
-          <div class="col font_color" style="text-align: center"><input type="radio" id="retail" name="roleid" value='4' ng-model="retailer.roleid" ng-change="toggle(retailer.roleid)" />
+          <div class="col font_color" style="text-align: center"><input type="radio" id="retail" name="roleid" class="radio" value='4' ng-model="retailer.roleid" ng-change="toggle(retailer.roleid)" />
             <label for="retail"> Retailer </label>
           </div>
         </div>
@@ -19,7 +20,7 @@
     </div>
       <ng-form name="customerRegForm" ng-show="customershow">
         <div class="list padding">
-          <label class="item-input margn_top"><input placeholder="Mobile Number" name="mobile" type="text" ng-model="customer.mobile" required/></label>
+          <label class="item-input margn_top"><input placeholder="Mobile Number" name="mobile" type="tel" ng-model="customer.mobile" minlength="10" maxlength="10" required/></label>
           <label class="item-input margn_top"><input placeholder="User Name" type="text" name="fname" ng-model="customer.fname" required/></label><br>
           <button ng-disabled="customerRegForm.$invalid" class="button button-full custom-dark1 ink"  ng-click="customerRegistration(customer,customerRegForm)">Submit</button>
         </div>

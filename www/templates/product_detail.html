@@ -1,113 +1,72 @@
+
 <ion-view view-title="Product Detail" xmlns="http://www.w3.org/1999/html">
   <ion-content>
-
-    <div class="list padding header_top">
-      <label class="item item-input item-select custom-dark3">
-        <div class="input-label">Select Segment Name</div>
-        <select name="productsegment" ng-model="productsegment" ng-change="productsegmentDetail(productsegment)" class="custom-dark2"
-          ng-options="productsegment.SEG_PK_ID as productsegment.SEG_NAME for productsegment in productsegments">
-          <!--<option class="custom-dark2"  value="{{productsegment.SEG_PK_ID}}" ng-repeat="productsegment in productsegments" >{{productsegment.SEG_NAME}}</option>-->
-          <option style="display:none" value="">Select Segment Name</option>
-        </select>
-      </label><br>
-      <label class="item item-input item-select custom-dark3">
-        <div class="input-label">Select Product</div>
-        <select name="product" ng-model="product" ng-change="productDetail(product)" class="custom-dark2">
-          <option class="custom-dark2"  ng-repeat="product in products" >{{product.PROD_CODE}}</option>
+    <h2 class="title" style="text-align: center; padding-top: 0.5em;"></h2>
+    <div name="product padding">
+      <div class="list padding">
+        <label class="item item-input item-select custom-dark2">
+          <div class="input-label item-text-wrap">Select Segment</div>
+          <select name="retailCreateOrderSegment" ng-model="retailCreateOrderSegment" ng-change="retailsegmentDetail(retailCreateOrderSegment)" class="custom-dark2" >
+            <option class="custom-dark2"  value="{{retailCreateOrderSegment.SEG_PK_ID}}" ng-repeat="retailCreateOrderSegment in retailCreateOrderSegments" >{{retailCreateOrderSegment.SEG_NAME}}</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="list padding" >
+      <label class="item item-input item-select custom-dark2">
+        <div class="input-label item-text-wrap">Select Product</div>
+        <select name="retailCreateProduct" ng-model="retailCreateProduct" ng-change="retailcreateproductDetail(retailCreateProduct)" class="custom-dark2" ng-disabled="disproduct">
+          <option class="custom-dark2" value="{{retailCreateProduct.PROD_PK_ID}}" ng-repeat="retailCreateProduct in retailCreateproducts" >{{retailCreateProduct.PROD_NAME}}</option>
         </select>
       </label>
     </div>
-    <p ng-repeat="item in products| filter:product" ng-show="checked">
-      <!--{{products| filter:product}}
-      -->
-    </p>
-    <div class="row card list">
-      <div class="col padding" ng-repeat="item in products| filter:product" ng-show="checked">
+
+    <div class="row  list">
+      <div class="col padding">
 
         <div class="row">
           <div class="col custom-dark3">Product Code :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{item.PROD_CODE}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_CODE}}</strong></div>
         </div>
         <div class="row product_margin">
-          <div class="col custom-dark1">SKU Size :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{item.PROD_CODE}}</strong></div>
+          <div class="col custom-dark3">SKU Size :</div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_SKU_SIZE}}</strong></div>
         </div>
         <div class="row product_margin">
           <div class="col custom-dark3">UOM :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{item.PROD_CODE}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_UOM}}</strong></div>
         </div>
         <div class="row product_margin">
-          <div class="col custom-dark1">MRP Per Pack :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{item.PROD_UNIT_PACK}}</strong></div>
+          <div class="col custom-dark3">MRP Per Pack :</div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_MRF}}</strong></div>
         </div>
-        <div class="row product_margin">
+        <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark3">Billing Price Per Liter :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{item.PROD_MRF}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_BILLING_PRICE_PER_LITER}}</strong></div>
         </div>
-        <div class="row product_margin">
-          <div class="col custom-dark1">Product Discount Per Liter :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{item.PROD_DESC}}</strong></div>
+        <div class="row product_margin" ng-if="rlid==3">
+          <div class="col custom-dark3">Product Discount Per Liter :</div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.proDis}}</strong></div>
         </div>
-        <div class="row product_margin">
+        <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark3">Landing Price Per Liter :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{item.PROD_SALESUNITMEASURE}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_BILLING_PRICE_PER_LITER-products.proDis}} </strong></div>
         </div>
-        <div class="row product_margin">
-          <div class="col custom-dark1">Order Qty in Nos :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{item.PROD_UNIT_PACK}}</strong></div>
-        </div>
-        <div class="row product_margin">
-          <div class="col custom-dark3">Order Qty in Liters :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{item.PROD_QTY}}</strong></div>
-        </div>
-        <div class="row product_margin">
-          <div class="col custom-dark1">Order Amount :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{item.PROD_LISTPRICE}}</strong></div>
-        </div>
-        <!--<div class="row">
-          <div class="col custom-dark1">Product DPL :</div>
-          <div class="col custom-dark2"><strong>{{item.PROD_DLP}}</strong></div>
-        </div>
-        <div class="row">
-          <div class="col custom-dark3">Segment Name :</div>
-          <div class="col custom-dark4"><strong>{{item.SEG_NAME}}</strong></div>
-        </div>-->
 
-        <!--<p>Product Code : <strong>{{item.PROD_CODE}}</strong></p>
-        <p>Product Description :<strong>{{item.PROD_DESC}}</strong></p>
-        <p>Product MRP : <strong>{{item.PROD_MRF}}</strong></p>
-        <p>Product Sales Unit Measurement : <strong>{{item.PROD_SALESUNITMEASURE}}</strong></p>
-        <p>Product Unit Pack : <strong>{{item.PROD_UNIT_PACK}}</strong></p>
-        <p>Product Quantity : <strong>{{item.PROD_QTY}}</strong></p>
-        <p>Product Last Price :<strong> {{item.PROD_LISTPRICE}}</strong></p>
-        <p>Product DPL : <strong>{{item.PROD_DLP}}</strong></p>
-        <p>Segment Name : <strong>{{item.SEG_NAME}}</strong></p>-->
+        <div class="row product_margin" ng-if="rlid==4">
+          <div class="col custom-dark3">DLP Per Pack:</div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_DLP}}</strong></div>
+        </div>
+       <!-- <div class="row product_margin" ng-if="rlid==4">
+          <div class="col custom-dark3">Product Discount Per Pack :</div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_DISCOUNT_PER_PACK}}</strong></div>
+        </div> <div class="row product_margin" ng-if="rlid==4">
+        <div class="col custom-dark3">Landing Price Per Pack :</div>
+        <div class="col custom-dark2"><strong class="product_font">{{(products.PROD_DLP)-products.PROD_DISCOUNT_PER_PACK}}</strong></div>
+      </div>-->
       </div>
 
-      <!--<a class="item card item-thumbnail-left">
-          &lt;!&ndash;<img src="img/1.jpg">&ndash;&gt;
-          &lt;!&ndash;<h3>Product Name :</h3>&ndash;&gt;
-          <h3>MRP :</h3>
-          <h3>List Price :</h3>
-          <h3>Discount :</h3>
-          <h3>SKU :</h3>
-      </a>--><!--
-            <a class="item card item-thumbnail-left">
-                <img src="img/1.jpg">
-                <h3>Product Name :</h3>
-                <h3>MRP :</h3>
-                <h3>List Price :</h3>
-                <h3>Discount :</h3>
-                <h3>SKU :</h3>
-            </a>
-            <a class="item card item-thumbnail-left">
-                <img src="img/1.jpg">
-                <h3>Product Name :</h3>
-                <h3>MRP :</h3>
-                <h3>List Price :</h3>
-                <h3>Discount :</h3>
-                <h3>SKU :</h3>
-            </a>-->
     </div>
+
   </ion-content>
 </ion-view>

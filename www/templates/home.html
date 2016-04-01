@@ -1,28 +1,21 @@
-<!--
-<ion-view hide-nav-bar="true" view-title="Home">
-    <ion-content class="home-back has-header">
-        &lt;!&ndash;<div class="bar custom-dark">
-        </div>&ndash;&gt;
-        <div class="hero no-header flat padding">
-            <div class="app-icon" style="margin-top: 200px;"></div>
-            <div class="content"></div>
-        </div>
-        <div class="padding_top">
-            <button ng-click="homeLogin()" class="button button-block custom-dark1 ink">Login</button>
-          <button ng-click="homeRegistration()" class="button button-block custom-dark2 ink">Registration</button>
-          </div>
-    </ion-content>
-</ion-view>
--->
-
 <ion-view hide-nav-bar="true">
-  <ion-content class="splash padding" scroll="false">
-    <div class="brading">
+  <ion-content class="splash" scroll="false">
+    <div class="row">
+    <div class="col" style="text-align: center;padding-top: 50px"><img src="img/logo.png"></div>
+    </div>
+<!--    <div class="brading">
       <img src="img/logo.png">
+    </div>-->
+
+    <div class="row" style="bottom: 180px; position: fixed; text-align: center;">
+      <div class="col"><button ng-click="homeLogin()" class="button custom-dark1 ink" style="width: 50%">Login</button></div>
     </div>
-    <div class="padding" style="bottom: 50px; position: fixed; text-align: center;">
-      <button ng-click="homeLogin()" class="button button-block custom-dark1 ink">Login</button>
-      <button ng-click="homeRegistration()" class="button button-block custom-dark2 ink">Registration</button>
+    <div class="row" style="bottom: 100px; position: fixed; text-align: center;">
+      <div class="col"><button ng-click="homeRegistration()" class="button custom-dark2 ink" style="width: 50%">Registration</button></div>
     </div>
+
+
+
+
   </ion-content>
 </ion-view>

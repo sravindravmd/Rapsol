@@ -1,5 +1,10 @@
-<ion-view view-title="Product Knowledge">
+<ion-view title='<img class="title-image" src="img/logo.png">'align-title="center" >
   <ion-content  style="background-color: white">
+    <h2 style="text-align: center">Product Knowledge</h2>
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
     <!--ng-class="{expanded:$scope.isExpanded}"-->
     <h2 class="has-header"></h2>
     <ion-list ng-repeat="productKnowledge in productKnowledges" class="">

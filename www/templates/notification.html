@@ -1,9 +1,10 @@
-<ion-view view-title="Notification">
+<ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
   <ion-content ng-class="{expanded:$scope.isExpanded}" style="background-color: white">
-    <h2 class="has-header">
-
-    </h2>
-
+    <h2 style="text-align: center">Notifications</h2>
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
     <ion-list ng-repeat="notification in notifications1" class="card">
       <div class="item item-text-wrap">
         <div class="row"><div class="col"><p style="text-align: right">{{notification.ADD_DATE}}</p></div></div>
@@ -11,7 +12,7 @@
           <div class="col"><p style="color: #e6e6e6">{{notification.NOTI_NAME}}</p></div>
         </div>
 
-        <img  class="item-image" ng-src={{notification.URL_URL}}>
+        <img  class="item-image full-image" ng-src={{'http://labs.govasool.com/repsol_v1/upload_files/notifications/'+notification.URL_URL}}>
         <div class="item custom-dark2">
           <p class="">{{notification.NOTI_DESC}}</p>
         </div>

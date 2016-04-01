@@ -1,16 +1,16 @@
 <ion-view view-title="Create Order">
-    <ion-content ng-class="{expanded:$scope.isExpanded}">
+    <ion-content>
         <div class="tabs tabs-icon-top static">
             <p>&nbsp;</p>
         </div>
         <div class="padding">
             <button ng-click="distributorOrder()" class="button button-full button-assertive ink">Create Order</button>
         </div>
-      <div class="padding">
+      <div class="padding" ng-hide="dismyorder">
         <button ng-click="MyOrders()" class="button button-full button-assertive ink">My Orders</button>
       </div>
-      <div class="padding">
-        <button ng-click="MyTeamOrders()" class="button button-full button-assertive ink">My Team Orders</button>
+      <div class="padding" ng-hide="relid==4">
+        <button ng-click="MyTeamOrders()"  class="button button-full button-assertive ink">My Team Orders</button>
       </div>
       <!--<div>
         <h2 class="title" style="text-align: center">Order History</h2>

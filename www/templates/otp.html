@@ -1,14 +1,18 @@
 <ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
-  <ion-content class="viewbackground">
-
+  <ion-content class="">
+      <p class="padding item-text-wrap" style="text-align: center">OTP has been sent to your Mobile number!</p>
     <label ng-show="false"><p>OTP verification has been done successfully </p></label>
-    <div class="list">
-      <label class="item-input margn_top1"><input placeholder="OTP" ng-model="otp" type="text"/></label>
-    </div>
-    <button class="button button-block custom-dark3 ink" ng-click="verifyotp(otp)">verify OTP</button>
+   <div style="padding-top: 10%;">
+     <div class="list">
+       <label class="item-input margn_top1"><input placeholder="OTP" ng-model="otp" type="text"/></label>
+     </div>
+     <div class="row">
+       <div class="col col-offset-34"><button class="button buttonwidth custom-dark3 ink"  ng-click="verifyotp(otp)">Verify</button></div>
+     </div>
+   </div>
 
-<div>
-  <a ng-click="regenrate()" class="col text-right font_color" style="color: white">Regenrate OTP</a>
+<div class="padding">
+  <a ng-click="regenrate()" class="button button-clear button-bar-royal col text-right font_color" style="color: white">Regenerate OTP</a>
 </div>
     <div style="text-align: center">
       <p>{{userOtp}}</p>

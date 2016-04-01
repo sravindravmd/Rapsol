@@ -181,7 +181,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             views: {
                 'menuContent': {
                     templateUrl: 'templates/product_detail.html',
-                    controller: 'ProductDetailCtrl'
+                    controller: 'CreateCtrl'
                 }
             }
         })
