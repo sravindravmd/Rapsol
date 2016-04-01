@@ -1,0 +1,22 @@
+<ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
+  <ion-content>
+    <h2>My Team Orders</h2>
+    <ion-list ng-repeat="order in orderdetails">
+      <ion-item style="padding-top: .5em">
+        <!--<a href="#/app/orderMyTeamDetail/{{order.ORD_PK_ID}}"> <div class="row">
+          <div class="col-20"><h3>Order Id: &nbsp;&nbsp;&nbsp;{{order.ORD_PK_ID}}</h3></div>
+          <div class="col"><p>Date: {{order.ADD_DATE}}</p></div>
+        </div></a>-->
+        <a href="#/app/orderMyTeamDetail/{{order.ORD_PK_ID}}" class="item item-divider" style="background-color: #01BCFF; border-radius: 4px;">
+          <div class="row">
+            <div class="col" style="text-align: center"><h3>Order Id: &nbsp;&nbsp;&nbsp;{{order.ORD_PK_ID}}</h3></div>
+            <div class="col"><h3>Date: {{order.ADD_DATE}}</h3></div>
+          </div>
+        </a>
+      </ion-item>
+
+    </ion-list>
+
+  </ion-content>
+</ion-view>
+

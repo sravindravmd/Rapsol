@@ -1,115 +1,13 @@
-<!--
 <ion-view view-title="Product Detail" xmlns="http://www.w3.org/1999/html">
   <ion-content>
 
     <div class="list padding header_top">
       <label class="item item-input item-select custom-dark3">
         <div class="input-label">Select Segment Name</div>
-        <select name="productsegment" ng-model="productsegment" ng-change="productsegmentDetail(productsegment)" class="custom-dark2">
-          <option class="custom-dark2"  value="{{productsegment.SEG_PK_ID}}" ng-repeat="productsegment in productsegments" >{{productsegment.SEG_NAME}}</option>
-        </select>
-      </label>
-    </div>
-    <div class="list padding">
-      <label class="item item-input item-select custom-dark3">
-        <div class="input-label">Select Product</div>
-        <select name="product" ng-model="product" ng-change="productDetail(product)" class="custom-dark2">
-          <option class="custom-dark2"  ng-repeat="product in products" >{{product.PROD_CODE}}</option>
-        </select>
-      </label>
-    </div>
-    <p ng-repeat="item in products| filter:product" ng-show="checked">
-      &lt;!&ndash;{{products| filter:product}}
-      &ndash;&gt;
-    </p>
-    <div class="row card list">
-      <div class="col padding" ng-repeat="item in products| filter:product" ng-show="checked">
-
-        <div class="row">
-          <div class="col custom-dark3">Product Code :</div>
-          <div class="col custom-dark4"><strong>{{item.PROD_CODE}}</strong></div>
-        </div>
-        <div class="row">
-          <div class="col custom-dark1">Product Description :</div>
-          <div class="col custom-dark2"><strong>{{item.PROD_DESC}}</strong></div>
-        </div>
-        <div class="row">
-          <div class="col custom-dark3">Product MRP :</div>
-          <div class="col custom-dark4"><strong>{{item.PROD_MRF}}</strong></div>
-        </div>
-        <div class="row">
-          <div class="col custom-dark1">Product Sales Unit Measurement :</div>
-          <div class="col custom-dark2"><strong>{{item.PROD_SALESUNITMEASURE}}</strong></div>
-        </div>
-        <div class="row">
-          <div class="col custom-dark3">Product Unit Pack :</div>
-          <div class="col custom-dark4"><strong>{{item.PROD_UNIT_PACK}}</strong></div>
-        </div>
-        <div class="row">
-          <div class="col custom-dark1">Product Quantity :</div>
-          <div class="col custom-dark2"><strong>{{item.PROD_QTY}}</strong></div>
-        </div>
-        <div class="row">
-          <div class="col custom-dark3">Product Last Price :</div>
-          <div class="col custom-dark4"><strong>{{item.PROD_LISTPRICE}}</strong></div>
-        </div>
-        <div class="row">
-          <div class="col custom-dark1">Product DPL :</div>
-          <div class="col custom-dark2"><strong>{{item.PROD_DLP}}</strong></div>
-        </div>
-        <div class="row">
-          <div class="col custom-dark3">Segment Name :</div>
-          <div class="col custom-dark4"><strong>{{item.SEG_NAME}}</strong></div>
-        </div>
-
-        &lt;!&ndash;<p>Product Code : <strong>{{item.PROD_CODE}}</strong></p>
-        <p>Product Description :<strong>{{item.PROD_DESC}}</strong></p>
-        <p>Product MRP : <strong>{{item.PROD_MRF}}</strong></p>
-        <p>Product Sales Unit Measurement : <strong>{{item.PROD_SALESUNITMEASURE}}</strong></p>
-        <p>Product Unit Pack : <strong>{{item.PROD_UNIT_PACK}}</strong></p>
-        <p>Product Quantity : <strong>{{item.PROD_QTY}}</strong></p>
-        <p>Product Last Price :<strong> {{item.PROD_LISTPRICE}}</strong></p>
-        <p>Product DPL : <strong>{{item.PROD_DLP}}</strong></p>
-        <p>Segment Name : <strong>{{item.SEG_NAME}}</strong></p>&ndash;&gt;
-      </div>
-
-      &lt;!&ndash;<a class="item card item-thumbnail-left">
-          &lt;!&ndash;<img src="img/1.jpg">&ndash;&gt;
-          &lt;!&ndash;<h3>Product Name :</h3>&ndash;&gt;
-          <h3>MRP :</h3>
-          <h3>List Price :</h3>
-          <h3>Discount :</h3>
-          <h3>SKU :</h3>
-      </a>&ndash;&gt;&lt;!&ndash;
-            <a class="item card item-thumbnail-left">
-                <img src="img/1.jpg">
-                <h3>Product Name :</h3>
-                <h3>MRP :</h3>
-                <h3>List Price :</h3>
-                <h3>Discount :</h3>
-                <h3>SKU :</h3>
-            </a>
-            <a class="item card item-thumbnail-left">
-                <img src="img/1.jpg">
-                <h3>Product Name :</h3>
-                <h3>MRP :</h3>
-                <h3>List Price :</h3>
-                <h3>Discount :</h3>
-                <h3>SKU :</h3>
-            </a>&ndash;&gt;
-    </div>
-  </ion-content>
-</ion-view>
--->
-
-<ion-view view-title="Product Detail" xmlns="http://www.w3.org/1999/html">
-  <ion-content>
-
-    <div class="list padding header_top">
-      <label class="item item-input item-select custom-dark3">
-        <div class="input-label">Select Segment Name</div>
-        <select name="productsegment" ng-model="productsegment" ng-change="productsegmentDetail(productsegment)" class="custom-dark2">
-          <option class="custom-dark2"  value="{{productsegment.SEG_PK_ID}}" ng-repeat="productsegment in productsegments" >{{productsegment.SEG_NAME}}</option>
+        <select name="productsegment" ng-model="productsegment" ng-change="productsegmentDetail(productsegment)" class="custom-dark2"
+          ng-options="productsegment.SEG_PK_ID as productsegment.SEG_NAME for productsegment in productsegments">
+          <!--<option class="custom-dark2"  value="{{productsegment.SEG_PK_ID}}" ng-repeat="productsegment in productsegments" >{{productsegment.SEG_NAME}}</option>-->
+          <option style="display:none" value="">Select Segment Name</option>
         </select>
       </label><br>
       <label class="item item-input item-select custom-dark3">
@@ -213,4 +111,3 @@
     </div>
   </ion-content>
 </ion-view>
-

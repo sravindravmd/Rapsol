@@ -2,61 +2,7 @@
 'use strict';
 
 angular.module('starter.controllers', [])
-  .factory('userinfoService',function(){
-    var role={};
-    var user={};
-    return{
-      setUsername: function (username) {
-        user.Username=username;
-        console.log('setting Username',username)
-      },
-      getUsername: function () {
-        return user
-        console.log('getting Username', user.Username)
-      },
-      setUserFKID: function (fkid) {
-        user.FKID=fkid;
-        console.log('setting FKID',fkid)
-      },
-      getUserFKID: function () {
-        return user
-        console.log('getting FKID',fkid)
-      },
-      setRoleInfo:function(roleid){
-      //  role.roleid=roleid;
-        role.roleid=roleid;
-        console.log('setting roleid',role)
-      },
 
-      getRoleInfo: function () {
-
-        return role;
-
-      },
-
-      setUsermobile: function (mobile) {
-
-        user.mobile=mobile;
-        console.log('setting mobile',mobile)
-      },
-      getUsermobile: function () {
-
-        return user.mobile;
-      },
-      setUserinfo:function(data){
-      user.otp=data.users.otp;
-        user.userId=data.users.userId;
-
-        console.log('setting userinfo',user)
-      },
-
-      getUserInfo: function () {
-
-        return user;
-
-      }
-    }
-  })
 
 .controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout) {
 })
@@ -432,7 +378,7 @@ angular.module('starter.controllers', [])
 
     .controller('DistHomeCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$ionicHistory,userinfoService) {
       $ionicHistory.clearHistory();
-
+      console.log('<<<<<<<<>>>>>>',userinfoService.getUsername())
       $scope.Username=userinfoService.getUsername().Username;
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -546,12 +492,168 @@ angular.module('starter.controllers', [])
       $scope.distributorOrder= function () {
         $state.go('app.create_order');
       };
+    $scope.MyOrders= function () {
+        $state.go('app.my_orders');
+      };
+    $scope.MyTeamOrders= function () {
+        $state.go('app.myteam_order');
+      };
+
+
     })
+
+  .controller('MyOrdersCtrl', function ($scope,API_ENDPOINT,userinfoService,$ionicLoading,$http,$ionicPopup) {
+
+    $scope.show = function() {
+      $ionicLoading.show({     template: '<p>Loading...</p><ion-spinner class="spinner-energized" icon="spiral"></ion-spinner>'   });
+    };
+    $scope.hide = function(){
+      $ionicLoading.hide(); };
+
+    $scope.show($ionicLoading);
+    var userId=userinfoService.getUserFKID().FKID;
+    /*if(userinfoService.getUserInfo().userId==undefined){
+      userId=userinfoService.getUserFKID().FKID;
+    } else{
+      userId=userinfoService.getRoleInfo().userId;
+    }*/
+
+    //$http.get(API_ENDPOINT.url+'/services.php/myorders/'+userid+'/'+fromdate+'/'+fromdate+'').then(function (result) {
+    $http.get(API_ENDPOINT.url+'/services.php/myorders/89/0/0').then(function (result) {
+      $scope.hide($ionicLoading);
+
+
+      $scope.myOrders=result.data.orderdetails;
+      console.log( $scope.myOrders);
+    }).catch(function (error) {
+
+      alert("Error on MyOrder request")
+    }).finally(function($ionicLoading) {
+      $scope.hide($ionicLoading); });
+
+
+  })
+
+  .controller('MyTeamOrdersCtrl', function ($scope,OrderHistoryService,$ionicLoading) {
+    $scope.show = function() {   $ionicLoading.show({     template: '<p>Loading...</p><ion-spinner class="spinner-energized" icon="spiral"></ion-spinner>'
+    }); };
+    $scope.hide = function(){
+      $ionicLoading.hide();
+    };
+    $scope.show($ionicLoading);
+    OrderHistoryService.getOrderHistory().success(function (orders) {
+      $scope.orderdetails=orders.orderdetails;
+      console.log('ctrl data',orders.orderdetails)
+      $scope.hide($ionicLoading);
+
+    })
+  })
+
+  .controller('MyTeamsOrderDtlCtrl', function ($stateParams,OrderHistoryService,$scope,userinfoService,$ionicLoading,$http,$ionicPopup,API_ENDPOINT) {
+    var orderId= $stateParams.id;
+
+    $scope.show = function() {   $ionicLoading.show({     template: '<p>Loading...</p><ion-spinner class="spinner-energized" icon="spiral"></ion-spinner>' 
+    }); };
+          $scope.hide = function(){ 
+            $ionicLoading.hide(); 
+          };
+    var userId=userinfoService.getUserFKID().FKID;
+    /*if(userinfoService.getUserInfo().userId==undefined){
+      userId=userinfoService.getUserFKID().FKID;
+    } else{
+      userId=userinfoService.getRoleInfo().userId;
+    }*/
+
+    $scope.OrderDtl=OrderHistoryService.getOrderDtl(orderId);
+    console.log('Details',$scope.OrderDtl)
+
+
+    $scope.Approve= function (orderid) {
+
+      var remark=prompt('Please provide Remark');
+      if(remark){
+        $http({
+          method:'POST',
+          url:API_ENDPOINT.url+'/services.php/orderStatusApprove',
+          headers: {
+            'Content-Type': "application/x-www-form-urlencoded"
+          },
+          data:'userid='+userId+'&orderid='+orderid+'&status='+'Approve'+'&remark='+remark
+
+        }).success(function (data) {
+          $scope.hide($ionicLoading);
+          console.log('Approved successfully')
+
+          console.log('data',data);
+
+          if(data.status==1){
+            $scope.approvestatus=true;
+            var alertPopup = $ionicPopup.alert({
+              title: 'Order Approved successfully'
+            });
+          }
+        }).error(function(){
+          console.log('Something wrong')
+          var alertPopup = $ionicPopup.alert({
+            title: 'Something wrong'
+          });
+
+        }).finally(function($ionicLoading) {
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);
+        });
+
+      } else{
+        alert('remart required');
+      }
+    }
+    $scope.DisApprove= function (orderid) {
+
+      var remark=prompt('Please provide Remark');
+      if(remark){
+        $http({
+          method:'POST',
+          url:API_ENDPOINT.url+'/services.php/orderStatusApprove',
+          headers: {
+            'Content-Type': "application/x-www-form-urlencoded"
+          },
+          data:'userid='+36+'&orderid='+orderid+'&status='+'Reject'+'&remark='+remark
+
+        }).success(function (data) {
+          $scope.hide($ionicLoading);
+          console.log('Rejected successfully')
+
+          console.log('data',data);
+
+          if(data.status==1){
+            $scope.approvestatus=true;
+            var alertPopup = $ionicPopup.alert({
+              title: 'Order Rejected successfully'
+            });
+          }
+        }).error(function(){
+          console.log('Something wrong')
+          var alertPopup = $ionicPopup.alert({
+            title: 'Something wrong'
+          });
+
+        }).finally(function($ionicLoading) {
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);
+        });
+
+      } else{
+        alert('remart required');
+      }
+    }
+
+
+
+  })
     .controller('DistOrderDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
 
         // Set Ink
         ionicMaterialInk.displayEffect();
-
 
     })
 
@@ -837,8 +939,7 @@ angular.module('starter.controllers', [])
     var roleId=userinfoService.getRoleInfo().roleid;
     $scope.rlid=userinfoService.getRoleInfo().roleid;
     //$scope.rlid=4;
-
-      var userId= userinfoService.getUserInfo().userId;
+    //var userId= userinfoService.getUserInfo().userId;
       var FKuserId=userinfoService.getUserFKID().FKID;
 
 
@@ -900,7 +1001,7 @@ angular.module('starter.controllers', [])
       }
 
 
-      $scope.confirmorderForRetailer= function () {
+      $scope.confirmorderForRetailer= function (qty) {
 
         var productId= $scope.products.PROD_PK_ID;
         if(userId!==undefined){
@@ -908,6 +1009,9 @@ angular.module('starter.controllers', [])
         }
 
         console.log('user fkid',FKuserId);
+        console.log('user Userid',userId);
+        console.log('user roleid',roleId);
+        console.log('user qty',qty);
 
         $scope.show($ionicLoading);
         $http({
@@ -916,7 +1020,7 @@ angular.module('starter.controllers', [])
           headers: {
             'Content-Type': "application/x-www-form-urlencoded"
           },
-          data:'userId='+FKuserId+'&productId='+productId+'&qty='+$scope.oqin+'&roleid='+roleId
+          data:'userId='+FKuserId+'&productId='+productId+'&qty='+qty+'&roleid='+roleId
 
         }).success(function (data) {
           console.log(data);
@@ -1192,8 +1296,15 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
         $http.get(API_ENDPOINT.url+'/services.php/userlogin/'+mobile+'/'+createpass.password).success(function (data) {
 
           console.log('user info',data.data.user.ROLE_FK_ID);
+          console.log('new user info',data.data.user);
+
 
           var role=data.data.user.ROLE_FK_ID;
+          var username=data.data.user.ROLE_FK_ID.FIRST_NAME;
+          var FKID=data.data.user.MEMBER_FK_ID
+          userinfoService.setRoleInfo(role);
+          userinfoService.setUsername(username);
+          userinfoService.setUserFKID(FKID);
           console.log('user info',data.data.message);
 
           var message=data.data.message;
@@ -1204,12 +1315,15 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
             } else if(role==3){
               $state.go('app.distributor_home')
           } else if(role==2){
-             alert('No state craeted for L1')
+             //alert('No state craeted for L1')
+              $state.go('app.slm1_home');
             }
             else if(role==6){
-              alert('No state craeted L2')
+              //alert('No state craeted L2')
+              $state.go('app.slm2_home');
             }else if(role==7){
-              alert('No state craeted L3')
+              //alert('No state craeted L3')
+              $state.go('app.slm3_home');
             }
 /*
           if(data.data.user.ROLE_FK_ID==5){

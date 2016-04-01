@@ -3,9 +3,82 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
   })
 
   .constant('API_ENDPOINT', {
-    //url:'http://labs.govasool.com/repsol_v1/webservices'
-    url:'http://10.10.10.78/gulf_v1/webservices'
+    url:'http://labs.govasool.com/repsol_v1/webservices'
+    //url:'http://10.10.10.78/gulf_v1/webservices'
     //  For a simulator use: url: 'http://127.0.0.1:8080/api'
+  })
+  .factory('userinfoService',function(){
+    var role={};
+    var user={};
+    return{
+      setUsername: function (username) {
+        user.Username=username;
+        window.localStorage.setItem('username',JSON.stringify(user));
+      /* console.log('setting and get Username',window.localStorage.getItem('username'))
+        console.log('getting Username', JSON.parse(window.localStorage.getItem('username')))*/
+      },
+      getUsername: function () {
+        //return user
+        return JSON.parse(window.localStorage.getItem('username'));
+        console.log('getting Username', JSON.parse(window.localStorage.getItem('username')))
+      },
+      setUserFKID: function (fkid) {
+        user.FKID=fkid;
+        window.localStorage.setItem('userFKID',JSON.stringify(user));
+        console.log('setting FKID',fkid)
+
+      },
+      getUserFKID: function () {
+        //return user
+        return JSON.parse(window.localStorage.getItem('userFKID'));
+        console.log('getting FKID',window.localStorage.getItem('userFKID'))
+      },
+      setRoleInfo:function(roleid){
+        //  role.roleid=roleid;
+        role.roleid=roleid;
+
+        window.localStorage.setItem('role',JSON.stringify(role));
+        console.log('setting roleid',role)
+
+      },
+
+      getRoleInfo: function () {
+
+        //return role;
+
+        return JSON.parse(window.localStorage.getItem('role'));
+
+      },
+
+      setUsermobile: function (mobile) {
+
+        user.mobile=mobile;
+        console.log('setting mobile',mobile)
+        window.localStorage.setItem('mobile',JSON.stringify(mobile));
+
+
+      },
+      getUsermobile: function () {
+
+       // return user.mobile;
+
+        return JSON.parse(window.localStorage.getItem('mobile'));
+      },
+      setUserinfo:function(data){
+        user.otp=data.users.otp;
+        user.userId=data.users.userId;
+
+
+        console.log('setting userinfo',user)
+        window.localStorage.setItem('user',JSON.stringify(user));
+      },
+
+      getUserInfo: function () {
+        return JSON.parse(window.localStorage.getItem('user'));
+        //return user;
+
+      }
+    }
   })
 
 
@@ -21,6 +94,44 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
 
       return ReplacedNumber;
     }
+  })
+
+  .factory('OrderHistoryService', function ($http,API_ENDPOINT,userinfoService) {
+    var OrderHis=[];
+   var roldeId= userinfoService.getRoleInfo().roleid;
+    var userId=userinfoService.getUserInfo().userId;
+
+
+
+    if(userinfoService.getUserInfo().userId==undefined){
+      userId=userinfoService.getUserFKID().FKID;
+    }
+    console.log('OrderHistoryService role',roldeId)
+    console.log('OrderHistoryService UserId',userId)
+
+
+    return {
+      getOrderHistory: function () {
+
+        return  $http.get(API_ENDPOINT.url+'/services.php/myteamorders/'+userId+'/'+roldeId+'/'+0+'/'+0).success(function (data) {
+          console.log('order history service',data.orderdetails);
+
+          OrderHis=data.orderdetails;
+          console.log('order history service length',OrderHis.length);
+          return data.orderdetails;
+
+        })
+      },
+      getOrderDtl: function (OrderId) {
+        for(i=0;i<OrderHis.length;i++){
+          if(OrderHis[i].ORD_PK_ID=OrderId){
+            return OrderHis[i];
+          }
+        }
+
+      }
+    }
+
   })
 
 /*.factory('networkService', function ($rootScope) {

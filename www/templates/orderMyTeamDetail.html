@@ -1,0 +1,68 @@
+<ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
+  <ion-content>
+    <h2 style="text-align: center">Order Details</h2>
+    <ion-list >
+      <ion-item>
+
+        <div class="list padding-left padding-right">
+          <div class="item item-divider" style="background-color: #01BCFF">
+            <h2 class="text-center"style="color:ghostwhite;">Order Id : {{OrderDtl.ORD_PK_ID}}</h2>
+          </div>
+
+          <div class="item item-text-wrap">
+            <div class="row">
+              <div class="col"><strong>Product Name :</strong> {{OrderDtl.PROD_NAME}}</div>
+            </div>
+            <div class="row">
+              <div class="col"><strong>Order Amount :</strong>{{OrderDtl.ORD_AMOUNT}}</div>
+            </div>
+            <div class="row">
+              <div class="col"><strong>Date :</strong>{{OrderDtl.ADD_DATE}}</div>
+            </div>
+            <div class="row">
+              <div class="col"><strong>Segment Name :</strong>{{OrderDtl.SEG_NAME}}</div>
+            </div>
+            <div class="row">
+              <div class="col"><strong>DLP Amount :</strong>{{OrderDtl.PROD_DLP}}</div>
+            </div>
+            <div class="row">
+              <div class="col"><strong>Landing Price :</strong>{{OrderDtl.landingprice}}</div>
+            </div>
+            <div class="row">
+              <div class="col"><strong>Pro duct UOM :</strong>{{OrderDtl.PROD_UOM}}</div>
+            </div>
+            <div class="row">
+              <div class="col"><strong>Is Offers :</strong>{{OrderDtl.IS_OFFER}}</div>
+            </div>
+            <div class="row">
+              <div class="col"><strong>Product Quantity :</strong>{{OrderDtl.PROD_QTY}}</div>
+            </div>
+            <div class="row padding-top" style="text-align: center">
+              <div class="col">
+                <button class="button button-small button-positive" ng-disabled="approvestatus" ng-click="Approve(OrderDtl.ORD_PK_ID)">
+                  Approve
+                </button>
+              </div>
+              <div class="col">
+                <button class="button button-small button-assertive" ng-disabled="approvestatus"  ng-click="DisApprove(OrderDtl.ORD_PK_ID)">
+                  DisApprove
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="item item-text-wrap" ng-if="brnd.URL_URL">
+            <a class="item item-icon-left assertive" href="#">
+              <i class="icon ion-document-text"></i>
+              For more info, Read PDF
+            </a>
+          </div>
+
+        </div>
+        </div>
+      </ion-item>
+
+
+    </ion-list>
+  </ion-content>
+</ion-view>

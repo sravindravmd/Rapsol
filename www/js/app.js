@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ionMdInput','starter.services','youtube-embed','ngCordova'])
 /*angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])*/
-.run(function($ionicPlatform,$cordovaNetwork, $rootScope,$ionicPopup) {
+.run(function($ionicPlatform,$cordovaNetwork, $rootScope,$ionicPopup,userinfoService,$state) {
     $ionicPlatform.ready(function() {
 
       if(window.Connection) {
@@ -23,6 +23,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
         }
       }
 
+
+
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -32,6 +34,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
+
+    /*  if(userinfoService.getUserInfo().FKID==undefined || userinfoService.getUserInfo().FKID==null){
+        $state.go('app.distributor_home');
+      }*/
     });
 })/*.config(['$ionicConfigProvider', function($ionicConfigProvider) {
 
@@ -374,6 +380,33 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 }
             }
         })
+      .state('app.my_orders', {
+            url: '/my_orders',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/my_orders.html',
+                    controller: 'MyOrdersCtrl'
+                }
+            }
+        })
+      .state('app.myteam_order', {
+            url: '/myteam_order',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/myteam_order.html',
+                    controller: 'MyTeamOrdersCtrl'
+                }
+            }
+        })
+      .state('app.orderMyTeamDetail', {
+        url: '/orderMyTeamDetail/:id',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/orderMyTeamDetail.html',
+            controller: 'MyTeamsOrderDtlCtrl'
+          }
+        }
+      })
 
       .state('app.customer_login', {
         url: '/customer_login',
