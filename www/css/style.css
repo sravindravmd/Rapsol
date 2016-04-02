@@ -549,3 +549,19 @@ input.radio:checked ~ label {
 input.radio:focus ~ label:before {
   box-shadow: 0 0 0 3px #999;
 }
+
+.orderApproved{
+  background-color: #6484d6;
+}
+.OrderRejected{
+  background-color: #d624b2;
+}
+.OrderAwaiting{
+  background-color: #d6970e;
+}
+.acolor{color:#000;}
+.borderline{padding:0px !important;border-bottom: 1px solid #ccc;margin:0px;}
+.padingremove{margin:-5px;}
+.odd{background-color: #f0f0f0;}
+.line{border-bottom: 1px solid #ccc;}
+.even{background-color: #f0f0f0;}

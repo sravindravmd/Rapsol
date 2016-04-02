@@ -1,3 +1,4 @@
+<!--
 <ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
   <ion-content>
     <div class="">
@@ -5,7 +6,7 @@
       <div class="list" style="padding-top: 10em">
 
         <div class="row">
-          <!--<div class="col col-20"></div>-->
+          &lt;!&ndash;<div class="col col-20"></div>&ndash;&gt;
           <div class="col col-offset-10 col-30 font_color" style="text-align: center"><input type="radio" name="roleid" id="cust" class="radio" value='5' ng-model="customer.roleid" ng-change="toggle(customer.roleid)" />
             <label for="cust"> Customer </label>
           </div>
@@ -53,14 +54,14 @@
 
               </select>
             </label>
-            <!--<label class="item item-input item-select">
+            &lt;!&ndash;<label class="item item-input item-select">
               <div class="input-label">Select Firm Name</div>
               <select name="firmName" ng-model="retailer.firmName" required/>
               <option>A</option>
               <option selected>B</option>
               <option>C</option>
               </select>
-            </label>-->
+            </label>&ndash;&gt;
             <label class="item item-input item-select custom-dark1">
               <div class="input-label">Distributor Firm Name</div>
               <select name="distributor Firm Name" ng-model="retailer.distributor" required ng-change="changeddist(retailer.distributor)" class="custom-dark4">
@@ -68,10 +69,10 @@
 
               </select>
             </label>
-            <!--<label class="item-input margn_top"><input placeholder="Region" type="text" name="region" ng-model="retailer.region" required/></label>
+            &lt;!&ndash;<label class="item-input margn_top"><input placeholder="Region" type="text" name="region" ng-model="retailer.region" required/></label>
             <label class="item-input margn_top"><input placeholder="State" type="text" name="state" ng-model="retailer.state" required/></label>
             <label class="item-input margn_top"><input placeholder="City" type="text" name="city" ng-model="retailer.city" required/></label>
-            <label class="item-input margn_top"><input placeholder="Firm Name" type="text" name="firmName" ng-model="retailer.firmName" required/></label>-->
+            <label class="item-input margn_top"><input placeholder="Firm Name" type="text" name="firmName" ng-model="retailer.firmName" required/></label>&ndash;&gt;
            <input value='4' name="roleid" ng-model="retailer.roleid" ng-show="false">
             <label class="item-input margn_top"><input placeholder="Retailer Firm Name" type="text" name="firmname" ng-model="retailer.firmname" required/></label>
             <label class="item-input margn_top"><input placeholder="Retailer Name" type="text" name="fname" ng-model="retailer.fname" required/></label>
@@ -80,7 +81,7 @@
             <label class="item-input margn_top"><input placeholder="Date of Birth"  type="text" name="dob" ng-model="retailer.dob" date-parser="dd/MM/yyyy" onfocus="(this.type='date')" required/></label><br>
             <div>
               <button ng-disabled="retailerRegForm.$invalid" class="button button-full custom-dark1 ink"  ng-click="retailerRegistration(retailer,retailerRegForm)">Submit</button>
-             <!-- <button class="button button-full custom-dark1 ink"  ng-click="retailerRegistration(retailer,retailerRegForm)">Submit</button>-->
+             &lt;!&ndash; <button class="button button-full custom-dark1 ink"  ng-click="retailerRegistration(retailer,retailerRegForm)">Submit</button>&ndash;&gt;
             </div>
             <br>
           </div>
@@ -94,12 +95,85 @@
             <p ng-show="retailerRegForm.fname.$error.required && retailerRegForm.$dirty" class="error_msg_color">Retailer Name required</p>
             <p ng-show="retailerRegForm.firmname.$error.required && retailerRegForm.$dirty" class="error_msg_color">Firm Name required</p>
             <p ng-show="retailerRegForm.city.$error.required && retailerRegForm.$dirty" class="error_msg_color">City required</p>
-            <!--<p ng-show="retailerRegForm.depot.$error.required && retailerRegForm.$dirty">Depot required</p>-->
+            &lt;!&ndash;<p ng-show="retailerRegForm.depot.$error.required && retailerRegForm.$dirty">Depot required</p>&ndash;&gt;
             <p ng-show="retailerRegForm.state.$error.required && retailerRegForm.$dirty" class="error_msg_color">State required</p>
             <p ng-show="retailerRegForm.region.$error.required && retailerRegForm.$dirty" class="error_msg_color">Region required</p>
             <p ng-show="retailerRegForm.distributor.$error.required && retailerRegForm.$dirty" class="error_msg_color">Distributor required</p>
           </div>
         </div>
       </ng-form>
+  </ion-content>
+</ion-view>
+-->
+
+<ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
+  <ion-content>
+    <div class="">
+      <div class="list" style="padding-top: 10em">
+        <div class="row">
+          <!--<div class="col col-20"></div>-->
+          <div class="col font_color" style="text-align: center"><input type="radio" name="roleid" id="cust" value='5' ng-model="choose" />
+            <label for="cust"> Customer </label>
+          </div>
+          <div class="col font_color" style="text-align: center"><input type="radio" id="retail" name="roleid" value='4' ng-model="choose" />
+            <label for="retail"> Retailer </label>
+          </div>
+        </div>
+      </div>
+      <div class="list card">
+        <div class="item " ng-show="regsuccess" style="background-color: green"><h2 class="text-center">Registration Successful</h2></div>
+      </div>
+    </div>
+    <ng-form name="customerRegForm" ng-show="choose==5">
+      <div class="list padding">
+        <label class="item-input margn_top"><input placeholder="Mobile Number" name="mobile" type="tel" ng-model="customer.mobile" minlength="10" maxlength="10" required/></label>
+        <label class="item-input margn_top"><input placeholder="User Name" type="text" name="fname" ng-model="customer.fname" required/></label><br>
+        <button ng-disabled="customerRegForm.$invalid" class="button button-full custom-dark1 ink"  ng-click="customerRegistration(customer,customerRegForm,choose)">Submit</button>
+      </div>
+    </ng-form>
+    <ng-form name="retailerRegForm" ng-show="choose==4">
+      <div class="list padding">
+        <label class="item item-input item-select custom-dark3">
+          <div class="input-label item-text-wrap" style="color:white;">Select Region</div>
+          <select name="region" ng-model="retailer.region" ng-change="changedresion(retailer.region)" class="custom-dark3"  style="color:white;"
+                  ng-options="region.REGION_PK_ID as region.REGION_NAME for region in regions" >
+            <option style="display:none; font-size: 1.0em;" value="" ></option>
+          </select>
+        </label><br>
+        <label class="item item-input item-select custom-dark1">
+          <div class="input-label item-text-wrap" style="color:white;font-size: 1.1em">Select State</div>
+          <select name="state" ng-model="retailer.state"  ng-change="changedstate(retailer.state)" class="custom-dark1"  style="color:white;font-size: 1.1em"
+                  ng-options="state.STATE_PK_ID as state.STATE_NAME for state in states">
+            <option style="display:none; font-size: 10px;" value="" >&nbsp;</option>
+          </select>
+        </label><br>
+        <label class="item item-input item-select custom-dark3">
+          <div class="input-label item-text-wrap" style="color:white;font-size: 1.1em">Select City</div>
+          <select name="city" ng-model="retailer.city"   ng-change="changedcity(retailer.city)" class="custom-dark3" style="color:white;font-size: 1.1em"
+                  ng-options="city.CITY_PK_ID as city.CITY_NAME for city in cities">
+            <option style="display:none; font-size: 10px;" value="">&nbsp;</option>
+          </select>
+        </label><br>
+        <label class="item item-input item-select custom-dark1">
+          <div class="input-label item-text-wrap" style="color:white;font-size: 1.1em">Distributor Firm Name</div>
+          <select name="distributor" ng-model="retailer.distributor" ng-change="changeddist(retailer.distributor)" class="custom-dark1" style="color:white;font-size: 1.1em"
+                  ng-options="distibuter.DET_MEMBER_PK_ID as distibuter.FIRM_NAME for distibuter in distributers">
+            <option style="display:none; font-size: 10px;" value="">&nbsp;</option>
+          </select>
+        </label>
+
+        <input value='4' name="roleid" ng-model="retailer.roleid" ng-show="false">
+        <label class="item-input margn_top"><input placeholder="Retailer Firm Name" type="text" name="firmname" ng-model="retailer.firmname" required/></label>
+        <label class="item-input margn_top"><input placeholder="Retailer Name" type="text" name="fname" ng-model="retailer.fname" required/></label>
+        <label class="item-input margn_top"><input placeholder="Mobile Number" type="tel" name="mobile" ng-model="retailer.mobile" required/></label>
+        <label class="item-input margn_top"><input placeholder="Email Id" type="email" name="email" ng-model="retailer.email" required/></label>
+        <label class="item-input margn_top"><input placeholder="Date of Birth"  type="text" name="dob" ng-model="retailer.dob" date-parser="dd/MM/yyyy" onfocus="(this.type='date')" required/></label><br>
+        <div>
+          <button ng-disabled="retailerRegForm.$invalid" class="button button-full custom-dark1 ink"  ng-click="retailerRegistration(retailer,retailerRegForm,choose)">Submit</button>
+          <!-- <button class="button button-full custom-dark1 ink"  ng-click="retailerRegistration(retailer,retailerRegForm)">Submit</button>-->
+        </div>
+        <br>
+      </div>
+    </ng-form>
   </ion-content>
 </ion-view>

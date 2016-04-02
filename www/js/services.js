@@ -11,6 +11,11 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
     var role={};
     var user={};
     return{
+      insertdumy: function () {
+        user.dummy=0;
+        window.localStorage.setItem('username',JSON.stringify(user));
+        window.localStorage.setItem('userFKID',JSON.stringify(user));
+      },
       setUsername: function (username) {
         user.Username=username;
         window.localStorage.setItem('username',JSON.stringify(user));
@@ -136,6 +141,31 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
       }
     }
 
+  })
+  .factory('notesService', function ($http,API_ENDPOINT,userinfoService) {
+
+    var userId=0;
+
+    return{
+
+      getNotes: function () {
+        var userId=userinfoService.getUserFKID().FKID;
+        console.log('>>>',userId)
+
+
+          return $http.get(API_ENDPOINT.url+'/services.php/pushnotifications/'+userId).success(function (data) {
+            console.log('notefication data',data);
+            return data;
+          })
+
+
+
+
+
+
+
+      }
+    }
   })
 
 /*.factory('networkService', function ($rootScope) {

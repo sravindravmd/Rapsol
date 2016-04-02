@@ -398,6 +398,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 }
             }
         })
+      .state('app.mydisteam_order', {
+        url: '/mydisteam_order',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/mydisteam_order.html',
+            controller: 'MyDisTeamOrdersCtrl'
+          }
+        }
+      })
       .state('app.orderMyTeamDetail', {
         url: '/orderMyTeamDetail/:id',
         views: {

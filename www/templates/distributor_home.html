@@ -1,15 +1,18 @@
 <ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
-    <ion-content>
-      <h2 class="title" style="text-align: center; padding-top: 0.5em;">Welcome Distributor {{Username}}</h2>
-        <div class="padding">
-            <button ng-click="profile()" class="button button-block custom-dark1 ink">My profile</button>
-            <button ng-click="productDetail()" class="button button-block custom-dark2 ink">Product Details</button>
-            <button ng-click="createOrder()" class="button button-block custom-dark3 ink">Order Details</button>
-            <button ng-click="distTarget()" class="button button-block custom-dark1 ink">Target Details</button>
-            <button ng-click="notification()" class="button button-block custom-dark2 ink">Notifications</button>
-            <button ng-click="brandStories()" class="button button-block custom-dark3 ink">Brand Stories</button>
-            <button ng-click="feedbackQuery()" class="button button-block custom-dark1 ink">Feedback & Query</button>
-            <button ng-click="changePassword()" class="button button-block custom-dark2 ink">Change Password</button>
-           </div>
-    </ion-content>
+  <ion-content>
+    <!--<h2 class="title" style="text-align: center; padding-top: 0.5em;">Welcome Distributor {{Username}}</h2>-->
+    <div class="tabs tabs-icon-top static">
+      <p>Welcome {{Username}}</p>
+    </div>
+    <div class="padding">
+      <button ng-click="profile()" class="button button-block custom-dark1 ink">My Profile</button>
+      <button ng-click="productDetail()" class="button button-block custom-dark2 ink">Product Details</button>
+      <button ng-click="createOrder()" class="button button-block custom-dark3 ink">Order Details</button>
+      <button ng-click="distTarget()" class="button button-block custom-dark1 ink">Target Details</button>
+      <button ng-click="notification()" class="button button-block custom-dark2 ink">Notifications</button>
+      <button ng-click="brandStories()" class="button button-block custom-dark3 ink">Brand Stories</button>
+      <button ng-click="feedbackQuery()" class="button button-block custom-dark1 ink">Feedback & Query</button>
+      <button ng-click="changePassword()" class="button button-block custom-dark2 ink">Change Password</button>
+    </div>
+  </ion-content>
 </ion-view>

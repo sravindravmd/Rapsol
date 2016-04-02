@@ -4,8 +4,32 @@
 angular.module('starter.controllers', [])
 
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout) {
-})
+.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,notesService, $interval,userinfoService,$state) {
+    userinfoService.insertdumy();
+    $scope.note=0;
+    $scope.goto= function () {
+      $state.go('app.note');
+    }
+
+     var intervalnotes=function(){
+
+       if(userinfoService.getUserFKID().FKID!==undefined){
+       notesService.getNotes().success(function (data) {
+
+         $scope.note=data.count
+         console.log("notes Ctrl",data.count);
+       });}
+     }
+
+
+    $interval(intervalnotes,300);
+
+
+
+
+}).controller('noteCtrl', function () {
+
+  })
 
 .controller('HomeCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk, $state,$rootScope, $cordovaNetwork,$ionicPopup) {
 
@@ -274,14 +298,14 @@ angular.module('starter.controllers', [])
       $scope.changedcity= function (city) {
         $scope.show($ionicLoading);
         console.log('city for distributor',city)
-        $http.get(API_ENDPOINT.url+'/services.php/distributerlist/'+0).then(function(results){
+        $http.get(API_ENDPOINT.url+'/services.php/distributerlist/'+city).then(function(results){
           $scope.hide($ionicLoading);
           $scope.distributers=results.data.Distributers;
           console.log('distributers', $scope.distributers);
         })
       }
 
-      $scope.retailerRegistration= function (retailer,retailerRegForm) {
+      $scope.retailerRegistration= function (retailer,retailerRegForm,choose) {
 
         if(retailerRegForm.$valid)
           console.log('retailer',retailer);
@@ -295,14 +319,14 @@ angular.module('starter.controllers', [])
           headers: {
             'Content-Type': "application/x-www-form-urlencoded"
           },
-          data:'city='+retailer.city+'&distributor='+retailer.distributor+'&dob='+retailer.dob+'&email='+retailer.email+'&fname='+retailer.fname+'&mobile='+retailer.mobile+'&region='+retailer.region+'&roleid='+retailer.roleid+'&state='+retailer.state+'&firmname='+retailer.firmname
+          data:'city='+retailer.city+'&distributor='+retailer.distributor+'&dob='+retailer.dob+'&email='+retailer.email+'&fname='+retailer.fname+'&mobile='+retailer.mobile+'&region='+retailer.region+'&roleid='+choose+'&state='+retailer.state+'&firmname='+retailer.firmname
 
           /*'city='+'12'+'&distributor='+'16'+'&dob='+'12/12/1091'+'&email='+'g@rg.com'+
           '&fname='+'13'+'&mobile='+'4213432499'+'&region='+'3'+'&roleid='+'4'+
           '&state='+'13'+'&firmname='+'abc'*/
         }).success(function (data, status, headers, config) {
 
-          userinfoService.setRoleInfo(retailer.roleid);
+          userinfoService.setRoleInfo(choose);
           userinfoService.setUsermobile(retailer.mobile)
           userinfoService.setUserinfo(data);
           $scope.regsuccess=true;
@@ -331,11 +355,11 @@ angular.module('starter.controllers', [])
         // $state.go('app.login');
         }
 
-      $scope.customerRegistration= function (customer,customerRegForm) {
+      $scope.customerRegistration= function (customer,customerRegForm,choose) {
 
         if(customerRegForm.$valid){
           console.log("eneted in customer registration",customer);
-          userinfoService.setRoleInfo(customer.roleid)
+          userinfoService.setRoleInfo(choose)
           $scope.show($ionicLoading);
           $http({
             method:'POST',
@@ -343,7 +367,7 @@ angular.module('starter.controllers', [])
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
             },
-            data:'fname='+customer.fname+'&mobile='+customer.mobile+'&roleid='+customer.roleid
+            data:'fname='+customer.fname+'&mobile='+customer.mobile+'&roleid='+choose
           }).success(function (data, status, headers, config) {
             userinfoService.setUserinfo(data);
             userinfoService.setUsermobile(customer.mobile)
@@ -423,6 +447,9 @@ angular.module('starter.controllers', [])
 
     $scope.MyTeamOrders= function () {
       $state.go('app.myteam_order');
+    };
+    $scope.MyDisTeamOrders= function () {
+      $state.go('app.mydisteam_order');
     };
 
     })
@@ -508,6 +535,9 @@ angular.module('starter.controllers', [])
     $scope.MyTeamOrders= function () {
         $state.go('app.myteam_order');
       };
+    $scope.MyDisTeamOrders= function () {
+      $state.go('app.mydisteam_order');
+    };
 
 
     })
@@ -549,6 +579,31 @@ angular.module('starter.controllers', [])
 
     var roldeId= userinfoService.getRoleInfo().roleid;
     var userId=userinfoService.getUserFKID().FKID;
+    $scope.userId=userId;
+    $scope.show = function() {   $ionicLoading.show({     template: '<p>Loading...</p><ion-spinner class="spinner-energized" icon="spiral"></ion-spinner>'
+    }); };
+    $scope.hide = function(){
+      $ionicLoading.hide();
+    };
+    function intialdata(){
+      $scope.show($ionicLoading);
+      OrderHistoryService.getOrderHistory().success(function (orders) {
+        $scope.orderdetails=orders.orderdetails;
+        console.log('ctrl data',orders.orderdetails)
+        $scope.hide($ionicLoading);
+
+      })
+
+
+    }
+    intialdata();
+  })
+
+  .controller('MyDisTeamOrdersCtrl', function ($scope,OrderHistoryService,$ionicLoading,userinfoService) {
+
+    var roldeId= userinfoService.getRoleInfo().roleid;
+    var userId=userinfoService.getUserFKID().FKID;
+    $scope.userId=userId;
     $scope.show = function() {   $ionicLoading.show({     template: '<p>Loading...</p><ion-spinner class="spinner-energized" icon="spiral"></ion-spinner>'
     }); };
     $scope.hide = function(){
@@ -577,6 +632,10 @@ angular.module('starter.controllers', [])
             $ionicLoading.hide(); 
           };
     var userId=userinfoService.getUserFKID().FKID;
+    $scope.userId=userId;
+    var roldeId= userinfoService.getRoleInfo().roleid;
+
+    $scope.roleId=roldeId;
     /*if(userinfoService.getUserInfo().userId==undefined){
       userId=userinfoService.getUserFKID().FKID;
     } else{
@@ -614,6 +673,7 @@ angular.module('starter.controllers', [])
             var alertPopup = $ionicPopup.alert({
               title: 'Order Approved successfully'
             });
+            OrderHistoryService.getOrderHistory();
           }
         }).error(function(){
           console.log('Something wrong')
@@ -627,7 +687,7 @@ angular.module('starter.controllers', [])
         });
 
       } else{
-        alert('remart required');
+        alert('remark required');
       }
     }
     $scope.DisApprove= function () {
@@ -653,6 +713,7 @@ angular.module('starter.controllers', [])
             var alertPopup = $ionicPopup.alert({
               title: 'Order Rejected successfully'
             });
+            OrderHistoryService.getOrderHistory();
           }
         }).error(function(){
           console.log('Something wrong')
@@ -1078,7 +1139,7 @@ angular.module('starter.controllers', [])
         }).success(function (data) {
           console.log(data);
           var alertPopup = $ionicPopup.alert({
-            title: 'Order successfully created'
+            title: 'Order created successfully'
           });
           $ionicHistory.goBack();
           console.log('data',data);
@@ -1456,7 +1517,10 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
         // 'new_password='+createpass.password+'&confirm_password='+createpass.conPassword
 
-      })
+      }).finally(function($ionicLoading) {
+        // On both cases hide the loading
+        $scope.hide($ionicLoading);
+      });
 
     }
 
@@ -1619,7 +1683,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
     userinfoService.removeUserInfo();
     console.log('logout',userinfoService.removeUserInfo());
-      $state.go('main.home');
+    $state.go('main.home');
 
 
 

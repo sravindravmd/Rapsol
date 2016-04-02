@@ -9,9 +9,19 @@
       <div class="padding" ng-hide="dismyorder">
         <button ng-click="MyOrders()" class="button button-full button-assertive ink">My Orders</button>
       </div>
-      <div class="padding" ng-hide="relid==4">
-        <button ng-click="MyTeamOrders()"  class="button button-full button-assertive ink">My Team Orders</button>
+      <div class="padding" ng-show="relid==2">
+        <button ng-click="MySlm1TeamOrders()"  class="button button-full button-assertive ink">My Team Orders</button>
       </div>
+      <div class="padding" ng-show="relid==6">
+        <button ng-click="MySlm1TeamOrders()"  class="button button-full button-assertive ink">My Team Orders</button>
+      </div>
+      <div class="padding" ng-show="relid==7">
+        <button ng-click="MySlm1TeamOrders()"  class="button button-full button-assertive ink">My Team Orders</button>
+      </div>
+      <div class="padding" ng-show="relid==3">
+        <button ng-click="MyDisTeamOrders()"  class="button button-full button-assertive ink">My Team Orders</button>
+      </div>
+
       <!--<div>
         <h2 class="title" style="text-align: center">Order History</h2>
         <ion-list>
