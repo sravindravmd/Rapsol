@@ -400,7 +400,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             }
         })
       .state('app.myteam_order', {
-            url: '/myteam_order',
+            url: '/myteam_order/:id',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/myteam_order.html',
@@ -409,7 +409,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             }
         })
       .state('app.mydisteam_order', {
-        url: '/mydisteam_order',
+        url: '/mydisteam_order/:id',
         views: {
           'menuContent': {
             templateUrl: 'templates/mydisteam_order.html',

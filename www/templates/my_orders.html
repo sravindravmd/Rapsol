@@ -1,9 +1,10 @@
 <ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
   <ion-content>
-    <h2 class="has-header"></h2>
+    <div class="tabs tabs-icon-top static">
+      <p>My Orders</p>
+    </div>
     <ion-list ng-repeat="myOrder in myOrders" class="card" id="grad1">
-      Date: {{myOrder.ADD_DATE}}
-      <div class="item item-text-wrap">
+      <div class="item item-text-wrap font_size">
         <div class="row">
           <div class="col profile_color">Date :</div>
           <div class="col">{{myOrder.ADD_DATE}}</div>
@@ -17,16 +18,28 @@
           <div class="col">{{myOrder.PROD_NAME}}</div>
         </div>
         <div class="row">
-          <div class="col profile_color">Product Description :</div>
-          <div class="col">{{myOrder.PROD_DESC}}</div>
-        </div>
-        <div class="row">
           <div class="col profile_color">Product DLP :</div>
           <div class="col">{{myOrder.PROD_DLP}}</div>
         </div>
         <div class="row">
           <div class="col profile_color">Product UOM :</div>
           <div class="col">{{myOrder.PROD_UOM}}</div>
+        </div>
+        <div class="row">
+          <div class="col profile_color">Landing Price :</div>
+          <div class="col">{{myOrder.landingprice}}</div>
+        </div>
+        <div class="row">
+          <div class="col profile_color">Product Quantity :</div>
+          <div class="col">{{myOrder.PROD_QTY}}</div>
+        </div>
+        <div class="row">
+          <div class="col profile_color">Product Discount :</div>
+          <div class="col">{{myOrder.PROD_DISCOUNT}}</div>
+        </div>
+        <div class="row">
+          <div class="col profile_color">Order Amount :</div>
+          <div class="col">{{myOrder.ORD_AMOUNT}}</div>
         </div>
       </div>
     </ion-list>

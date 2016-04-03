@@ -115,14 +115,14 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
    var roldeId= userinfoService.getRoleInfo().roleid;
     var userId=userinfoService.getUserFKID().FKID;
 
-    console.log('OrderHistoryService role',roldeId)
-    console.log('OrderHistoryService UserId',userId)
+    console.log('OrderHistoryService role',roldeId);
+    console.log('OrderHistoryService UserId',userId);
 
 
     return {
-      getOrderHistory: function () {
-
-        return  $http.get(API_ENDPOINT.url+'/services.php/myteamorders/'+userId+'/'+roldeId+'/'+0+'/'+0).success(function (data) {
+      getOrderHistory: function (tempId) {
+        console.log("tempid",tempId)
+        return  $http.get(API_ENDPOINT.url+'/services.php/myteamorders/'+userId+'/'+roldeId+'/'+0+'/'+0+'/'+tempId).success(function (data) {
           console.log('order history service',data.orderdetails);
 
           OrderHis=data.orderdetails;
@@ -163,14 +163,17 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
 
       }
     }
-  }).directive('validPasswordC', function () {
-    return {
-      require: 'ngModel',
-      link: function (scope, elm, attrs, ctrl) {
-        ctrl.$parsers.unshift(function (viewValue, $scope) {
-          var noMatch = viewValue != scope.myForm.password.$viewValue
-          ctrl.$setValidity('noMatch', !noMatch)
+  }).factory('notificationListService', function (API_ENDPOINT,$http,userinfoService) {
+
+    return{
+      getnotiList: function () {
+        var userId=userinfoService.getUserFKID().FKID;
+        return $http.get(API_ENDPOINT.url+'/services.php/pushnotificationslist/'+userId).success(function (data) {
+          console.log('noteficationlist data data',data);
+          return data;
         })
+
+
       }
     }
   })

@@ -4,7 +4,36 @@
 
 <ion-view title='<img class="title-image" src="img/logo.png">'>
   <ion-content>
-    <h3 class="padding-top" style="text-align: center">Notifications</h3>
+    <h3 class="padding-top" style="text-align: center">Approval Notifications</h3>
 
+    <ion-list class="card" ng-repeat="order in list">
+      <ion-item class="item-text-wrap borderline" ng-class-even="'even'">
+        <a href="#/app/{{nave}}/{{order.REFERENCE_ID}}" class="acolor">
+          <div class="row padingremove">
+            <div class="col">
+              <strong>Type:</strong>  {{order.NOTI_TYPE}}
+            </div>
+          </div>
+          <div class="row padingremove">
+            <div class="col"><strong>Message:</strong> {{order.NOTIFICATION}}</div>
+          </div>
+<!--
+          <div class="row padingremove">
+            <div class="col"><strong>Amount:</strong> {{order.ORD_AMOUNT | number}}</div>
+            <div class="col"><strong>Date:</strong> {{order.ADD_DATE}}</div>
+            <div class="col padingremove col-center">
+              <span ng-if="order.SALEL2_ID==userId && order.ORD_STATUS_L2=='Awaiting'" style="color:blue">Pending</span>
+              <span ng-if="order.SALEL2_ID==userId && order.ORD_STATUS_L2=='Reject'" style="color: red">Rejected</span>
+              <span ng-if="order.SALEL2_ID==userId && order.ORD_STATUS_L2=='Approve'" style="color: darkgreen">Approved</span></div>
+          </div>-->
+
+        </a>
+      </ion-item>
+
+
+
+    </ion-list>
+  <br/>
+  <br/>
   </ion-content>
 </ion-view>

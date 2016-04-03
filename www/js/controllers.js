@@ -9,6 +9,8 @@ angular.module('starter.controllers', [])
     $scope.note=0;
     $scope.goto= function () {
       $state.go('app.note');
+      $scope.note=0;
+
     }
 
      var intervalnotes=function(){
@@ -23,6 +25,7 @@ angular.module('starter.controllers', [])
 
 
     $interval(intervalnotes,300000);
+    //$interval(intervalnotes,300000);
 
 
 
@@ -584,7 +587,18 @@ angular.module('starter.controllers', [])
 
   })
 
-  .controller('MyTeamOrdersCtrl', function ($scope,OrderHistoryService,$ionicLoading,userinfoService) {
+  .controller('MyTeamOrdersCtrl', function ($scope,OrderHistoryService,$ionicLoading,userinfoService,$stateParams) {
+
+    console.log('>>>>>>>>>>>>>>>>',$stateParams);
+
+    var tempOrderId=0;
+
+    if($stateParams.id!==""){
+      //alert('Null');
+      tempOrderId= $stateParams.id;
+      //tempOrderId=1;
+    }
+
 
     var roldeId= userinfoService.getRoleInfo().roleid;
     var userId=userinfoService.getUserFKID().FKID;
@@ -596,7 +610,7 @@ angular.module('starter.controllers', [])
     };
     function intialdata(){
       $scope.show($ionicLoading);
-      OrderHistoryService.getOrderHistory().success(function (orders) {
+      OrderHistoryService.getOrderHistory(tempOrderId).success(function (orders) {
         $scope.orderdetails=orders.orderdetails;
         console.log('ctrl data',orders.orderdetails)
         $scope.hide($ionicLoading);
@@ -608,11 +622,20 @@ angular.module('starter.controllers', [])
     intialdata();
   })
 
-  .controller('MyDisTeamOrdersCtrl', function ($scope,OrderHistoryService,$ionicLoading,userinfoService) {
+  .controller('MyDisTeamOrdersCtrl', function ($scope,OrderHistoryService,$ionicLoading,userinfoService,$rootScope,$stateParams) {
+
+    var tempOrderId=0;
+
+    if($stateParams.id!==""){
+      //alert('Null');
+      tempOrderId= $stateParams.id;
+      //tempOrderId=1;
+    }
+
 
     var roldeId= userinfoService.getRoleInfo().roleid;
     var userId=userinfoService.getUserFKID().FKID;
-    $scope.userId=userId;
+    $rootScope=$scope.userId=userId;
     $scope.show = function() {   $ionicLoading.show({     template: '<p>Loading...</p><ion-spinner class="spinner-energized" icon="spiral"></ion-spinner>'
     }); };
     $scope.hide = function(){
@@ -620,7 +643,7 @@ angular.module('starter.controllers', [])
     };
     function intialdata(){
       $scope.show($ionicLoading);
-      OrderHistoryService.getOrderHistory().success(function (orders) {
+      OrderHistoryService.getOrderHistory(tempOrderId).success(function (orders) {
         $scope.orderdetails=orders.orderdetails;
         console.log('ctrl data',orders.orderdetails)
         $scope.hide($ionicLoading);
@@ -988,7 +1011,7 @@ angular.module('starter.controllers', [])
         console.log(data);
        if(data.status==1){
          var alertPopup = $ionicPopup.alert({
-           title: "Feedback Successfully submitted"
+           title: "Feedback  submitted Successfully"
          })
          $scope.feedback.subject="";
          $scope.feedback.message="";
@@ -1033,7 +1056,7 @@ angular.module('starter.controllers', [])
         console.log(data);
         if(data.status==1){
           var alertPopup = $ionicPopup.alert({
-            title: "Query Successfully submitted"
+            title: "Query submitted Successfully"
 
           })
           $scope.query.subject="";
@@ -1700,7 +1723,27 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
   .controller('MainCtrl', function ($scope) {
 
   })
-  .controller('notelistCtrl', function ($scope) {
+  .controller('notelistCtrl', function ($scope,notificationListService,userinfoService,$stateParams) {
+
+
+    $scope.roleId=userinfoService.getRoleInfo().roleid;
+
+    notificationListService.getnotiList().success(function (data) {
+
+      $scope.list=data.PushNotificationsList;
+
+      console.log($scope.list)
+    })
+
+    if($scope.roleId==3){
+
+      $scope.nave='mydisteam_order';
+    } else{
+      $scope.nave='myteam_order';
+    }
+
+
+    console.log();
 
   })
 
