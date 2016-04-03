@@ -22,7 +22,7 @@ angular.module('starter.controllers', [])
      }
 
 
-    $interval(intervalnotes,300);
+    $interval(intervalnotes,300000);
 
 
 
@@ -31,19 +31,29 @@ angular.module('starter.controllers', [])
 
   })
 
-.controller('HomeCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk, $state,$rootScope, $cordovaNetwork,$ionicPopup) {
+.controller('HomeCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk, $state,$rootScope, $cordovaNetwork,$ionicPopup,$location) {
 
   $scope.homeLogin= function () {
-    $state.go('main.login');
+    //$location.url('#/main/login');
+   $state.go('main.login',null, {reload:true});
   };
   $scope.homeRegistration= function () {
-    $state.go('main.registration');
+    $state.go('main.registration',null, {reload:true});
   };
 
-}).controller('LoginCtrl', function($scope, $stateParams, $timeout, $http,ionicMaterialMotion, ionicMaterialInk,$state,API_ENDPOINT,userinfoService,$ionicLoading,$ionicPopup,$ionicHistory) {
+})
+  .controller('LoginCtrl', function($scope, $stateParams, $timeout, $http,ionicMaterialMotion, ionicMaterialInk,$state,API_ENDPOINT,
+                                    userinfoService,$ionicLoading,$ionicPopup,$ionicHistory,$window) {
 
-
+    //window.location.reload();
         ionicMaterialInk.displayEffect();
+
+
+
+      $scope.firsttime=true;
+      $scope.mobile="";
+
+
     $ionicHistory.nextViewOptions({
       disableBack:true
     });
@@ -66,7 +76,7 @@ angular.module('starter.controllers', [])
     };
 
 
-    $scope.firsttime=true;
+
       $scope.userlogin= function (mobile,password) {
         console.log(mobile,password)
         $scope.show($ionicLoading);
@@ -120,27 +130,6 @@ angular.module('starter.controllers', [])
 
           }
 
-
-
-/*
-          $scope.message=data.data.Message;
-          if(data.Message!==undefined){
-          var alertPopup = $ionicPopup.alert({
-            title: $scope.message
-          });
-          } else if(data.data.message!==undefined){
-            var alertPopup = $ionicPopup.alert({
-              title: data.data.message
-            });
-          }*/
-
-
-          /*
-           if(data.data.user.ROLE_FK_ID==5){
-           $state.go('app.channel_partner');
-           } else if(data.data.user.ROLE_FK_ID==5){
-           $state.go('app.channel_partner');
-           }*/
 
         }).error(function (error) {
 
@@ -225,6 +214,9 @@ angular.module('starter.controllers', [])
 
 
       }
+
+   /* onloadLogin();
+    console.log('on change call',onloadLogin)*/
 
 
     })
@@ -348,7 +340,7 @@ angular.module('starter.controllers', [])
 
         function callAtTimeout() {
           console.log("Timeout occurred");
-          $state.go('app.otp');
+          $state.go('main.otp');
         }
 
 
@@ -394,7 +386,7 @@ angular.module('starter.controllers', [])
       }
       function callAtTimeout() {
         console.log("Timeout occurred");
-        $state.go('app.otp');
+        $state.go('main.otp');
       }
 
     })
@@ -404,12 +396,29 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
 
-    .controller('DistHomeCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$ionicHistory,userinfoService) {
+    .controller('DistHomeCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$ionicHistory,API_ENDPOINT,userinfoService,$http) {
       $ionicHistory.clearHistory();
-      console.log('<<<<<<<<>>>>>>',userinfoService.getUsername())
-      $scope.Username=userinfoService.getUsername().Username;
-        // Set Ink
-        ionicMaterialInk.displayEffect();
+     // console.log('<<<<<<<<>>>>>>',userinfoService.getUsername())
+      //$scope.Username=userinfoService.getUsername().Username;
+    ionicMaterialInk.displayEffect();
+
+    var userId;
+    var roleId=$scope.rlid=userinfoService.getRoleInfo().roleid;
+    // $scope.rlid=3;
+
+    userId=userinfoService.getUserFKID().FKID;
+
+
+    $http.get(API_ENDPOINT.url+'/services.php/viewprofile/'+userId+'/'+roleId).then(function(results){
+      $scope.profiles=results.data.userDetails;
+
+      //alert("thhhhhh",$scope.profiles)
+      console.log('User Profile Details',results.data.userDetails);
+    }).catch(function (error) {
+      alert('Something went wrong!!!!')
+    })
+
+
       $scope.news= function () {
         $state.go('app.news');
       };
@@ -867,7 +876,7 @@ angular.module('starter.controllers', [])
           userinfoService.setUserinfo(data.data);
 
           $timeout(function () {
-            $state.go('app.otp');
+            $state.go('main.otp');
           },300)
          // $scope.userinfo=data.data.users;
           console.log(data);
@@ -1368,11 +1377,11 @@ angular.module('starter.controllers', [])
           });
           //alert(data.data.otpStatus.message+" "+"Please regenerate");
         } else if(data.data.otpStatus.status==3){
-          $state.go('app.create_password')
+          $state.go('main.create_password')
         } else if(data.data.otpStatus.status==0){
           //alert(data.data.otpStatus.message+" "+"Please regenerate");
           var alertPopup = $ionicPopup.alert({
-            title: data.data.otpStatus.message+"Please regenerate"
+            title: data.data.otpStatus.message+"  Please Check "
           });
         }
       /*  if("OTP Expired"==data.otpStatus.status){
@@ -1680,15 +1689,18 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
   .controller('LogoutCtrl', function ($state,$ionicHistory,userinfoService) {
 
     $ionicHistory.clearHistory();
-
+    console.log('logout removing data');
     userinfoService.removeUserInfo();
-    console.log('logout',userinfoService.removeUserInfo());
+    userinfoService.insertdumy();
     $state.go('main.home');
 
 
 
   })
   .controller('MainCtrl', function ($scope) {
+
+  })
+  .controller('notelistCtrl', function ($scope) {
 
   })
 

@@ -2,12 +2,12 @@
     <ion-content class="back_color1">
             <p style="text-align: center; padding-top:3em; font-size: 2em; color: black">Welcome to Repsol</p>
 
-                <form name="loginForm">
-                    <div class="list padding">
+      <form name="loginForm">
+        <div class="list padding">
                       <label class="item-input margn_top1"><input type="tel" placeholder="Mobile Number" name="mobile" ng-model="mobile" ng-minlength="10" ng-maxlength="10" required/></label>
                       <label class="item-input margn_top" ng-show="!firsttime"> <input type="password" placeholder="Password" name="password" ng-model="password" /></label>
-                      <a ng-click="forgotPassword()" ng-if="!firsttime" class="col text-right font_color" style="color: white">Forgot Password</a>
-                      <button ng-disabled="loginForm.$invalid" class="button button-full custom-dark1 ink"  ng-if="firsttime" ng-click="checkuser(mobile)">Check Number</button>
+                      <a ng-click="forgotPassword()" ng-show="!firsttime" class="col text-right font_color" style="color: white">Forgot Password</a>
+                      <button ng-disabled="loginForm.$invalid" class="button button-full custom-dark1 ink"  ng-show="firsttime" ng-click="checkuser(mobile)">Check Number</button>
                       <button ng-disabled="loginForm.$invalid" ng-show="!firsttime" class="button button-full custom-dark1 ink"  ng-click="userlogin(mobile,password)">Login</button>
                     </div>
                   <div style="text-align: center">

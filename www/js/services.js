@@ -13,7 +13,7 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
     return{
       insertdumy: function () {
         user.dummy=0;
-        window.localStorage.setItem('username',JSON.stringify(user));
+        //window.localStorage.setItem('mobile',JSON.stringify(mobile));
         window.localStorage.setItem('userFKID',JSON.stringify(user));
       },
       setUsername: function (username) {
@@ -143,9 +143,6 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
 
   })
   .factory('notesService', function ($http,API_ENDPOINT,userinfoService) {
-
-    var userId=0;
-
     return{
 
       getNotes: function () {
@@ -164,6 +161,16 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
 
 
 
+      }
+    }
+  }).directive('validPasswordC', function () {
+    return {
+      require: 'ngModel',
+      link: function (scope, elm, attrs, ctrl) {
+        ctrl.$parsers.unshift(function (viewValue, $scope) {
+          var noMatch = viewValue != scope.myForm.password.$viewValue
+          ctrl.$setValidity('noMatch', !noMatch)
+        })
       }
     }
   })

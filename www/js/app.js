@@ -98,6 +98,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             }
         })
 
+      .state('app.note', {
+        url: '/note',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/note.html',
+            controller: 'notelistCtrl'
+          }
+        }
+      })
+
        /* .state('app.distributor_Reg', {
             url: '/distributor_Reg',
             views: {
@@ -426,10 +436,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
           }
         }
       })
-      .state('app.otp', {
+      .state('main.otp', {
         url: '/otp',
         views: {
-          'menuContent': {
+          'mainContent': {
             templateUrl: 'templates/otp.html',
             controller: 'otpCtrl'
           }
@@ -444,10 +454,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
           }
         }
       })
-      .state('app.create_password', {
+      .state('main.create_password', {
         url: '/create_password',
         views: {
-          'menuContent': {
+          'mainContent': {
             templateUrl: 'templates/create_password.html',
             controller: 'CreatePasswordCtrl'
           }
