@@ -38,7 +38,7 @@
         </div>
         <div class="row product_margin">
           <div class="col custom-dark3">MRP Per Pack :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_MRF}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_MRF |number:2}}</strong></div>
         </div>
         <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark3">Billing Price Per Liter :</div>

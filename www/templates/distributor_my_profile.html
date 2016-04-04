@@ -1,86 +1,15 @@
-<!--
-<ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
-  <ion-content class="profile_color" id="grad1">
 
-      <h2 class="title" style="text-align: center; padding-top: 0.5em;">Profile Information</h2>
-    <ion-list>
-      <ion-item class="padding-top" ">
-        <div class="row my_profile_border">
-          <div class="col profile_color">My Name :</div>
-          <div class="col my_profile_css">{{profile.FULL_NAME}}</div>
-        </div>
-        <div class="row my_profile_border">
-          <div class="col profile_color">Email Id :</div>
-          <div class="col my_profile_css">{{profile.EMAIL_ID}}</div>
-        </div>
-        <div class="row my_profile_border">
-          <div class="col profile_color">Mobile Number :</div>
-          <div class="col my_profile_css">{{profile.MOBILE_PHONE}}</div>
-        </div>
-      <div class="row my_profile_border" ng-if="rlid==3">
-        <div class="col profile_color">Alternative Mobile Number :</div>
-        <div class="col my_profile_css">{{profile.MOBILE2}}</div>
-      </div>
-        <div class="row my_profile_border">
-          <div class="col profile_color">Date Of Birth :</div>
-          <div class="col my_profile_css">{{profile.DOB}}</div>
-        </div>
-        <div class="row my_profile_border">
-          <div class="col profile_color">My Firm Name :</div>
-          <div class="col my_profile_css">{{profile.FIRM_NAME}}</div>
-        </div>
-        <div class="row my_profile_border">
-          <div class="col profile_color">City :</div>
-          <div class="col my_profile_css">{{profile.CITY_NAME}}</div>
-        </div>
-        <div class="row my_profile_border">
-          <div class="col profile_color">State :</div>
-          <div class="col my_profile_css">{{profile.STATE_NAME}}</div>
-        </div>
-        <div class="row my_profile_border">
-          <div class="col profile_color">Region :</div>
-          <div class="col my_profile_css"> {{profile.REGION_NAME}}</div>
-        </div>
-      <div class="row my_profile_border" ng-if="rlid==3">
-        <div class="col profile_color">Distributor Code :</div>
-        <div class="col my_profile_css">{{profile.DIST_CODE}}</div>
-      </div>
-
-
-
-      <div class="row my_profile_border" ng-if="rlid==3">
-        <div class="col profile_color">Date Of Anniversary :</div>
-        <div class="col my_profile_css">{{profile.DOA}}</div>
-      </div>
-
-      <div class="row my_profile_border" ng-if="rlid==3">
-        <div class="col profile_color">Sales Person 1 :</div>
-        <div class="col my_profile_css">{{profile.slm1name}}</div>
-      </div>
-      <div class="row my_profile_border" ng-if="rlid==3">
-        <div class="col profile_color">Sales Person 2 :</div>
-        <div class="col my_profile_css">{{profile.slm2name}}</div>
-      </div>
-      <div class="row my_profile_border" ng-if="rlid==3">
-        <div class="col profile_color">Sales Person 3 :</div>
-        <div class="col my_profile_css">{{profile.slm3name}}</div>
-      </div>
-      </ion-item
-    </ion-list>
-  </ion-content>
-</ion-view>
--->
 <ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
   <ion-content class="">
     <p class="title" style="text-align: center; padding-top: 0.5em;">Profile Information</p>
     <ion-list class="card" id="grad1">
-      <ion-item class="padding-top font_size">
+      <ion-item class="padding-top item-text-wrap font_size">
         <div class="row">
-          <div class="col profile_color">My Name :</div>
+          <div class="col profile_color">Name :</div>
           <div class="col my_profile_css">{{profile.FULL_NAME}}</div>
         </div>
         <div class="row">
-          <div class="col profile_color">My Firm Name :</div>
+          <div class="col profile_color">Firm Name :</div>
           <div class="col my_profile_css">{{profile.FIRM_NAME}}</div>
         </div>
         <div class="row" ng-if="rlid==3">
@@ -88,21 +17,21 @@
           <div class="col my_profile_css">{{profile.DIST_CODE}}</div>
         </div>
         <div class="row">
-          <div class="col profile_color">Mobile Number :</div>
+          <div class="col profile_color">Mobile :</div>
           <div class="col my_profile_css">{{profile.MOBILE_PHONE}}</div>
         </div>
         <div class="row" ng-if="rlid==3">
-          <div class="col profile_color">Alternative Mobile Number :</div>
+          <div class="col profile_color">Alternative Mobile :</div>
           <div class="col my_profile_css">{{profile.MOBILE2}}</div>
         </div>
         <div class="row">
-          <div class="col profile_color">Email Id :</div>
+          <div class="col profile_color">Email:</div>
           <div class="col my_profile_css">{{profile.EMAIL_ID}}</div>
         </div>
 
         <div class="row">
           <div class="col profile_color">Date Of Birth :</div>
-          <div class="col my_profile_css">{{profile.DOB}}</div>
+          <div class="col my_profile_css">{{profile.DOB | date:'dd/MM/yyyy'}}</div>
         </div>
         <div class="row" ng-if="rlid==4">
           <div class="col profile_color">Distributor Firm Name :</div>

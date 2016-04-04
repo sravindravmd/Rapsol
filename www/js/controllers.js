@@ -9,7 +9,7 @@ angular.module('starter.controllers', [])
     $scope.note=0;
     $scope.goto= function () {
       $state.go('app.note');
-      $scope.note=0;
+      //$scope.note=0;
 
     }
 
@@ -24,7 +24,7 @@ angular.module('starter.controllers', [])
      }
 
 
-    $interval(intervalnotes,300000);
+    $interval(intervalnotes,3000);
     //$interval(intervalnotes,300000);
 
 
@@ -57,9 +57,9 @@ angular.module('starter.controllers', [])
       $scope.mobile="";
 
 
-    $ionicHistory.nextViewOptions({
+   /* $ionicHistory.nextViewOptions({
       disableBack:true
-    });
+    });*/
 
 
     $scope.forgotPassword= function () {
@@ -187,7 +187,7 @@ angular.module('starter.controllers', [])
               userinfoService.setUserinfo(data);
               userinfoService.setUsermobile(mobile);
 
-              $state.go('app.otp');
+              $state.go('main.otp');
 
               //alert(data);
               // 'new_password='+createpass.password+'&confirm_password='+createpass.conPassword
@@ -655,7 +655,7 @@ angular.module('starter.controllers', [])
     intialdata();
   })
 
-  .controller('MyTeamsOrderDtlCtrl', function ($stateParams,OrderHistoryService,$scope,userinfoService,$ionicLoading,$http,$ionicPopup,API_ENDPOINT) {
+  .controller('MyTeamsOrderDtlCtrl', function ($stateParams,OrderHistoryService,$scope,userinfoService,$ionicLoading,$http,$ionicPopup,API_ENDPOINT,$state) {
     var orderId= $stateParams.id;
 
     $scope.show = function() {   $ionicLoading.show({     template: '<p>Loading...</p><ion-spinner class="spinner-energized" icon="spiral"></ion-spinner>' 
@@ -702,6 +702,13 @@ angular.module('starter.controllers', [])
 
           if(data.status==1){
             $scope.approvestatus=true;
+            if(roldeId==3){
+              $state.go('app.mydisteam_order',null,{reload:true});
+
+            } else{
+              $state.go('app.myteam_order',null,{reload:true});
+            }
+
             var alertPopup = $ionicPopup.alert({
               title: 'Order Approved successfully'
             });
@@ -742,6 +749,12 @@ angular.module('starter.controllers', [])
 
           if(data.status==1){
             $scope.approvestatus=true;
+            if(roldeId==3){
+              $state.go('app.mydisteam_order',null,{reload:true});
+
+            } else{
+              $state.go('app.myteam_order',null,{reload:true});
+            }
             var alertPopup = $ionicPopup.alert({
               title: 'Order Rejected successfully'
             });
@@ -766,7 +779,7 @@ angular.module('starter.controllers', [])
 
 
   })
-    .controller('DistOrderDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+  .controller('DistOrderDetailCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -1723,10 +1736,11 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
   .controller('MainCtrl', function ($scope) {
 
   })
-  .controller('notelistCtrl', function ($scope,notificationListService,userinfoService,$stateParams) {
+  .controller('notelistCtrl', function ($scope,notificationListService,userinfoService,$stateParams,API_ENDPOINT,$location,$window,$http) {
 
-
+    $scope.url=API_ENDPOINT.url;
     $scope.roleId=userinfoService.getRoleInfo().roleid;
+    var userId=userinfoService.getUserFKID().FKID;
 
     notificationListService.getnotiList().success(function (data) {
 
@@ -1742,8 +1756,15 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
       $scope.nave='myteam_order';
     }
 
+    $scope.confirmnote= function (noteid) {
+      //$location.absUrl()= API_ENDPOINT.url+'/services.php/pushnotificationsupdate/'+userId+'/'+noteid;
+     //console.log('url url url', $location.absUrl()=API_ENDPOINT.url+'/services.php/pushnotificationsupdate/'+userId+'/'+noteid);
 
-    console.log();
+
+      $http.get(API_ENDPOINT.url+'/services.php/pushnotificationsupdate/'+userId+'/'+noteid);
+
+    }
+
 
   })
 

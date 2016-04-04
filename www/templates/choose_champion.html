@@ -18,11 +18,14 @@
         </select>
       </label>
     </div>
-    <div class="" ng-show="showrecommendation">
-      <ul class="list">
-        <li class="item" style="background-color: #cccccc;"><strong>CC:</strong> {{recmds[0].CC}}</li><br>
-        <li class="item" style="background-color: #cccccc;"><strong>Repsol Recommendation Oil :</strong>{{recmds[0].REC_RECOMMENDATION}}</li>
-      </ul>
+    <div class="padding" ng-show="showrecommendation">
+      <p style="text-align: center"><strong>CC:</strong> {{recmds[0].CC}}</p>
+      <div class="row">
+        <div class="col custom-dark3" style="text-align: center;font-size: 1em">Repsol Recommendation Oil</div>
+      </div>
+      <div class="row">
+        <div class="col custom-dark4 padding" style="text-align: center;height: 45px; font-size: 1.3em">{{recmds[0].REC_RECOMMENDATION}}</div>
+      </div>
     </div>
   </ion-content>
 </ion-view>
