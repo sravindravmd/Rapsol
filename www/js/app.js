@@ -196,6 +196,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             }
         })
 
+
         .state('app.order', {
             url: '/order',
             views: {
@@ -408,6 +409,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 }
             }
         })
+      .state('app.retailerDetails', {
+        url: '/retailerDetails/:id',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/retailerDetails.html',
+            controller: 'retailerDetailsCtrl'
+          }
+        }
+      })
       .state('app.mydisteam_order', {
         url: '/mydisteam_order/:id',
         views: {
@@ -423,6 +433,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
           'menuContent': {
             templateUrl: 'templates/orderMyTeamDetail.html',
             controller: 'MyTeamsOrderDtlCtrl'
+          }
+        }
+      })
+      .state('app.retailerDtls', {
+        url: '/retailerDtls/:id',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/retailerDtls.html',
+            controller: 'retailerDetailsCtrl2'
           }
         }
       })

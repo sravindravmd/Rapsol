@@ -14,7 +14,7 @@
         </div>
         <div class="row" ng-if="rlid==3">
           <div class="col profile_color">Distributor Code :</div>
-          <div class="col my_profile_css">{{profile.DIST_CODE}}</div>
+          <div class="col my_profile_css">{{profile.MEMBER_CODE}}</div>
         </div>
         <div class="row">
           <div class="col profile_color">Mobile :</div>
@@ -39,7 +39,7 @@
         </div>
         <div class="row" ng-if="rlid==3">
           <div class="col profile_color">Date Of Anniversary :</div>
-          <div class="col my_profile_css">{{profile.DOA}}</div>
+          <div class="col my_profile_css">{{profile.DOA  |date:'dd/MM/yyyy'}}</div>
         </div>
 
         <div class="row" ng-if="rlid==3">

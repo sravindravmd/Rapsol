@@ -112,6 +112,7 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
 
   .factory('OrderHistoryService', function ($http,API_ENDPOINT,userinfoService) {
     var OrderHis=[];
+    var rtls=[];
    var roldeId= userinfoService.getRoleInfo().roleid;
     var userId=userinfoService.getUserFKID().FKID;
 
@@ -138,7 +139,29 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
           }
         }
 
+      },
+
+      getRetailers: function (tempId) {
+        console.log("tempid",tempId)
+        return  $http.get(API_ENDPOINT.url+'/services.php/myteamretailers/'+userId+'/'+roldeId+'/'+0+'/'+0+'/'+0).success(function (data) {
+          console.log('retailers data',data.retailerdetails);
+
+          rtls=data.retailerdetails;
+          console.log('order history service length',rtls.length);
+          return data.retailerdetails;
+
+        })
+      },
+      getretailDtl: function (id) {
+        for(i=0;i<rtls.length;i++){
+          if(rtls[i].MEMBER_FK_ID==id){
+            return rtls[i];
+          }
+        }
+
       }
+
+
     }
 
   })
@@ -147,7 +170,7 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
 
       getNotes: function () {
         var userId=userinfoService.getUserFKID().FKID;
-        console.log('>>>',userId)
+        console.log('>>>',userId);
 
 
           return $http.get(API_ENDPOINT.url+'/services.php/pushnotifications/'+userId).success(function (data) {

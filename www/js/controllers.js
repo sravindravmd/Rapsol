@@ -4,9 +4,10 @@
 angular.module('starter.controllers', [])
 
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,notesService, $interval,userinfoService,$state) {
+.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,notesService, $interval,userinfoService,$state,$rootScope) {
     userinfoService.insertdumy();
-    $scope.note=0;
+
+    $rootScope.note=0;
     $scope.goto= function () {
       $state.go('app.note');
       //$scope.note=0;
@@ -18,7 +19,7 @@ angular.module('starter.controllers', [])
        if(userinfoService.getUserFKID().FKID!==undefined){
        notesService.getNotes().success(function (data) {
 
-         $scope.note=data.count
+         $rootScope.note=data.count
          console.log("notes Ctrl",data.count);
        });}
      }
@@ -85,10 +86,9 @@ angular.module('starter.controllers', [])
         $scope.show($ionicLoading);
         $http.get(API_ENDPOINT.url+'/services.php/userlogin/'+mobile+'/'+password).success(function (data) {
 
-          console.log('user info message',data.Message);
-          switch (data.Message){
 
-            case 'Invliad credentials':
+          switch (data.data.message){
+            case 'Invalid credentials':
 
               var alertPopup = $ionicPopup.alert({
                 title: 'Invalid credentials'
@@ -96,7 +96,7 @@ angular.module('starter.controllers', [])
                   break;
           }
 
-          console.log('data.data.user',data.data.user)
+
 
           switch(data.data.message){
             case 'Succesfully logined In.': var FKID=data.data.user.MEMBER_FK_ID;
@@ -105,8 +105,6 @@ angular.module('starter.controllers', [])
               userinfoService.setUsername(username)
               var role=data.data.user.ROLE_FK_ID;
               userinfoService.setRoleInfo(role);
-              console.log(data.data.message.Message);
-              console.log('user info media ',data.data.message);
 
               $timeout(function () {
 
@@ -331,23 +329,28 @@ angular.module('starter.controllers', [])
           //console.log(success.users)
         })
           .error(function(data, status, headers, config){
+            console.log('registration',data);
             var alertPopup = $ionicPopup.alert({
               title: 'Registration  failed!',
               template: 'Please check your mobile number'
             });
           console.log(data, status, headers, config)
         }).finally(function($ionicLoading) {
-          // On both cases hide the loading
           $scope.hide($ionicLoading);
         });
 
         function callAtTimeout() {
-          console.log("Timeout occurred");
-          $state.go('main.otp');
+          //$state.go('main.otp');
+
+          var alertPopup = $ionicPopup.alert({
+            title: 'Registration successful',
+            template: 'Your registration request has been sent for approval '
+          });
+          $state.go('main.login');
         }
 
 
-        // $state.go('app.login');
+
         }
 
       $scope.customerRegistration= function (customer,customerRegForm,choose) {
@@ -399,7 +402,7 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
     })
 
-    .controller('DistHomeCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$ionicHistory,API_ENDPOINT,userinfoService,$http) {
+    .controller('DistHomeCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$ionicHistory,API_ENDPOINT,userinfoService,$http,$rootScope) {
       $ionicHistory.clearHistory();
      // console.log('<<<<<<<<>>>>>>',userinfoService.getUsername())
       //$scope.Username=userinfoService.getUsername().Username;
@@ -407,7 +410,11 @@ angular.module('starter.controllers', [])
 
     var userId;
     var roleId=$scope.rlid=userinfoService.getRoleInfo().roleid;
+
     // $scope.rlid=3;
+    if(roleId==5 || roleId==4){
+      $rootScope.hidenot=true;
+    }
 
     userId=userinfoService.getUserFKID().FKID;
 
@@ -419,6 +426,8 @@ angular.module('starter.controllers', [])
       console.log('User Profile Details',results.data.userDetails);
     }).catch(function (error) {
       alert('Something went wrong!!!!')
+    }).finally(function () {
+
     })
 
 
@@ -463,6 +472,10 @@ angular.module('starter.controllers', [])
     $scope.MyDisTeamOrders= function () {
       $state.go('app.mydisteam_order');
     };
+
+    $scope.retailerDetails= function () {
+      $state.go('app.retailerDetails');
+    }
 
     })
 
@@ -1184,7 +1197,7 @@ angular.module('starter.controllers', [])
         }).success(function (data) {
           console.log(data);
           var alertPopup = $ionicPopup.alert({
-            title: 'Order created successfully'
+            title: 'Order request sent successfully'
           });
           $ionicHistory.goBack();
           console.log('data',data);
@@ -1506,9 +1519,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
         //alert(data);
 
         $http.get(API_ENDPOINT.url+'/services.php/userlogin/'+mobile+'/'+createpass.password).success(function (data) {
-
-          console.log('user info',data.data.user.ROLE_FK_ID);
-          console.log('new user info',data.data.user);
+          console.log('user info',data);
 
 
           var role=data.data.user.ROLE_FK_ID;
@@ -1736,7 +1747,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
   .controller('MainCtrl', function ($scope) {
 
   })
-  .controller('notelistCtrl', function ($scope,notificationListService,userinfoService,$stateParams,API_ENDPOINT,$location,$window,$http) {
+  .controller('notelistCtrl', function ($scope,notificationListService,userinfoService,$stateParams,API_ENDPOINT,$location,$window,$http,$rootScope) {
 
     $scope.url=API_ENDPOINT.url;
     $scope.roleId=userinfoService.getRoleInfo().roleid;
@@ -1757,9 +1768,8 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
     }
 
     $scope.confirmnote= function (noteid) {
-      //$location.absUrl()= API_ENDPOINT.url+'/services.php/pushnotificationsupdate/'+userId+'/'+noteid;
-     //console.log('url url url', $location.absUrl()=API_ENDPOINT.url+'/services.php/pushnotificationsupdate/'+userId+'/'+noteid);
 
+      $rootScope.note--;
 
       $http.get(API_ENDPOINT.url+'/services.php/pushnotificationsupdate/'+userId+'/'+noteid);
 
@@ -1768,4 +1778,112 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
   })
 
+  .controller('retailerDetailsCtrl', function ($scope,OrderHistoryService,$ionicLoading,userinfoService,$stateParams) {
+
+    console.log('>>>>>>>>>>>>>>>>',$stateParams);
+
+    var tempOrderId=0;
+
+    if($stateParams.id!==""){
+      //alert('Null');
+      tempOrderId= $stateParams.id;
+      //tempOrderId=1;
+    }
+
+
+    var roldeId= userinfoService.getRoleInfo().roleid;
+    var userId=userinfoService.getUserFKID().FKID;
+    $scope.userId=userId;
+    $scope.show = function() {   $ionicLoading.show({     template: '<p>Loading...</p><ion-spinner class="spinner-energized" icon="spiral"></ion-spinner>'
+    }); };
+    $scope.hide = function(){
+      $ionicLoading.hide();
+    };
+    function intialdata(){
+      $scope.show($ionicLoading);
+      OrderHistoryService.getRetailers(tempOrderId).success(function (orders) {
+        $scope.rtldetails=orders.retailerdetails;
+        console.log('retail data',orders.retailerdetails)
+        $scope.hide($ionicLoading);
+
+      })
+
+
+    }
+    intialdata();
+  })
+
+  .controller('retailerDetailsCtrl2', function ($stateParams,OrderHistoryService,$scope,userinfoService,$ionicLoading,$http,$ionicPopup,API_ENDPOINT,$state) {
+    var orderId= $stateParams.id;
+
+    $scope.show = function() {   $ionicLoading.show({     template: '<p>Loading...</p><ion-spinner class="spinner-energized" icon="spiral"></ion-spinner>'
+    }); };
+    $scope.hide = function(){
+      $ionicLoading.hide();
+    };
+    var userId=userinfoService.getUserFKID().FKID;
+    $scope.userId=userId;
+    var roldeId= userinfoService.getRoleInfo().roleid;
+
+    $scope.roleId=roldeId;
+    /*if(userinfoService.getUserInfo().userId==undefined){
+     userId=userinfoService.getUserFKID().FKID;
+     } else{
+     userId=userinfoService.getRoleInfo().userId;
+     }*/
+
+    $scope.OrderDtl=OrderHistoryService.getretailDtl(orderId);
+
+    console.log('Details',$scope.OrderDtl)
+
+    $scope.Approve= function () {
+      var userId=userinfoService.getUserFKID().FKID;
+
+
+      var remark=prompt('Please provide Remark');
+      if(remark){
+        $http({
+          method:'POST',
+          url:API_ENDPOINT.url+'/services.php/retailerstatus',
+          headers: {
+            'Content-Type': "application/x-www-form-urlencoded"
+          },
+          data:'userid='+userId+'&retailerid='+orderId+'&status='+1
+
+        }).success(function (data) {
+          $scope.hide($ionicLoading);
+          console.log('Approved successfully')
+
+          console.log('data',data);
+
+          if(data.status==1){
+            $scope.approvestatus=true;
+              $state.go('app.retailerDetails',null,{reload:true});
+
+
+            var alertPopup = $ionicPopup.alert({
+              title: 'Order Approved successfully'
+            });
+            OrderHistoryService.getRetailers();
+          }
+        }).error(function(){
+          console.log('Something wrong')
+          var alertPopup = $ionicPopup.alert({
+            title: 'Something wrong'
+          });
+
+        }).finally(function($ionicLoading) {
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);
+        });
+
+      } else{
+        alert('remark required');
+      }
+    }
+
+
+
+
+  })
 ;

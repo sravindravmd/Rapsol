@@ -16,10 +16,10 @@
         <li class="item padingremove odd line"><strong>Product Quantity : </strong> {{OrderDtl.PROD_QTY}}</li>
         <div ng-if="OrderDtl.ROLE_FK_ID==3">
           <li class="item padingremove"><strong>UOM : </strong> {{OrderDtl.PROD_UOM}}</li>
-          <li class="item padingremove odd"><strong>Product Billing Price : </strong> Need to provide</li>
+        <!--  <li class="item padingremove odd"><strong>Product Billing Price : </strong> Need to provide</li>-->
           <li class="item padingremove"><strong>Product Discount Price : </strong>{{OrderDtl.PROD_DISCOUNT}}</li>
           <li class="item padingremove odd"><strong>Product Landingprice : </strong>{{OrderDtl.landingprice}}</li><hr/>
-          <li class="item padingremove"><strong>Product Qty in Liters : </strong>{{OrderDtl.PROD_UOM}}*{{OrderDtl.PROD_QTY}}</li>
+          <li class="item padingremove"><strong>Product Qty in Liters : </strong>{{(OrderDtl.PROD_UOM) * (OrderDtl.PROD_QTY)}}</li>
           <li class="item padingremove odd"><strong>Product Amount : </strong>{{OrderDtl.ORD_AMOUNT}}</li>
         </div>
       <div ng-if="OrderDtl.ROLE_FK_ID==4">

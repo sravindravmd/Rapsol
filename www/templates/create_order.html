@@ -6,14 +6,14 @@
     </div>
     <div class="list padding">
       <label class="item item-input item-select custom-dark3">
-        <div class="input-label item-text-wrap" style="color:white;font-size: 1.1em">Select Segment</div>
+        <div class="input-label item-text-wrap" style="color:white;font-size: 1.1em">Segment</div>
         <select name="retailCreateOrderSegment" ng-model="retailCreateOrderSegment" ng-change="retailsegmentDetail(retailCreateOrderSegment)" class="custom-dark3" style="color:white;font-size: 1.1em"
                 ng-options="retailCreateOrderSegment.SEG_PK_ID as retailCreateOrderSegment.SEG_NAME for retailCreateOrderSegment in retailCreateOrderSegments">
           <option style="display:none; font-size: 10px;" value="" >&nbsp;</option>
         </select>
       </label><br>
       <label class="item item-input item-select custom-dark3">
-        <div class="input-label item-text-wrap" style="color:white;font-size: 1.1em">Select Product</div>
+        <div class="input-label item-text-wrap" style="color:white;font-size: 1.1em">Product</div>
         <select name="retailCreateProduct" ng-model="retailCreateProduct" ng-change="retailcreateproductDetail(retailCreateProduct)" class="custom-dark3" ng-disabled="disproduct"
                 style="color:white;font-size: 1.1em" ng-options="retailCreateProduct.PROD_PK_ID as retailCreateProduct.PROD_NAME for retailCreateProduct in retailCreateproducts">
           <option style="display:none; font-size: 10px;" value=""  ></option>
@@ -38,7 +38,7 @@
         </div>
         <div class="row product_margin">
           <div class="col custom-dark3">MRP Per Pack :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_MRF}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_MRF | number:2}}</strong></div>
         </div>
         <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark3">Billing Price Per Liter :</div>
@@ -50,7 +50,7 @@
         </div>
         <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark3">Landing Price Per Liter :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_BILLING_PRICE_PER_LITER-products.proDis}} </strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_BILLING_PRICE_PER_LITER-products.proDis | number:2}} </strong></div>
         </div>
         <div class="row product_margin" ng-show="rlid==3">
           <div class="col custom-dark1">Order Qty in Nos :</div>
@@ -58,34 +58,39 @@
         </div>
         <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark3">Order Qty in Liters :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{oqin*products.PROD_UOM}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{ (oqin) *(products.PROD_UOM)}}</strong></div>
         </div>
         <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark1">Order Amount :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{(oqin*products.PROD_UOM)*(products.PROD_BILLING_PRICE_PER_LITER-products.proDis)}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{((oqin*products.PROD_UOM)*(products.PROD_BILLING_PRICE_PER_LITER-products.proDis))| number:2}}</strong></div>
         </div>
         <div class="row product_margin" ng-if="rlid==4">
           <div class="col custom-dark3">DLP Per Pack:</div>
-          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_DLP}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_DLP | number:2}}</strong></div>
         </div>
         <div class="row product_margin" ng-if="rlid==4">
           <div class="col custom-dark3">Product Discount Per Pack :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_DISCOUNT_PER_PACK}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_DISCOUNT_PER_PACK == null ? products.proDis : products.offDis | number:2}}</strong></div>
         </div> <div class="row product_margin" ng-if="rlid==4">
         <div class="col custom-dark3">Landing Price Per Pack :</div>
-        <div class="col custom-dark2"><strong class="product_font">{{(products.PROD_DLP)-products.PROD_DISCOUNT_PER_PACK}}</strong></div>
+        <div class="col custom-dark2"><strong class="product_font">{{(products.PROD_DLP)-products.PROD_DISCOUNT_PER_PACK | number:2}}</strong></div>
       </div> <div class="row product_margin" ng-show="rlid==4">
         <div class="col custom-dark3">Order Qty in Nos  :</div>
         <div class="col custom-dark2"><input type="number"  ng-model="oqin"></div>
       </div><div class="row product_margin" ng-if="rlid==4">
         <div class="col custom-dark3">Order Amount :</div>
-        <div class="col custom-dark2"><strong class="product_font">{{oqin*(products.PROD_DLP-products.PROD_DISCOUNT_PER_PACK)}}</strong></div>
+        <div class="col custom-dark2"><strong class="product_font">{{(oqin*(products.PROD_DLP-products.PROD_DISCOUNT_PER_PACK))| number:2}}</strong></div>
       </div>
       </div>
 
     </div>
     <div style="text-align: center"  class="padding-top"><button class="button button-small custom-dark1" ng-disabled="oqin<=0" ng-show="rlid==4" ng-click="confirmorderForRetailer(oqin)">Order</button></div>
     <div style="text-align: center"  class="padding-top"><button class="button button-small custom-dark1" ng-disabled="oqin<=0"  ng-show="rlid==3" ng-click="confirmorderForDistributor(oqin)">Order</button></div>
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 
   </ion-content>
 </ion-view>

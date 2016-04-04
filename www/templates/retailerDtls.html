@@ -1,0 +1,38 @@
+<ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
+  <ion-content>
+    <h3 class="padding-top" style="text-align: center">Details View</h3>
+    <div class=" custom-dark3">
+      <div class="row">
+        <div class="col"><strong>Firm Name: </strong>{{OrderDtl.disfirmname}}</div>
+      </div>
+      <div class="row">
+        <div class="col"><strong>Distributor: </strong>{{OrderDtl.disname}}</div>
+      </div>
+    </div>
+    <ul class="list item-text-wrap">
+      <li class="item padingremove line"><strong>Distributor Code  : </strong> {{OrderDtl.dismembercode}}</li>
+      <li class="item padingremove odd line"><strong>Retailer Firm name: </strong> {{OrderDtl.FIRM_NAME}}</li>
+      <li class="item padingremove line"><strong>Mobile : </strong> {{OrderDtl.MOBILE_PHONE}}</li>
+      <li class="item padingremove odd line"><strong>Email : </strong> {{OrderDtl.EMAIL_ID}}</li>
+
+        <li class="item padingremove"><strong>City : </strong> {{OrderDtl.CITY_NAME}}</li>
+        <li class="item padingremove odd"><strong>State : </strong>{{OrderDtl.STATE_NAME}}</li><hr/>
+        <li class="item padingremove"><strong>Region : </strong>{{OrderDtl.REGION_NAME}}</li>
+    </ul>
+
+    <div class="row item-text-wrap" style="text-align:center !important;">
+
+      <button class="button button-small button-positive" ng-disabled="approvestatus" ng-click="Approve()">
+        Approve
+      </button>
+      </div>
+
+    </div>
+    <br/>
+    <br/>
+    <br/>
+
+
+
+  </ion-content>
+</ion-view>

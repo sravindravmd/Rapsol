@@ -1,22 +1,20 @@
 
-<ion-view view-title="Product Detail" xmlns="http://www.w3.org/1999/html">
+<ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
   <ion-content>
-    <h2 class="title" style="text-align: center; padding-top: 0.5em;"></h2>
-    <div name="product padding">
-      <div class="list padding">
-        <label class="item item-input item-select custom-dark2">
-          <div class="input-label item-text-wrap">Select Segment</div>
-          <select name="retailCreateOrderSegment" ng-model="retailCreateOrderSegment" ng-change="retailsegmentDetail(retailCreateOrderSegment)" class="custom-dark2" >
-            <option class="custom-dark2"  value="{{retailCreateOrderSegment.SEG_PK_ID}}" ng-repeat="retailCreateOrderSegment in retailCreateOrderSegments" >{{retailCreateOrderSegment.SEG_NAME}}</option>
-          </select>
-        </label>
-      </div>
-    </div>
-    <div class="list padding" >
-      <label class="item item-input item-select custom-dark2">
-        <div class="input-label item-text-wrap">Select Product</div>
-        <select name="retailCreateProduct" ng-model="retailCreateProduct" ng-change="retailcreateproductDetail(retailCreateProduct)" class="custom-dark2" ng-disabled="disproduct">
-          <option class="custom-dark2" value="{{retailCreateProduct.PROD_PK_ID}}" ng-repeat="retailCreateProduct in retailCreateproducts" >{{retailCreateProduct.PROD_NAME}}</option>
+    <p class="title" style="text-align: center; padding-top: 0.5em;">Product Details</p>
+    <div class="list padding">
+      <label class="item item-input item-select custom-dark3">
+        <div class="input-label item-text-wrap" style="color:white;font-size: 1.1em">Segment</div>
+        <select name="retailCreateOrderSegment" ng-model="retailCreateOrderSegment" ng-change="retailsegmentDetail(retailCreateOrderSegment)" class="custom-dark3" style="color:white;font-size: 1.1em"
+                ng-options="retailCreateOrderSegment.SEG_PK_ID as retailCreateOrderSegment.SEG_NAME for retailCreateOrderSegment in retailCreateOrderSegments">
+          <option style="display:none; font-size: 10px;" value="" >&nbsp;</option>
+        </select>
+      </label><br>
+      <label class="item item-input item-select custom-dark3">
+        <div class="input-label item-text-wrap" style="color:white;font-size: 1.1em">Product</div>
+        <select name="retailCreateProduct" ng-model="retailCreateProduct" ng-change="retailcreateproductDetail(retailCreateProduct)" class="custom-dark3" ng-disabled="disproduct"
+                style="color:white;font-size: 1.1em" ng-options="retailCreateProduct.PROD_PK_ID as retailCreateProduct.PROD_NAME for retailCreateProduct in retailCreateproducts">
+          <option style="display:none; font-size: 10px;" value=""  ></option>
         </select>
       </label>
     </div>
@@ -46,7 +44,7 @@
         </div>
         <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark3">Product Discount Per Liter :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{products.proDis}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.offDis == null ? products.proDis : products.offDis}}</strong></div>
         </div>
         <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark3">Landing Price Per Liter :</div>
