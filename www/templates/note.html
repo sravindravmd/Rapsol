@@ -8,7 +8,7 @@
 
     <ion-list class="card" ng-repeat="order in list">
       <ion-item class="item-text-wrap borderline" ng-class-even="'even'">
-        <a href="#/app/{{nave}}/{{order.REFERENCE_ID}}" class="acolor" ng-click="confirmnote(order.NOTI_PK_ID)">
+        <a href="#/app/{{order.NOTI_TYPE=='retailer'? navretl : nave}}/{{order.REFERENCE_ID}}" class="acolor" ng-click="confirmnote(order.NOTI_PK_ID)">
           <div class="row padingremove">
             <div class="col">
               <strong>Type:</strong>  {{order.NOTI_TYPE}}

@@ -1,9 +1,6 @@
 <ion-view  title='<img class="title-image" src="img/logo.png">'align-title="center">
   <ion-content>
-    <!--<p class="title" style="text-align: center; padding-top: 0.5em;">Create Order</p>-->
-    <div class="tabs tabs-icon-top static">
-      <p>Create Order</p>
-    </div>
+    <p class="title" style="text-align: center; padding-top: 0.5em;">Create Order</p>
     <div class="list padding">
       <label class="item item-input item-select custom-dark3">
         <div class="input-label item-text-wrap" style="color:white;font-size: 1.1em">Segment</div>
@@ -46,7 +43,7 @@
         </div>
         <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark3">Product Discount Per Liter :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{products.proDis}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.offDis == null ? products.proDis : products.offDis | number:2}}</strong></div>
         </div>
         <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark3">Landing Price Per Liter :</div>

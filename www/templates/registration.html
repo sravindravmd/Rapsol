@@ -57,7 +57,7 @@
         <input value='4' name="roleid" ng-model="retailer.roleid" ng-show="false">
         <label class="item-input margn_top"><input placeholder="Retailer Firm Name" type="text" name="firmname" ng-model="retailer.firmname" required/></label>
         <label class="item-input margn_top"><input placeholder="Retailer Name" type="text" name="fname" ng-model="retailer.fname" required/></label>
-        <label class="item-input margn_top"><input placeholder="Mobile Number" type="tel" name="mobile" ng-model="retailer.mobile" required/></label>
+        <label class="item-input margn_top"><input placeholder="Mobile Number" type="tel" name="mobile" ng-model="retailer.mobile" minlength="10" maxlength="10" required/></label>
         <label class="item-input margn_top"><input placeholder="Email Id" type="email" name="email" ng-model="retailer.email" required/></label>
         <label class="item-input margn_top"><input placeholder="Date of Birth"  type="text" name="dob" ng-model="retailer.dob" date-parser="dd/MM/yyyy" onfocus="(this.type='date')" required/></label><br>
         <div>

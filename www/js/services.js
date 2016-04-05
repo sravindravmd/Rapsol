@@ -143,7 +143,7 @@ angular.module('starter.services', []).constant('AUTH_EVENTS', {
 
       getRetailers: function (tempId) {
         console.log("tempid",tempId)
-        return  $http.get(API_ENDPOINT.url+'/services.php/myteamretailers/'+userId+'/'+roldeId+'/'+0+'/'+0+'/'+0).success(function (data) {
+        return  $http.get(API_ENDPOINT.url+'/services.php/myteamretailers/'+userId+'/'+roldeId+'/'+0+'/'+0+'/'+tempId).success(function (data) {
           console.log('retailers data',data.retailerdetails);
 
           rtls=data.retailerdetails;

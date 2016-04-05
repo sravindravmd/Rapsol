@@ -22,7 +22,7 @@
 
     <div class="row item-text-wrap" style="text-align:center !important;">
 
-      <button class="button button-small button-positive" ng-disabled="approvestatus" ng-click="Approve()">
+      <button class="button button-small button-positive" ng-show="OrderDtl.APPROVED==0" ng-disabled="approvestatus" ng-click="Approve()">
         Approve
       </button>
       </div>

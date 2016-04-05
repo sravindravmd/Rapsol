@@ -5,7 +5,7 @@ angular.module('starter.controllers', [])
 
 
 .controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,notesService, $interval,userinfoService,$state,$rootScope) {
-    userinfoService.insertdumy();
+    //userinfoService.insertdumy();
 
     $rootScope.note=0;
     $scope.goto= function () {
@@ -13,10 +13,14 @@ angular.module('starter.controllers', [])
       //$scope.note=0;
 
     }
+    $rootScope.usernote="";
 
+    console.log('Before login',$rootScope.usernote)
      var intervalnotes=function(){
 
-       if(userinfoService.getUserFKID().FKID!==undefined){
+       if($rootScope.usernote!==""){
+
+         console.log('After login',$rootScope.usernote)
        notesService.getNotes().success(function (data) {
 
          $rootScope.note=data.count
@@ -25,7 +29,7 @@ angular.module('starter.controllers', [])
      }
 
 
-    $interval(intervalnotes,3000);
+   $interval(intervalnotes,3000);
     //$interval(intervalnotes,300000);
 
 
@@ -325,7 +329,7 @@ angular.module('starter.controllers', [])
           $scope.regsuccess=true;
           console.log('registration data for retailer',data)
 
-            $timeout(callAtTimeout, 3000);
+            $timeout(callAtTimeout, 300);
           //console.log(success.users)
         })
           .error(function(data, status, headers, config){
@@ -346,7 +350,7 @@ angular.module('starter.controllers', [])
             title: 'Registration successful',
             template: 'Your registration request has been sent for approval '
           });
-          $state.go('main.login');
+          $state.go('main.home');
         }
 
 
@@ -404,8 +408,6 @@ angular.module('starter.controllers', [])
 
     .controller('DistHomeCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state,$ionicHistory,API_ENDPOINT,userinfoService,$http,$rootScope) {
       $ionicHistory.clearHistory();
-     // console.log('<<<<<<<<>>>>>>',userinfoService.getUsername())
-      //$scope.Username=userinfoService.getUsername().Username;
     ionicMaterialInk.displayEffect();
 
     var userId;
@@ -416,7 +418,7 @@ angular.module('starter.controllers', [])
       $rootScope.hidenot=true;
     }
 
-    userId=userinfoService.getUserFKID().FKID;
+   $rootScope.usernote=userId=userinfoService.getUserFKID().FKID;
 
 
     $http.get(API_ENDPOINT.url+'/services.php/viewprofile/'+userId+'/'+roleId).then(function(results){
@@ -1142,6 +1144,7 @@ angular.module('starter.controllers', [])
       });
       $scope.canbook=true;
       $scope.retailsegmentDetail= function (retailCreateProduct) {
+        $scope.products={};
         $scope.show($ionicLoading);
         $scope.disproduct=false;
         $http.get(API_ENDPOINT.url+'/services.php/productlist/'+retailCreateProduct+'/0/0').then(function(results){
@@ -1737,8 +1740,8 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
     $ionicHistory.clearHistory();
     console.log('logout removing data');
     userinfoService.removeUserInfo();
-    userinfoService.insertdumy();
-    $timeout(ionic.Platform.exitApp(),300);
+    //userinfoService.insertdumy();
+    ionic.Platform.exitApp();
   })
   .controller('MainCtrl', function ($scope) {
 
@@ -1755,6 +1758,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
       console.log($scope.list)
     })
+    $scope.navretl='retailerDetails';
 
     if($scope.roleId==3){
 
@@ -1828,8 +1832,12 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
      } else{
      userId=userinfoService.getRoleInfo().userId;
      }*/
-
+    //OrderHistoryService.getRetailers();
     $scope.OrderDtl=OrderHistoryService.getretailDtl(orderId);
+
+    /*if($scope.OrderDtl.APPROVED==1){
+      $scope.approvestatus=true;
+    }*/
 
     console.log('Details',$scope.OrderDtl)
 
