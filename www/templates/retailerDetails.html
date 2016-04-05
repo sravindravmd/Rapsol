@@ -1,7 +1,7 @@
 <ion-view title='<img class="title-image" src="img/logo.png">'align-title="center" >
   <ion-content>
     <h3 class="title" style="text-align: center">Retailer's</h3>
-    <ion-list class="card" ng-repeat="order in rtldetails" ng-show="order.SALEL2_ID==userId">
+    <ion-list class="card" ng-repeat="order in rtldetails">
       <ion-item class="item-text-wrap borderline" ng-class-even="'even'">
         <a href="#/app/retailerDtls/{{order.MEMBER_FK_ID}}" class="acolor">
           <div class="row padingremove">

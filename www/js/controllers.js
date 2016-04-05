@@ -1733,16 +1733,12 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
     }
   })
 
-  .controller('LogoutCtrl', function ($state,$ionicHistory,userinfoService) {
-
+  .controller('LogoutCtrl', function ($ionicPlatform,$state,$ionicHistory,userinfoService) {
     $ionicHistory.clearHistory();
     console.log('logout removing data');
     userinfoService.removeUserInfo();
     userinfoService.insertdumy();
-    $state.go('main.home');
-
-
-
+    $timeout(ionic.Platform.exitApp(),300);
   })
   .controller('MainCtrl', function ($scope) {
 
@@ -1803,7 +1799,8 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
       $scope.show($ionicLoading);
       OrderHistoryService.getRetailers(tempOrderId).success(function (orders) {
         $scope.rtldetails=orders.retailerdetails;
-        console.log('retail data',orders.retailerdetails)
+        console.log('retail data',$scope.rtldetails)
+        console.log('retail >>>> data',orders.retailerdetails)
         $scope.hide($ionicLoading);
 
       })
