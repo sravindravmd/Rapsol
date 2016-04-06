@@ -47,7 +47,7 @@
         </div>
         <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark3">Landing Price Per Liter :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_BILLING_PRICE_PER_LITER-products.proDis | number:2}} </strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{products.PROD_BILLING_PRICE_PER_LITER-(products.offDis == null ? products.proDis : products.offDis) | number:2}} </strong></div>
         </div>
         <div class="row product_margin" ng-show="rlid==3">
           <div class="col custom-dark1">Order Qty in Nos :</div>
@@ -59,7 +59,7 @@
         </div>
         <div class="row product_margin" ng-if="rlid==3">
           <div class="col custom-dark1">Order Amount :</div>
-          <div class="col custom-dark2"><strong class="product_font">{{((oqin*products.PROD_UOM)*(products.PROD_BILLING_PRICE_PER_LITER-products.proDis))| number:2}}</strong></div>
+          <div class="col custom-dark2"><strong class="product_font">{{((oqin*products.PROD_UOM)*(products.PROD_BILLING_PRICE_PER_LITER-(products.offDis == null ? products.proDis : products.offDis)))| number:2}}</strong></div>
         </div>
         <div class="row product_margin" ng-if="rlid==4">
           <div class="col custom-dark3">DLP Per Pack:</div>
@@ -70,13 +70,13 @@
           <div class="col custom-dark2"><strong class="product_font">{{products.PROD_DISCOUNT_PER_PACK == null ? products.proDis : products.offDis | number:2}}</strong></div>
         </div> <div class="row product_margin" ng-if="rlid==4">
         <div class="col custom-dark3">Landing Price Per Pack :</div>
-        <div class="col custom-dark2"><strong class="product_font">{{(products.PROD_DLP)-products.PROD_DISCOUNT_PER_PACK | number:2}}</strong></div>
+        <div class="col custom-dark2"><strong class="product_font">{{(products.PROD_DLP)-(products.PROD_DISCOUNT_PER_PACK == null ? products.proDis : products.offDis) | number:2}}</strong></div>
       </div> <div class="row product_margin" ng-show="rlid==4">
         <div class="col custom-dark3">Order Qty in Nos  :</div>
         <div class="col custom-dark2"><input type="number"  ng-model="oqin"></div>
       </div><div class="row product_margin" ng-if="rlid==4">
         <div class="col custom-dark3">Order Amount :</div>
-        <div class="col custom-dark2"><strong class="product_font">{{(oqin*(products.PROD_DLP-products.PROD_DISCOUNT_PER_PACK))| number:2}}</strong></div>
+        <div class="col custom-dark2"><strong class="product_font">{{(oqin*(products.PROD_DLP-(products.PROD_DISCOUNT_PER_PACK == null ? products.proDis : products.offDis)))| number:2}}</strong></div>
       </div>
       </div>
 

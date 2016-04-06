@@ -29,8 +29,8 @@ angular.module('starter.controllers', [])
      }
 
 
-   $interval(intervalnotes,3000);
-    //$interval(intervalnotes,300000);
+   //$interval(intervalnotes,3000);
+    $interval(intervalnotes,300000);
 
 
 
@@ -418,7 +418,10 @@ angular.module('starter.controllers', [])
       $rootScope.hidenot=true;
     }
 
+
    $rootScope.usernote=userId=userinfoService.getUserFKID().FKID;
+
+    console.log('After Login',$rootScope.usernote);
 
 
     $http.get(API_ENDPOINT.url+'/services.php/viewprofile/'+userId+'/'+roleId).then(function(results){
@@ -1238,6 +1241,7 @@ angular.module('starter.controllers', [])
         var alertPopup = $ionicPopup.alert({
           title: 'Order successfully created'
         });
+        $ionicHistory.goBack();
         console.log('data',data);
       }).error(function(){
         console.log('Something wrong')
@@ -1857,9 +1861,8 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
         }).success(function (data) {
           $scope.hide($ionicLoading);
-          console.log('Approved successfully')
 
-          console.log('data',data);
+
 
           if(data.status==1){
             $scope.approvestatus=true;
