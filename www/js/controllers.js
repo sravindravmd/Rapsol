@@ -1867,7 +1867,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
 
             var alertPopup = $ionicPopup.alert({
-              title: 'Order Approved successfully'
+              title: 'Retailer Approved successfully'
             });
             OrderHistoryService.getRetailers();
           }
