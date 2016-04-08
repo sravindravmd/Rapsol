@@ -1,6 +1,6 @@
 <ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
   <ion-content>
-    <h3 class="padding-top" style="text-align: center">Order Details</h3>
+    <h2 class="padding-top" style="text-align: center">Order Details</h2>
     <div class=" custom-dark3">
       <div class="row">
         <div class="col"><strong>Name: </strong>{{OrderDtl.FULL_NAME}}</div>
@@ -17,17 +17,17 @@
         <div ng-if="OrderDtl.ROLE_FK_ID==3">
           <li class="item padingremove"><strong>UOM : </strong> {{OrderDtl.PROD_UOM}}</li>
         <!--  <li class="item padingremove odd"><strong>Product Billing Price : </strong> Need to provide</li>-->
-          <li class="item padingremove"><strong>Product Discount Price : </strong>{{OrderDtl.PROD_DISCOUNT}}</li>
-          <li class="item padingremove odd"><strong>Product Landingprice : </strong>{{OrderDtl.landingprice}}</li><hr/>
-          <li class="item padingremove"><strong>Product Qty in Liters : </strong>{{(OrderDtl.PROD_UOM) * (OrderDtl.PROD_QTY)}}</li>
-          <li class="item padingremove odd"><strong>Product Amount : </strong>{{OrderDtl.ORD_AMOUNT}}</li>
+          <li class="item padingremove"><strong>Product Discount Price : </strong>{{OrderDtl.PROD_DISCOUNT | number:2}}</li>
+          <li class="item padingremove odd"><strong>Product Landingprice : </strong>{{OrderDtl.landingprice | number:2}}</li><hr/>
+          <li class="item padingremove"><strong>Product Qty in Liters : </strong>{{(OrderDtl.PROD_UOM) * (OrderDtl.PROD_QTY) | number:2}}</li>
+          <li class="item padingremove odd"><strong>Product Amount : </strong>{{OrderDtl.ORD_AMOUNT | number:2}}</li>
         </div>
       <div ng-if="OrderDtl.ROLE_FK_ID==4">
         <div class="">
-          <li class="item padingremove"><strong>DLP Per Pack : </strong> {{OrderDtl.PROD_DLP}}</li>
-          <li class="item padingremove odd"><strong>Product Discount Price : </strong> {{OrderDtl.PROD_DISCOUNT}}</li>
-          <li class="item padingremove"><strong>Product Landingprice : </strong>{{OrderDtl.landingprice}}</li>
-          <li class="item padingremove odd"><strong>Product Amount : </strong>{{OrderDtl.ORD_AMOUNT}}</li>
+          <li class="item padingremove"><strong>DLP Per Pack : </strong> {{OrderDtl.PROD_DLP | number:2}}</li>
+          <li class="item padingremove odd"><strong>Product Discount Price : </strong> {{OrderDtl.PROD_DISCOUNT | number:2}}</li>
+          <li class="item padingremove"><strong>Product Landingprice : </strong>{{OrderDtl.landingprice | number:2}}</li>
+          <li class="item padingremove odd"><strong>Product Amount : </strong>{{OrderDtl.ORD_AMOUNT | number:2}}</li>
         </div>
       </div>
       </ul>

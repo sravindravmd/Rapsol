@@ -2,7 +2,7 @@
   <ion-content>
     <h2 style="text-align: center">Brand Stories</h2>
 
-    <div class="list list-inset card-red padding" ng-repeat=" brnd in brandstory">
+    <div class="list card card-red padding" ng-repeat=" brnd in brandstory">
       <div class="item item-divider" style="background-color: #01BCFF">
       <h2 class="text-center"style="color:ghostwhite;">{{brnd.BRDS_NAME}}</h2>
         <button class="button button-clear button-energized pull-right" style="right: -5px; top: -25px;bottom: 10px" ng-click="shareAnywhere(brnd)"><i class="icon ion-android-share-alt"></i></button>
@@ -10,7 +10,7 @@
       <p class="item item-text-wrap">{{brnd.BRDS_DESC}}</p>
       <div class="item item-image full-image">
         <div class="">
-          <img ng-src="{{'http://labs.govasool.com/repsol_v1/upload_files/Brandstory/'+brnd.URL_URL}}">
+          <img ng-src="{{'http://labs.govasool.com/repsol_v1/upload_files/Brandstory/'+brnd.URL_URL}}" alt="Image">
         </div>
         </div>
       <br/>

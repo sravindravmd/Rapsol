@@ -1,21 +1,20 @@
-/* global angular, document, window */
+
 'use strict';
 
 angular.module('starter.controllers', [])
 
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,notesService, $interval,userinfoService,$state,$rootScope) {
-    //userinfoService.insertdumy();
+.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,notesService, $interval,userinfoService,$state,$rootScope,$ionicPopup) {
+
 
     $rootScope.note=0;
     $scope.goto= function () {
       $state.go('app.note');
-      //$scope.note=0;
+
 
     }
     $rootScope.usernote="";
 
-    console.log('Before login',$rootScope.usernote)
      var intervalnotes=function(){
 
        if($rootScope.usernote!==""){
@@ -23,14 +22,29 @@ angular.module('starter.controllers', [])
          console.log('After login',$rootScope.usernote)
        notesService.getNotes().success(function (data) {
 
-         $rootScope.note=data.count
-         console.log("notes Ctrl",data.count);
+         $rootScope.note=data.count;
+
        });}
      }
 
 
    //$interval(intervalnotes,3000);
     $interval(intervalnotes,300000);
+
+    $rootScope.logout= function () {
+
+    var confirmPopup=$ionicPopup.confirm({
+
+      title:'Logout',
+      template:'Are you sure want to logout?'
+    }).then(function (reslult) {
+      if(reslult==true){
+        $rootScope.usernote="";
+        userinfoService.removeUserInfo();
+        $state.go('main.home');
+      }
+    })
+    }
 
 
 
@@ -53,7 +67,7 @@ angular.module('starter.controllers', [])
   .controller('LoginCtrl', function($scope, $stateParams, $timeout, $http,ionicMaterialMotion, ionicMaterialInk,$state,API_ENDPOINT,
                                     userinfoService,$ionicLoading,$ionicPopup,$ionicHistory,$window) {
 
-    //window.location.reload();
+
         ionicMaterialInk.displayEffect();
 
 
@@ -62,16 +76,13 @@ angular.module('starter.controllers', [])
       $scope.mobile="";
 
 
-   /* $ionicHistory.nextViewOptions({
-      disableBack:true
-    });*/
 
 
     $scope.forgotPassword= function () {
       $state.go('app.forgot_password');
     };
 
-      //loading functions
+
 
     $scope.show = function() {
       $ionicLoading.show({
@@ -157,7 +168,7 @@ angular.module('starter.controllers', [])
         userinfoService.setUsermobile(mobile)
         $http.get(API_ENDPOINT.url+'/services.php/firstuserlogin/'+mobile).then(function (data) {
 
-          console.log('First login',data.data.Message.isfrstLogin);
+
 
           if(data.data.Message.isfrstLogin==undefined){
             var alertPopup = $ionicPopup.alert({
@@ -185,7 +196,7 @@ angular.module('starter.controllers', [])
               }
 
             }).success(function (data) {
-              console.log(data);
+
               userinfoService.setUserinfo(data);
               userinfoService.setUsermobile(mobile);
 
@@ -261,7 +272,7 @@ angular.module('starter.controllers', [])
       $http.get(API_ENDPOINT.url+'/services.php/regionlist').then(function(results){
         $scope.hide($ionicLoading);
        $scope.regions=results.data.regionList;
-     console.log('regions', $scope.regions);
+
       }).catch(function (error) {
         alert('Something went wrong!!!!')
 
@@ -272,23 +283,21 @@ angular.module('starter.controllers', [])
 
       $scope.changedresion= function (reregion) {
         $scope.show($ionicLoading);
-/*
-        console.log($scope.retailer,$scope.retailer.STATE_PK_ID);
-*/
+
         $http.get(API_ENDPOINT.url+'/services.php/statelist/'+reregion).then(function(results){
           $scope.hide($ionicLoading);
           $scope.states=results.data.States;
-          console.log('sates for region',  $scope.states);
+
         })
       }
 
       $scope.changedstate= function (state) {
         $scope.show($ionicLoading);
-        console.log('sates for cites',state)
+
         $http.get(API_ENDPOINT.url+'/services.php/citylist/'+state).then(function(results){
           $scope.hide($ionicLoading);
           $scope.cities=results.data.cities;
-          console.log('cities',  $scope.cities);
+
         })
       }
 
@@ -298,7 +307,7 @@ angular.module('starter.controllers', [])
         $http.get(API_ENDPOINT.url+'/services.php/distributerlist/'+city).then(function(results){
           $scope.hide($ionicLoading);
           $scope.distributers=results.data.Distributers;
-          console.log('distributers', $scope.distributers);
+
         })
       }
 
@@ -333,12 +342,12 @@ angular.module('starter.controllers', [])
           //console.log(success.users)
         })
           .error(function(data, status, headers, config){
-            console.log('registration',data);
+
             var alertPopup = $ionicPopup.alert({
               title: 'Registration  failed!',
               template: 'Please check your mobile number'
             });
-          console.log(data, status, headers, config)
+
         }).finally(function($ionicLoading) {
           $scope.hide($ionicLoading);
         });
@@ -360,7 +369,7 @@ angular.module('starter.controllers', [])
       $scope.customerRegistration= function (customer,customerRegForm,choose) {
 
         if(customerRegForm.$valid){
-          console.log("eneted in customer registration",customer);
+
           userinfoService.setRoleInfo(choose)
           $scope.show($ionicLoading);
           $http({
@@ -378,14 +387,14 @@ angular.module('starter.controllers', [])
               });
             //$scope.regsuccess=true;
            $timeout(callAtTimeout, 3000);
-            console.log(data, status, headers, config)  })
+              })
             .error(function(data, status, headers, config){
 
               var alertPopup = $ionicPopup.alert({
                 title: 'Registration  failed!',
                 template: 'Please check your mobile number'
               });
-            console.log(data, status, headers, config)
+
           }).finally(function($ionicLoading) {
             // On both cases hide the loading
             $scope.hide($ionicLoading);
@@ -395,7 +404,7 @@ angular.module('starter.controllers', [])
         }
       }
       function callAtTimeout() {
-        console.log("Timeout occurred");
+
         $state.go('main.otp');
       }
 
@@ -421,14 +430,11 @@ angular.module('starter.controllers', [])
 
    $rootScope.usernote=userId=userinfoService.getUserFKID().FKID;
 
-    console.log('After Login',$rootScope.usernote);
 
 
     $http.get(API_ENDPOINT.url+'/services.php/viewprofile/'+userId+'/'+roleId).then(function(results){
       $scope.profiles=results.data.userDetails;
 
-      //alert("thhhhhh",$scope.profiles)
-      console.log('User Profile Details',results.data.userDetails);
     }).catch(function (error) {
       alert('Something went wrong!!!!')
     }).finally(function () {
@@ -496,8 +502,6 @@ angular.module('starter.controllers', [])
 
       $http.get(API_ENDPOINT.url+'/services.php/viewprofile/'+userId+'/'+roleId).then(function(results){
         $scope.profile=results.data.userDetails;
-        //alert("thhhhhh",$scope.profiles)
-        console.log('User Profile Details',results.data.userDetails);
       }).catch(function (error) {
         alert('Something went wrong!!!!')
       })
@@ -595,7 +599,7 @@ angular.module('starter.controllers', [])
 
 
       $scope.myOrders=result.data.orderdetails;
-      console.log( $scope.myOrders);
+
     }).catch(function (error) {
 
       alert("Error on MyOrder request")
@@ -694,9 +698,6 @@ angular.module('starter.controllers', [])
 
     $scope.OrderDtl=OrderHistoryService.getOrderDtl(orderId);
 
-    console.log('Details',$scope.OrderDtl)
-
-
     $scope.Approve= function () {
       var userId=userinfoService.getUserFKID().FKID;
 
@@ -714,9 +715,7 @@ angular.module('starter.controllers', [])
 
         }).success(function (data) {
           $scope.hide($ionicLoading);
-          console.log('Approved successfully')
 
-          console.log('data',data);
 
           if(data.status==1){
             $scope.approvestatus=true;
@@ -733,7 +732,7 @@ angular.module('starter.controllers', [])
             OrderHistoryService.getOrderHistory();
           }
         }).error(function(){
-          console.log('Something wrong')
+
           var alertPopup = $ionicPopup.alert({
             title: 'Something wrong'
           });
@@ -761,9 +760,6 @@ angular.module('starter.controllers', [])
 
         }).success(function (data) {
           $scope.hide($ionicLoading);
-          console.log('Rejected successfully')
-
-          console.log('data',data);
 
           if(data.status==1){
             $scope.approvestatus=true;
@@ -779,7 +775,6 @@ angular.module('starter.controllers', [])
             OrderHistoryService.getOrderHistory();
           }
         }).error(function(){
-          console.log('Something wrong')
           var alertPopup = $ionicPopup.alert({
             title: 'Something wrong'
           });
@@ -847,7 +842,6 @@ angular.module('starter.controllers', [])
 
 
         $scope.notifications1=result.data.NotificationList;
-        console.log( $scope.notifications1);
       }).catch(function (error) {
 
         alert("Error on notifocation request")
@@ -878,7 +872,6 @@ angular.module('starter.controllers', [])
     $http.get(API_ENDPOINT.url+'/services.php/newslimit/0/5').then(function (result) {
       $scope.hide($ionicLoading);
       $scope.newlist=result.data.NewsList;
-      console.log( $scope.newlist);
     }).catch(function (error) {
 
       alert("Error on news request")
@@ -891,7 +884,6 @@ angular.module('starter.controllers', [])
       $http.get(API_ENDPOINT.url+'/services.php/newslimit/0/5').then(function (result) {
         $scope.hide($ionicLoading);
         $scope.newlist=result.data.NewsList;
-        console.log( $scope.newlist);
       }).catch(function (error) {
 
         alert("Error on news request")
@@ -933,7 +925,6 @@ angular.module('starter.controllers', [])
             $state.go('main.otp');
           },300)
          // $scope.userinfo=data.data.users;
-          console.log(data);
           $scope.message="Otp generated successfully";
 
           // 'new_password='+createpass.password+'&confirm_password='+createpass.conPassword
@@ -964,7 +955,6 @@ angular.module('starter.controllers', [])
       $scope.show($ionicLoading);
       $http.get(API_ENDPOINT.url+'/services.php/brandstory/0/5').then(function (result) {
 
-        console.log(result.data);
         $scope.brandstory=result.data.brandstory;
       }).catch(function (error) {
 
@@ -1005,8 +995,6 @@ angular.module('starter.controllers', [])
 
         $scope.queryfeedbackmsg=result.data.queries
 
-        console.log(result.data.queries);
-        console.log($scope.queryfeedbackmsg);
 
       }).catch(function (error) {
 
@@ -1022,7 +1010,6 @@ angular.module('starter.controllers', [])
 
     $scope.submitFeedback= function (feedback) {
       $scope.show($ionicLoading);
-      console.log('feedback info',userId,feedback)
 
 
 
@@ -1037,20 +1024,15 @@ angular.module('starter.controllers', [])
       }).success(function (data) {
         $scope.meesagefeed=data.status.message;
         $scope.hide($ionicLoading);
-        console.log('feedback info',userId,feedback)
 
-        console.log(data);
        if(data.status==1){
          var alertPopup = $ionicPopup.alert({
-           title: "Feedback  submitted Successfully"
+           title: "Feedback  submitted successfully"
          })
          $scope.feedback.subject="";
          $scope.feedback.message="";
        }
-
-        console.log('data',data);
       }).error(function(){
-        console.log('Something wrong')
         var alertPopup = $ionicPopup.alert({
           title: 'Something wrong'
         });
@@ -1080,23 +1062,15 @@ angular.module('starter.controllers', [])
       }).success(function (data) {
         $scope.meesagefeed=data.status.message;
         $scope.hide($ionicLoading);
-
-        console.log('query info',userId,query)
-        console.log('calling lodeprevquery');
-
-        console.log(data);
         if(data.status==1){
           var alertPopup = $ionicPopup.alert({
-            title: "Query submitted Successfully"
+            title: "Query submitted successfully"
 
           })
           $scope.query.subject="";
           $scope.query.question="";
         }
-
-        console.log('data',data);
       }).error(function(){
-        console.log('Something wrong')
         var alertPopup = $ionicPopup.alert({
           title: 'Something wrong'
         });
@@ -1138,7 +1112,6 @@ angular.module('starter.controllers', [])
 
       $http.get(API_ENDPOINT.url+'/services.php/segmentlist/0/0').then(function(results){
         $scope.retailCreateOrderSegments=results.data.segmentlist;
-        console.log('Create Product Segmet Details', $scope.retailCreateOrderSegments);
       }).catch(function (error) {
         alert('Something went wrong!!!!')
       }).finally(function($ionicLoading) {
@@ -1147,12 +1120,13 @@ angular.module('starter.controllers', [])
       });
       $scope.canbook=true;
       $scope.retailsegmentDetail= function (retailCreateProduct) {
+        console.log(',,,,,,',retailCreateProduct)
         $scope.products={};
         $scope.show($ionicLoading);
         $scope.disproduct=false;
         $http.get(API_ENDPOINT.url+'/services.php/productlist/'+retailCreateProduct+'/0/0').then(function(results){
           $scope.retailCreateproducts=results.data.productlist;
-          console.log('Product List', $scope.retailCreateproducts);
+          console.log('>>>>>', $scope.retailCreateproducts);
         }).catch(function (error) {
           alert('Something went wrong!!!!')
         }).finally(function($ionicLoading) {
@@ -1164,7 +1138,7 @@ angular.module('starter.controllers', [])
         $scope.disqty=false;
 
 
-        console.log('product id ',product)
+
         $scope.show($ionicLoading);
 
         $http.get(API_ENDPOINT.url+'/services.php/product/'+product+'/'+roleId).then(function(results){
@@ -1173,7 +1147,6 @@ angular.module('starter.controllers', [])
           $scope.lppl=$scope.products.PROD_BILLING_PRICE_PER_LITER-$scope.products.proDis;
 
           $scope.productID=product;
-          console.log('Product List', JSON.stringify($scope.products));
         }).catch(function (error) {
           alert('Something went wrong!!!!')
         }).finally(function($ionicLoading) {
@@ -1187,10 +1160,6 @@ angular.module('starter.controllers', [])
       $scope.confirmorderForRetailer= function (qty) {
 
 
-        console.log('user fkid',userId);
-        console.log('user Userid',userId);
-
-
         $scope.show($ionicLoading);
         $http({
           method:'POST',
@@ -1201,14 +1170,12 @@ angular.module('starter.controllers', [])
           data:'userId='+userId+'&productId='+$scope.productID+'&qty='+qty+'&roleid='+roleId
 
         }).success(function (data) {
-          console.log(data);
           var alertPopup = $ionicPopup.alert({
             title: 'Order request sent successfully'
           });
           $ionicHistory.goBack();
-          console.log('data',data);
+
         }).error(function(){
-          console.log('Something wrong')
           var alertPopup = $ionicPopup.alert({
             title: 'Something wrong'
           });
@@ -1222,11 +1189,6 @@ angular.module('starter.controllers', [])
 
     $scope.confirmorderForDistributor= function (qty) {
 
-
-      console.log('user fkid',userId);
-      console.log('user Userid',userId);
-
-
       $scope.show($ionicLoading);
       $http({
         method:'POST',
@@ -1239,7 +1201,7 @@ angular.module('starter.controllers', [])
       }).success(function (data) {
         console.log(data);
         var alertPopup = $ionicPopup.alert({
-          title: 'Order successfully created'
+          title: 'Order request sent successfully'
         });
         $ionicHistory.goBack();
         console.log('data',data);
@@ -1263,7 +1225,6 @@ angular.module('starter.controllers', [])
 
     $scope.customerLogin1= function (customer,customerLoginForm) {
       if(customerLoginForm.$valid){
-        console.log(customerLoginForm,customer);
         $state.go('app.channel_partner');
       }
     }
@@ -1277,7 +1238,6 @@ angular.module('starter.controllers', [])
     $scope.retailLogin= function (retailer,retailerLoginForm) {
 
       if(retailerLoginForm.$valid){
-        console.log(retailerLoginForm,retailer);
         $state.go('app.retailer_home');
       }
     }
@@ -1304,12 +1264,9 @@ angular.module('starter.controllers', [])
     $scope.changePassword= function (changepass,changePassForm) {
       var oldpassword=changepass.currentpassword;
 
-      console.log('curpass',oldpassword)
       var newpassword=changepass.password;
-      console.log('newpass',newpassword)
 
       var confirmpassword=changepass.conpassword;
-      console.log('confirm',confirmpassword)
 
 
       $http({
@@ -1320,7 +1277,6 @@ angular.module('starter.controllers', [])
           'Content-Type': "application/x-www-form-urlencoded"
         }
       }).success(function (data) {
-        console.log('change password ',data.Message);
         //{Message: "Old Password is Mismatch"}
 
         if(data.Message=='Old Password is Mismatch'){
@@ -1328,9 +1284,9 @@ angular.module('starter.controllers', [])
           alert('Password Changed Successfully');
           $ionicHistory.goBack();
         }
-        console.log('Successfully changed passed',data);
+
       }).error(function (error) {
-        alert('failed to  change the passed',error);
+        alert('Failed to  change the password',error);
       })
 
     }
@@ -1407,19 +1363,14 @@ angular.module('starter.controllers', [])
 
     $scope.userOtp="Use OTP: "+userinfoService.getUserInfo().otp;
 
-    console.log("getting otp:",userinfoService.getUserInfo());
 
     $scope.verifyotp= function (otp) {
      var userId= userinfoService.getUserInfo().userId;
-     console.log('userId',userinfoService.getUserInfo().userId);
       // Start showing the progress
       $scope.show($ionicLoading);
 
       $http.get(API_ENDPOINT.url+'/services.php/verifyOTP/'+userId+'/'+otp).then(function (data) {
 
-
-
-        console.log(data.data.otpStatus);
 
         if(data.data.otpStatus.status==2){
 
@@ -1461,8 +1412,8 @@ angular.module('starter.controllers', [])
     var  mobile=userinfoService.getUsermobile()
       $scope.show($ionicLoading);
       var userId=userinfoService.getUserInfo().userId;
-      console.log('userId',userinfoService.getUserInfo().userId)
-      console.log('userMobile',userinfoService.getUsermobile());
+
+
       $http({
         method:'POST',
         url:API_ENDPOINT.url+'/services.php/getOTP',
@@ -1474,8 +1425,7 @@ angular.module('starter.controllers', [])
 
       }).success(function (data) {
         $scope.hide($ionicLoading);
-        console.log(data)
-          //userinfoService.setUserinfo(data)
+
 
         $scope.userOtp="Use OTP: "+userinfoService.getUserInfo().otp;
 
@@ -1535,7 +1485,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
           userinfoService.setRoleInfo(role);
           userinfoService.setUsername(username);
           userinfoService.setUserFKID(FKID);
-          console.log('user info',data.data.message);
+          //console.log('user info',data.data.message);
 
           var message=data.data.message;
             if(role==5){
@@ -1651,7 +1601,6 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
 
         $scope.models=results.data.models;
-        console.log('models',$scope.models);
       }).catch(function (error) {
         var alertPopup = $ionicPopup.alert({   title: "Error on request" });
       }).finally(function($ionicLoading) {
@@ -1662,15 +1611,13 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
     }
 
     $scope.selectBikeModel= function (mds) {
-      console.log('<<<<<<',mds)
       $scope.show($ionicLoading);
       $http.get(API_ENDPOINT.url+'/services.php/recommendationbikesrecom/'+mds).then(function(results){
         $scope.showrecommendation=true;
 
 
         $scope.recmds=results.data.recomded;
-        console.log('recmds',$scope.recmds);
-        console.log('recmds',$scope.recmds[0].REC_RECOMMENDATION);
+
       }).catch(function (error) {
         var alertPopup = $ionicPopup.alert({   title: "Error on request" });
       }).finally(function($ionicLoading) {
@@ -1715,7 +1662,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
     $http.get(API_ENDPOINT.url+'/services.php/productknowledge/0/0').then(function (result) {
 
       $scope.productKnowledges=result.data.productknowledge;
-      console.log( $scope.productKnowledges);
+
     }).catch(function (error) {
 
       var alertPopup = $ionicPopup.alert({   title: "Error on Product Knowledge request" });
@@ -1728,7 +1675,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
       $http.get(API_ENDPOINT.url+'/services.php/productknowledge/0/0').then(function (result) {
 
         $scope.productKnowledges=result.data.productknowledge;
-        console.log( $scope.productKnowledges);
+
       }).catch(function (error) {
 
         var alertPopup = $ionicPopup.alert({   title: "Error on Product Knowledge request" });
@@ -1742,7 +1689,6 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
   .controller('LogoutCtrl', function ($ionicPlatform,$state,$ionicHistory,userinfoService) {
     $ionicHistory.clearHistory();
-    console.log('logout removing data');
     userinfoService.removeUserInfo();
     //userinfoService.insertdumy();
     ionic.Platform.exitApp();
@@ -1759,8 +1705,6 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
     notificationListService.getnotiList().success(function (data) {
 
       $scope.list=data.PushNotificationsList;
-
-      console.log($scope.list)
     })
     $scope.navretl='retailerDetails';
 
@@ -1784,8 +1728,6 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
   .controller('retailerDetailsCtrl', function ($scope,OrderHistoryService,$ionicLoading,userinfoService,$stateParams) {
 
-    console.log('>>>>>>>>>>>>>>>>',$stateParams);
-
     var tempOrderId=0;
 
     if($stateParams.id!==""){
@@ -1807,8 +1749,6 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
       $scope.show($ionicLoading);
       OrderHistoryService.getRetailers(tempOrderId).success(function (orders) {
         $scope.rtldetails=orders.retailerdetails;
-        console.log('retail data',$scope.rtldetails)
-        console.log('retail >>>> data',orders.retailerdetails)
         $scope.hide($ionicLoading);
 
       })
@@ -1843,7 +1783,6 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
       $scope.approvestatus=true;
     }*/
 
-    console.log('Details',$scope.OrderDtl)
 
     $scope.Approve= function () {
       var userId=userinfoService.getUserFKID().FKID;
@@ -1875,7 +1814,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
             OrderHistoryService.getRetailers();
           }
         }).error(function(){
-          console.log('Something wrong')
+         /* console.log('Something wrong')*/
           var alertPopup = $ionicPopup.alert({
             title: 'Something wrong'
           });
