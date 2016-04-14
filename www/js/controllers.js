@@ -28,8 +28,8 @@ angular.module('starter.controllers', [])
      }
 
 
-   //$interval(intervalnotes,3000);
-    $interval(intervalnotes,300000);
+   $interval(intervalnotes,3000);
+    //$interval(intervalnotes,300000);
 
     $rootScope.logout= function () {
 
@@ -41,7 +41,8 @@ angular.module('starter.controllers', [])
       if(reslult==true){
         $rootScope.usernote="";
         userinfoService.removeUserInfo();
-        $state.go('main.home');
+        //$state.go('main.home');
+        ionic.Platform.exitApp();
       }
     })
     }
@@ -53,8 +54,10 @@ angular.module('starter.controllers', [])
 
   })
 
-.controller('HomeCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk, $state,$rootScope, $cordovaNetwork,$ionicPopup,$location) {
-
+.controller('HomeCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk, $state,$rootScope, $cordovaNetwork,$ionicPopup,$location,$ionicHistory) {
+    $ionicHistory.clearHistory();
+    console.log('$rootScope.usernote',$rootScope.usernote);
+    $rootScope.usernote="";
   $scope.homeLogin= function () {
     //$location.url('#/main/login');
    $state.go('main.login',null, {reload:true});
@@ -599,6 +602,7 @@ angular.module('starter.controllers', [])
 
 
       $scope.myOrders=result.data.orderdetails;
+      console.log('$scope.myOrders',$scope.myOrders)
 
     }).catch(function (error) {
 
@@ -612,6 +616,7 @@ angular.module('starter.controllers', [])
   .controller('MyTeamOrdersCtrl', function ($scope,OrderHistoryService,$ionicLoading,userinfoService,$stateParams) {
 
     console.log('>>>>>>>>>>>>>>>>',$stateParams);
+    $scope.ordersby='ORD_PK_ID';
 
     var tempOrderId=0;
 
@@ -634,7 +639,7 @@ angular.module('starter.controllers', [])
       $scope.show($ionicLoading);
       OrderHistoryService.getOrderHistory(tempOrderId).success(function (orders) {
         $scope.orderdetails=orders.orderdetails;
-        console.log('ctrl data',orders.orderdetails)
+        console.log('ctrl array data',$scope.orderdetails)
         $scope.hide($ionicLoading);
 
       })
@@ -799,11 +804,48 @@ angular.module('starter.controllers', [])
 
     })
 
-    .controller('TargetOSCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    .controller('TargetOSCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,$ionicLoading,userinfoService,$http,API_ENDPOINT) {
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+    var userId=userinfoService.getUserFKID().FKID;
 
+    $scope.show = function() {
+      $ionicLoading.show({     template: '<p>Loading...</p><ion-spinner class="spinner-energized" icon="spiral"></ion-spinner>'   });
+    };
+    $scope.hide = function(){
+      $ionicLoading.hide(); };
+
+    $scope.show($ionicLoading);
+
+    $http.get(API_ENDPOINT.url+'/services.php/perioddetails').then(function (result) {
+      $scope.hide($ionicLoading);
+
+
+      $scope.periods=result.data.Period;
+     // console.log( $scope.periods);
+    }).catch(function (error) {
+
+      alert("Error on period request")
+    }).finally(function($ionicLoading) {
+      $scope.hide($ionicLoading); });
+
+
+    $scope.changedPeriod= function (period) {
+      console.log(period,userId);
+
+      $http.get(API_ENDPOINT.url+'/services.php/quartertargetdetails/'+userId+'/'+period).then(function (result) {
+        $scope.hide($ionicLoading);
+
+
+        $scope.targetDetails=result.data;
+        console.log( $scope.targetDetails);
+      }).catch(function (error) {
+
+        alert("Error on period request")
+      }).finally(function($ionicLoading) {
+        $scope.hide($ionicLoading); });
+    }
 
 
     })

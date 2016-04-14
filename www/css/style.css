@@ -566,3 +566,7 @@ input.radio:focus ~ label:before {
 .odd{background-color: #f0f0f0;}
 .line{border-bottom: 1px solid #ccc;}
 .even{background-color: #f0f0f0;}
+
+.oddeven{
+  background-color: lavenderblush;
+}

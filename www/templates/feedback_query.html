@@ -1,8 +1,7 @@
 <ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
   <ion-content class="">
-    <div class="hero no-header flat">
-      <div class="app-icon"></div>
-      <div class="content"></div>
+    <div class="hero  flat">
+     <!-- <div class="app-icon"></div>-->
       <div class="row">
         <div class="col col-30 font_color"><input type="radio" id="feedback" name="reading" value="feedback" ng-model="choose" />
           <label for="feedback"> Feedback </label>
@@ -19,15 +18,16 @@
           <p ng-show="feedbackForm.message.$error.required && feedbackForm.$dirty" class="error_msg_color">Feedback required</p>
         </div>
       </div>-->
-      <label class="item-input margn_top"><input placeholder="Write Subject" type="text" name="subject" ng-model="feedback.subject" required/></label>
+      <label class="item-input"><input placeholder="Write Subject" type="text" name="subject" ng-model="feedback.subject" required/></label>
       <div class="card">
-        <label class="item-input margn_top">
+        <label class="item-input">
           <textarea type="text" placeholder="Write your feedback" rows="4" name="message" ng-model="feedback.message" style="text-align:center" required></textarea>
         </label>
       </div>
       <br>
-      <button ng-disabled="feedbackForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submitFeedback(feedback)">Submit</button>
-
+<div>
+  <button ng-disabled="feedbackForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submitFeedback(feedback)">Submit</button>
+</div>
 
     </ng-form>
     <ng-form name="queryForm" ng-show="choose == 'query'">
@@ -37,17 +37,20 @@
           <p ng-show="queryForm.question.$error.required && queryForm.$dirty" class="error_msg_color">Query required</p>
         </div>
       </div>-->
-      <label class="item-input margn_top"><input placeholder="Write Subject" type="text" name="subject" ng-model="query.subject" required/></label>
+      <label class="item-input "><input placeholder="Write Subject" type="text" name="subject" ng-model="query.subject" required/></label>
       <!--<label class="item-input margn_top card">
         <textarea type="text" placeholder="Write your Query" rows="4" name="message" ng-model="query.question" style="text-align:center" required></textarea>
       </label>-->
       <div class="card">
-        <label class="item-input margn_top">
+        <label class="item-input">
           <textarea type="text" placeholder="Write your Query" rows="4" name="question" ng-model="query.question" style="text-align:center" required></textarea>
         </label>
       </div>
       <br>
-      <button ng-disabled="queryForm.$invalid" class="button button-full custom-dark1 ink" ng-click="submitQuery(query)">Send</button>
+      <div style="text-align: center; " class="row">
+        <button ng-disabled="queryForm.$invalid" class="button button-full  custom-dark1 ink" ng-click="submitQuery(query)">Send</button>
+      </div>
+
     </ng-form>
 
     <!--<ion-list>

@@ -1,77 +1,46 @@
-<ion-view view-title="Target Details">
-  <ion-content  class="back_color1">
-    <div class="tabs tabs-icon-top static">
-      <p>Distributor Target Details</p>
+<ion-view title='<img class="title-image" src="img/logo.png">'align-title="center">
+  <ion-content>
+    <div class="list card ">
+      <label class="item item-input item-select custom-dark3">
+        <div class="input-label" style="color:white; font-weight: bold">
+          Period
+        </div>
+        <select name="periodName" ng-model="period" ng-change="changedPeriod(period)" style="color:white; font-weight: bold" class="custom-dark3"
+                ng-options="period.PERIOD_ID as period.PERIOD_NAME for period in periods" >
+          <option style="display:none; font-size: 1.0em;" value="" disabled>Select</option>
+        </select>
+      </label>
+
     </div>
-    <label class="item item-input item-select">
-      <div class="input-label">Quarterly Months</div>
-      <select ng-model="product">
-        <option selected value="q1">Q1</option>
-        <option value="q2" >Q2</option>
-        <option value="q3">Q3</option>
-      </select>
-    </label>
-    <label class="item item-input item-select">
-      <div class="input-label">Made Of Target</div>
-      <select ng-model="product">
-        <option selected value="A">A</option>
-        <option value="B" >B</option>
-        <option>C</option>
-      </select>
-    </label>
-    <div>
-      <div class="row header col-box">
-        <div class="col">Target</div>
-        <div class="col">Eligible Slab</div>
-        <div class="col">Actual Achievement</div>
-        <div class="col">Pending Target Qty.</div>
-        <div class="col">Achieved Incentive Amt.</div>
+    <div class="list card">
+      <div class="item item-divider" style="text-align: center; padding-bottom:50px; background-color: #C3C3C3 ">Target Details</div>
+      <div class="row">
+        <div class="item col-66 item-text-wrap">Target</div>
+        <div class="item">{{targetDetails.Target | number:2}}</div>
       </div>
-      <div class="row" ng-repeat="data in ctrl.data">
-        <div class="col">{{data.name}}</div>
-        <div class="col">{{data.name}}</div>
-        <div class="col">{{data.name}}</div>
-        <div class="col">{{data.name}}</div>
-        <div class="col">{{data.name}}</div>
-        <!--<div class="col"><button class="button-small" ng-click="ctrl.add($index)">Remove</button></div>-->
-        <!--<div class="col">
-          <a><i class="icon ion-close-circled"></i></a>
-        </div>-->
+      <div class="row oddeven">
+      <div class="item col-66 item-text-wrap">Eligible Slab</div>
+        <div class="item">{{targetDetails.Eligible_Slab | number:2}}</div>
+
       </div>
-      <hr>
+      <div class="row">
+        <div class="item col-66 item-text-wrap">Actual Achievement</div>
+        <div class="item">{{targetDetails.Actual_Achiement | number:2}}</div>
+      </div>
+      <div class="row oddeven">
+        <div class="item col-66">Pending Target Qty </div>
+        <div class="item">{{targetDetails.Pending_Target_Qty | number:2}}</div>
+
+      </div>
+      <div class="row">
+        <div class="item col-66 item-text-wrap"> Achieved Incentive Amount</div>
+        <div class="item">{{targetDetails.Achieved_Incentive_Amt | number:2}}</div>
+
+      </div>
+
+
+
     </div>
-    <!--<div class="row">
-      <div class="col col-33"></div>
-      &lt;!&ndash; <div class="col"></div>
-       <div class="col"></div>
-       <div class="col"></div>&ndash;&gt;
-      <div class="col">
-        <button class="button button-small custom-dark1">Create</button>
-      </div>
-      &lt;!&ndash;<a class="item card item-thumbnail-left">
-          &lt;!&ndash;<img src="img/1.jpg">&ndash;&gt;
-          &lt;!&ndash;<h3>Product Name :</h3>&ndash;&gt;
-          <h3>MRP :</h3>
-          <h3>List Price :</h3>
-          <h3>Discount :</h3>
-          <h3>SKU :</h3>
-      </a>&ndash;&gt;&lt;!&ndash;
-            <a class="item card item-thumbnail-left">
-                <img src="img/1.jpg">
-                <h3>Product Name :</h3>
-                <h3>MRP :</h3>
-                <h3>List Price :</h3>
-                <h3>Discount :</h3>
-                <h3>SKU :</h3>
-            </a>
-            <a class="item card item-thumbnail-left">
-                <img src="img/1.jpg">
-                <h3>Product Name :</h3>
-                <h3>MRP :</h3>
-                <h3>List Price :</h3>
-                <h3>Discount :</h3>
-                <h3>SKU :</h3>
-            </a>&ndash;&gt;
-    </div>-->
+    </ion-list>
   </ion-content>
-</ion-view>
+  </ion-view>

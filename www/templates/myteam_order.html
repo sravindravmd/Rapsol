@@ -1,8 +1,8 @@
 <ion-view title='<img class="title-image" src="img/logo.png">'align-title="center" >
   <ion-content>
     <h2 class="title" style="text-align: center">My Team Orders</h2>
-    <ion-list class="card" ng-repeat="order in orderdetails" ng-show="order.SALEL2_ID==userId">
-      <ion-item class="item-text-wrap borderline" ng-class-even="'even'">
+    <ion-list class="card" ng-repeat="order in orderdetails">
+      <div class="item item-text-wrap borderline" ng-class-even="'even'">
         <a href="#/app/orderMyTeamDetail/{{order.ORD_PK_ID}}" class="acolor">
           <div class="row padingremove">
             <div class="col">
@@ -16,21 +16,22 @@
           <div class="row padingremove">
             <div class="col"><strong>Amount:</strong> {{order.ORD_AMOUNT | number}}</div>
             <div class="col"><strong>Date:</strong> {{order.ADD_DATE}}</div>
-            <div class="col padingremove col-center">
+            <div class="col padingremove col-center" ng-show="order.SALEL2_ID==userId">
               <span ng-if="order.SALEL2_ID==userId && order.ORD_STATUS_L2=='Awaiting'" style="color:blue">Pending</span>
               <span ng-if="order.SALEL2_ID==userId && order.ORD_STATUS_L2=='Reject'" style="color: red">Rejected</span>
               <span ng-if="order.SALEL2_ID==userId && order.ORD_STATUS_L2=='Approve'" style="color: darkgreen">Approved</span></div>
+            <div class="col padingremove col-center" ng-if="order.SALEL1_ID==userId">
+              <span ng-show="order.SALEL1_ID==userId && order.ORD_STATUS_L1=='Awaiting'" style="color:blue">Pending</span>
+              <span  ng-if="order.SALEL1_ID==userId && order.ORD_STATUS_L1=='Reject'" style="color: red">Rejected</span>
+              <span ng-if="order.SALEL1_ID==userId && order.ORD_STATUS_L1=='Approve'" style="color: darkgreen">Approved</span></div>
           </div>
 
         </a>
-      </ion-item>
-
-
-
+      </div>
     </ion-list>
 
-    <ion-list class="card" ng-repeat="order in orderdetails" ng-if="order.SALEL1_ID==userId">
-      <ion-item class="item-text-wrap borderline">
+    <!--<ion-list class="card" ng-repeat="order in orderdetails" ng-if="order.SALEL1_ID==userId">
+      <div class="item item-text-wrap borderline">
         <a href="#/app/orderMyTeamDetail/{{order.ORD_PK_ID}}" class="acolor">
           <div class="row padingremove">
             <div class="col">
@@ -51,11 +52,9 @@
           </div>
 
         </a>
-      </ion-item>
+      </div>
 
-
-
-    </ion-list>
+    </ion-list>-->
     <!--<ion-list class="card" ng-repeat="order in orderdetails" ng-if="order.SALEL1_ID==userId">
       <ion-item>
         <a href="#/app/orderMyTeamDetail/{{order.ORD_PK_ID}}"> <div class="row">
@@ -79,3 +78,85 @@
     <br/>
   </ion-content>
 </ion-view>
+
+
+<!--
+real code here
+
+<ion-view title='<img class="title-image" src="img/logo.png">'align-title="center" >
+  <ion-content>
+    <h2 class="title" style="text-align: center">My Team Orders</h2>
+    <ion-list class="card" ng-repeat="order in orderdetails" ng-show="order.SALEL2_ID==userId">
+      <div class="item item-text-wrap borderline" ng-class-even="'even'">
+        <a href="#/app/orderMyTeamDetail/{{order.ORD_PK_ID}}" class="acolor">
+          <div class="row padingremove">
+            <div class="col">
+              <strong> {{order.ROLE_NAME}} Name:</strong>  {{order.FULL_NAME}}
+            </div>
+          </div>
+          <div class="row padingremove">
+            <div class="col"><strong>Product:</strong> {{order.PROD_NAME}}</div>
+          </div>
+
+          <div class="row padingremove">
+            <div class="col"><strong>Amount:</strong> {{order.ORD_AMOUNT | number}}</div>
+            <div class="col"><strong>Date:</strong> {{order.ADD_DATE}}</div>
+            <div class="col padingremove col-center">
+              <span ng-if="order.SALEL2_ID==userId && order.ORD_STATUS_L2=='Awaiting'" style="color:blue">Pending</span>
+              <span ng-if="order.SALEL2_ID==userId && order.ORD_STATUS_L2=='Reject'" style="color: red">Rejected</span>
+              <span ng-if="order.SALEL2_ID==userId && order.ORD_STATUS_L2=='Approve'" style="color: darkgreen">Approved</span></div>
+          </div>
+
+        </a>
+      </div>
+    </ion-list>
+
+    <ion-list class="card" ng-repeat="order in orderdetails" ng-if="order.SALEL1_ID==userId">
+      <div class="item item-text-wrap borderline">
+        <a href="#/app/orderMyTeamDetail/{{order.ORD_PK_ID}}" class="acolor">
+          <div class="row padingremove">
+            <div class="col">
+              <strong> {{order.ROLE_NAME}} Name:</strong>  {{order.FULL_NAME}}
+            </div>
+          </div>
+          <div class="row padingremove">
+            <div class="col"><strong>Product:</strong> {{order.PROD_NAME}}</div>
+          </div>
+
+          <div class="row padingremove">
+            <div class="col"><strong>Amount:</strong> {{order.ORD_AMOUNT | number}}</div>
+            <div class="col"><strong>Date:</strong> {{order.ADD_DATE}}</div>
+            <div class="col padingremove col-center">
+              <span ng-show="order.SALEL1_ID==userId && order.ORD_STATUS_L1=='Awaiting'" style="color:blue">Pending</span>
+              <span  ng-if="order.SALEL1_ID==userId && order.ORD_STATUS_L1=='Reject'" style="color: red">Rejected</span>
+              <span ng-if="order.SALEL1_ID==userId && order.ORD_STATUS_L1=='Approve'" style="color: darkgreen">Approved</span></div>
+          </div>
+
+        </a>
+      </div>
+
+    </ion-list>
+    &lt;!&ndash;<ion-list class="card" ng-repeat="order in orderdetails" ng-if="order.SALEL1_ID==userId">
+      <ion-item>
+        <a href="#/app/orderMyTeamDetail/{{order.ORD_PK_ID}}"> <div class="row">
+          <div class="col">
+            <p >{{order.ROLE_NAME}} Name : {{order.FULL_NAME}}</p>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-34"><p>Order Id: {{order.ORD_PK_ID}}</p></div>
+            <div class="col"><p>Date: {{order.ADD_DATE}}</p></div>
+            <div class="col col-center"><p >Pending</p>
+              <p>Rejected</p>
+              <p >Approved</p></div>
+          </div>
+        </div></a>
+      </ion-item>
+    </ion-list>&ndash;&gt;
+
+    <br/>
+    <br/>
+    <br/>
+  </ion-content>
+</ion-view>
+-->

@@ -2,7 +2,7 @@
   <ion-content>
     <h2 class="title" style="text-align: center">My Team Orders</h2>
     <ion-list class="card" ng-repeat="order in orderdetails">
-      <ion-item class="item-text-wrap borderline" ng-class-even="'even'">
+      <div class="item-text-wrap borderline" ng-class-even="'even'">
         <a href="#/app/orderMyTeamDetail/{{order.ORD_PK_ID}}" class="acolor">
           <div class="row padingremove">
             <div class="col">
@@ -21,8 +21,8 @@
             <strong ng-if="order.SALEL1_ID==userId && order.ORD_STATUS_L1=='Reject'" style="color: red">Rejected</strong>
             <strong ng-if="order.SALEL1_ID==userId && order.ORD_STATUS_L1=='Approve'" style="color: darkgreen">Approved</strong></div>
           </div>
-        </div></a>
-      </ion-item>
+        </a>
+      </div>
     </ion-list>
   </ion-content>
 </ion-view>

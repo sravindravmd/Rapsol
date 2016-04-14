@@ -18,7 +18,7 @@
           <li class="item padingremove"><strong>UOM : </strong> {{OrderDtl.PROD_UOM}}</li>
         <!--  <li class="item padingremove odd"><strong>Product Billing Price : </strong> Need to provide</li>-->
           <li class="item padingremove"><strong>Product Discount Price : </strong>{{OrderDtl.PROD_DISCOUNT | number:2}}</li>
-          <li class="item padingremove odd"><strong>Product Landingprice : </strong>{{OrderDtl.landingprice | number:2}}</li><hr/>
+          <li class="item padingremove odd"><strong>Product Landingprice : </strong>{{OrderDtl.landingprice | number:2}}</li>
           <li class="item padingremove"><strong>Product Qty in Liters : </strong>{{(OrderDtl.PROD_UOM) * (OrderDtl.PROD_QTY) | number:2}}</li>
           <li class="item padingremove odd"><strong>Product Amount : </strong>{{OrderDtl.ORD_AMOUNT | number:2}}</li>
         </div>
@@ -30,6 +30,7 @@
           <li class="item padingremove odd"><strong>Product Amount : </strong>{{OrderDtl.ORD_AMOUNT | number:2}}</li>
         </div>
       </div>
+        <li class="item padingremove item-text-wrap" ng-if="OrderDtl.ROLE_NAME!=='Retailer'" style="background-color: #9F9F9F"><strong>Outstanding Amount : </strong> {{OrderDtl.dueamount | number:2}}</li>
       </ul>
 
     <div class="row item-text-wrap" style="text-align:center !important;">
