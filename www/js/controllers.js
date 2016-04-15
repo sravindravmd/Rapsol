@@ -4,7 +4,7 @@
 angular.module('starter.controllers', [])
 
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,notesService, $interval,userinfoService,$state,$rootScope,$ionicPopup) {
+.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,notesService, $interval,userinfoService,$state,$rootScope,$ionicPopup, $ionicHistory) {
 
 
     $rootScope.note=0;
@@ -45,6 +45,32 @@ angular.module('starter.controllers', [])
         ionic.Platform.exitApp();
       }
     })
+    }
+
+
+    $rootScope.goHome= function () {
+      //$ionicHistory.clearHistory();
+      /*var roleId=userinfoService.getUserInfo().roleId;*/
+      var roleId=userinfoService.getRoleInfo().roleid;
+      console.log(">>>>>>",roleId)
+      var role=roleId;
+      if(role==5){
+        $state.go('app.channel_partner');
+      } else if(role==4){
+        $state.go('app.retailer_home');
+      } else if(role==3){
+        $state.go('app.distributor_home')
+      } else if(role==2){
+        //alert('No state craeted for L1')
+        $state.go('app.slm1_home');
+      }
+      else if(role==6){
+        //alert('No state craeted L2')
+        $state.go('app.slm2_home');
+      }else if(role==7){
+        //alert('No state craeted L3')
+        $state.go('app.slm1_home');
+      }
     }
 
 
@@ -101,6 +127,14 @@ angular.module('starter.controllers', [])
 
       $scope.userlogin= function (mobile,password) {
         console.log(mobile,password)
+        if(window.Connection){
+          if(navigator.connection.type == Connection.NONE){
+            $ionicPopup.alert({
+              title: 'No Internet Connection',
+              content: 'Sorry, no Internet connectivity detected. Please reconnect and try again.'
+            })
+          }
+        }
         $scope.show($ionicLoading);
         $http.get(API_ENDPOINT.url+'/services.php/userlogin/'+mobile+'/'+password).success(function (data) {
 
@@ -151,10 +185,10 @@ angular.module('starter.controllers', [])
 
 
         }).error(function (error) {
-
-          var alertPopup = $ionicPopup.alert({
+          console.log('Error',error);
+          /*var alertPopup = $ionicPopup.alert({
             title: $scope.message
-          });
+          });*/
 
         }).finally(function($ionicLoading) {
           // On both cases hide the loading
@@ -162,75 +196,93 @@ angular.module('starter.controllers', [])
         });
 
       }
+/*
+    if(window.Connection){
+      if(navigator.connection.type == Connection.NONE){
+        $ionicPopup.confirm({
+          title: 'No Internet Connection',
+          content: 'Sorry, no Internet connectivity detected. Please reconnect and try again.'
+        })
+      }
+    }*/
 
       $scope.checkuser= function (mobile) {
 
-        // Start showing the progress
-        $scope.show($ionicLoading);
 
-        userinfoService.setUsermobile(mobile)
-        $http.get(API_ENDPOINT.url+'/services.php/firstuserlogin/'+mobile).then(function (data) {
+        if(window.Connection){
+          if(navigator.connection.type == Connection.NONE){
+            $ionicPopup.alert({
+              title: 'No Internet Connection',
+              content: 'Sorry, no Internet connectivity detected. Please reconnect and try again.'
+            })
+          } else{
+            $scope.show($ionicLoading);
+
+            userinfoService.setUsermobile(mobile)
+            $http.get(API_ENDPOINT.url+'/services.php/firstuserlogin/'+mobile).then(function (data) {
 
 
 
-          if(data.data.Message.isfrstLogin==undefined){
-            var alertPopup = $ionicPopup.alert({
-              title: 'Invalid number'
-            });
-          }
-        /*  $scope.messagechck=data.data.Message;
-*/
-          // Do something on success for example if you are doing a login
-         /* var alertPopup = $ionicPopup.alert({
-            title: 'Number verified successfully !'
-          });*/
-/*
-          // On both cases hide the loading
-          $scope.hide($ionicLoading);*/
+              if(data.data.Message.isfrstLogin==undefined){
+                var alertPopup = $ionicPopup.alert({
+                  title: 'Invalid number'
+                });
+              }
+              /*  $scope.messagechck=data.data.Message;
+               */
+              // Do something on success for example if you are doing a login
+              /* var alertPopup = $ionicPopup.alert({
+               title: 'Number verified successfully !'
+               });*/
+              /*
+               // On both cases hide the loading
+               $scope.hide($ionicLoading);*/
 
-          if(data.data.Message.isfrstLogin==0){
-            $scope.firsttime=true;
+              if(data.data.Message.isfrstLogin==0){
+                $scope.firsttime=true;
 
-            $http({
-              method:'POST',
-              url:API_ENDPOINT.url+'/services.php/forgotpassword/'+mobile,
-              headers: {
-                'Content-Type': "application/x-www-form-urlencoded"
+                $http({
+                  method:'POST',
+                  url:API_ENDPOINT.url+'/services.php/forgotpassword/'+mobile,
+                  headers: {
+                    'Content-Type': "application/x-www-form-urlencoded"
+                  }
+
+                }).success(function (data) {
+
+                  userinfoService.setUserinfo(data);
+                  userinfoService.setUsermobile(mobile);
+
+                  $state.go('main.otp');
+
+                  //alert(data);
+                  // 'new_password='+createpass.password+'&confirm_password='+createpass.conPassword
+
+                })
+
+
               }
 
-            }).success(function (data) {
+              else if(data.data.Message.isfrstLogin==1){
+                $scope.firsttime=false;
+              }
 
-              userinfoService.setUserinfo(data);
-              userinfoService.setUsermobile(mobile);
+            }).catch(function (error) {
+              console.log(error);
 
-              $state.go('main.otp');
+              // Do something on error
+              var alertPopup = $ionicPopup.alert({
+                title: 'verification failed!',
+                template: 'Please check your number!'
+              });
 
-              //alert(data);
-              // 'new_password='+createpass.password+'&confirm_password='+createpass.conPassword
-
-            })
-
+            }).finally(function($ionicLoading) {
+              // On both cases hide the loading
+              $scope.hide($ionicLoading);
+            });
 
           }
-
-          else if(data.data.Message.isfrstLogin==1){
-            $scope.firsttime=false;
-          }
-
-        }).catch(function (error) {
-          console.log(error);
-
-          // Do something on error
-          var alertPopup = $ionicPopup.alert({
-            title: 'verification failed!',
-            template: 'Please check your number!'
-          });
-
-        }).finally(function($ionicLoading) {
-          // On both cases hide the loading
-          $scope.hide($ionicLoading);
-        });
-
+        }
 
       }
 
@@ -271,18 +323,28 @@ angular.module('starter.controllers', [])
         }
 
       }
-    $scope.show($ionicLoading);
-      $http.get(API_ENDPOINT.url+'/services.php/regionlist').then(function(results){
-        $scope.hide($ionicLoading);
-       $scope.regions=results.data.regionList;
+    if(window.Connection){
+      if(navigator.connection.type == Connection.NONE){
+        $ionicPopup.alert({
+          title: 'No Internet Connection',
+          content: 'Sorry, no Internet connectivity detected. Please reconnect and try again.'
+        })
+      } else{
+        $scope.show($ionicLoading);
+        $http.get(API_ENDPOINT.url+'/services.php/regionlist').then(function(results){
+          $scope.hide($ionicLoading);
+          $scope.regions=results.data.regionList;
 
-      }).catch(function (error) {
-        alert('Something went wrong!!!!')
+        }).catch(function (error) {
+          alert('Something went wrong!!!!')
 
-      }).finally(function($ionicLoading) {
-        // On both cases hide the loading
-        $scope.hide($ionicLoading);
-      });
+        }).finally(function($ionicLoading) {
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);
+        });
+      }
+    }
+
 
       $scope.changedresion= function (reregion) {
         $scope.show($ionicLoading);
@@ -320,40 +382,52 @@ angular.module('starter.controllers', [])
           console.log('retailer',retailer);
         console.log('reatiler form',retailer);
 
+        if(window.Connection){
+          if(navigator.connection.type == Connection.NONE){
+            $ionicPopup.alert({
+              title: 'No Internet Connection',
+              content: 'Sorry, no Internet connectivity detected. Please reconnect and try again.'
+            })
+          }
+          else{
+            $scope.show($ionicLoading);
+            $http({
+              method:'POST',
+              url:API_ENDPOINT.url+'/services.php/registration',
+              headers: {
+                'Content-Type': "application/x-www-form-urlencoded"
+              },
+              data:'city='+retailer.city+'&distributor='+retailer.distributor+'&dob='+retailer.dob+'&email='+retailer.email+'&fname='+retailer.fname+'&mobile='+retailer.mobile+'&region='+retailer.region+'&roleid='+choose+'&state='+retailer.state+'&firmname='+retailer.firmname
+
+              /*'city='+'12'+'&distributor='+'16'+'&dob='+'12/12/1091'+'&email='+'g@rg.com'+
+               '&fname='+'13'+'&mobile='+'4213432499'+'&region='+'3'+'&roleid='+'4'+
+               '&state='+'13'+'&firmname='+'abc'*/
+            }).success(function (data, status, headers, config) {
+
+              userinfoService.setRoleInfo(choose);
+              userinfoService.setUsermobile(retailer.mobile)
+              userinfoService.setUserinfo(data);
+              $scope.regsuccess=true;
+              console.log('registration data for retailer',data)
+
+              $timeout(callAtTimeout, 300);
+              //console.log(success.users)
+            })
+              .error(function(data, status, headers, config){
+
+                var alertPopup = $ionicPopup.alert({
+                  title: 'Registration  failed!',
+                  template: 'Please check your mobile number'
+                });
+
+              }).finally(function($ionicLoading) {
+                $scope.hide($ionicLoading);
+              });
+        }
+        }
+
         // Start showing the progress
-        $scope.show($ionicLoading);
-        $http({
-          method:'POST',
-          url:API_ENDPOINT.url+'/services.php/registration',
-          headers: {
-            'Content-Type': "application/x-www-form-urlencoded"
-          },
-          data:'city='+retailer.city+'&distributor='+retailer.distributor+'&dob='+retailer.dob+'&email='+retailer.email+'&fname='+retailer.fname+'&mobile='+retailer.mobile+'&region='+retailer.region+'&roleid='+choose+'&state='+retailer.state+'&firmname='+retailer.firmname
 
-          /*'city='+'12'+'&distributor='+'16'+'&dob='+'12/12/1091'+'&email='+'g@rg.com'+
-          '&fname='+'13'+'&mobile='+'4213432499'+'&region='+'3'+'&roleid='+'4'+
-          '&state='+'13'+'&firmname='+'abc'*/
-        }).success(function (data, status, headers, config) {
-
-          userinfoService.setRoleInfo(choose);
-          userinfoService.setUsermobile(retailer.mobile)
-          userinfoService.setUserinfo(data);
-          $scope.regsuccess=true;
-          console.log('registration data for retailer',data)
-
-            $timeout(callAtTimeout, 300);
-          //console.log(success.users)
-        })
-          .error(function(data, status, headers, config){
-
-            var alertPopup = $ionicPopup.alert({
-              title: 'Registration  failed!',
-              template: 'Please check your mobile number'
-            });
-
-        }).finally(function($ionicLoading) {
-          $scope.hide($ionicLoading);
-        });
 
         function callAtTimeout() {
           //$state.go('main.otp');
@@ -371,40 +445,48 @@ angular.module('starter.controllers', [])
 
       $scope.customerRegistration= function (customer,customerRegForm,choose) {
 
-        if(customerRegForm.$valid){
-
-          userinfoService.setRoleInfo(choose)
-          $scope.show($ionicLoading);
-          $http({
-            method:'POST',
-            url:API_ENDPOINT.url+'/services.php/registration',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data:'fname='+customer.fname+'&mobile='+customer.mobile+'&roleid='+choose
-          }).success(function (data, status, headers, config) {
-            userinfoService.setUserinfo(data);
-            userinfoService.setUsermobile(customer.mobile)
+        if(window.Connection){
+          if(navigator.connection.type == Connection.NONE){
+            $ionicPopup.alert({
+              title: 'No Internet Connection',
+              content: 'Sorry, no Internet connectivity detected. Please reconnect and try again.'
+            })
+          } else{
+            userinfoService.setRoleInfo(choose)
+            $scope.show($ionicLoading);
+            $http({
+              method:'POST',
+              url:API_ENDPOINT.url+'/services.php/registration',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              data:'fname='+customer.fname+'&mobile='+customer.mobile+'&roleid='+choose
+            }).success(function (data, status, headers, config) {
+              userinfoService.setUserinfo(data);
+              userinfoService.setUsermobile(customer.mobile)
               var alertPopup = $ionicPopup.alert({
                 title: 'Registration successful!'
               });
-            //$scope.regsuccess=true;
-           $timeout(callAtTimeout, 3000);
-              })
-            .error(function(data, status, headers, config){
+              //$scope.regsuccess=true;
+              $timeout(callAtTimeout, 300);
+            })
+              .error(function(data, status, headers, config){
 
-              var alertPopup = $ionicPopup.alert({
-                title: 'Registration  failed!',
-                template: 'Please check your mobile number'
+                var alertPopup = $ionicPopup.alert({
+                  title: 'Registration  failed!',
+                  template: 'Please check your mobile number'
+                });
+
+              }).finally(function($ionicLoading) {
+                // On both cases hide the loading
+                $scope.hide($ionicLoading);
               });
-
-          }).finally(function($ionicLoading) {
-            // On both cases hide the loading
-            $scope.hide($ionicLoading);
-          });
-
-
+          }
         }
+
+       /* if(customerRegForm.$valid){
+
+        }*/
       }
       function callAtTimeout() {
 
@@ -493,12 +575,13 @@ angular.module('starter.controllers', [])
 
     })
 
-    .controller('DistProfileCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, API_ENDPOINT,userinfoService) {
+    .controller('DistProfileCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, API_ENDPOINT,userinfoService,$rootScope) {
         // Set Ink
         ionicMaterialInk.displayEffect();
       var userId;
     var roleId=$scope.rlid=userinfoService.getRoleInfo().roleid;
    // $scope.rlid=3;
+
 
       userId=userinfoService.getUserFKID().FKID;
 
@@ -708,90 +791,115 @@ angular.module('starter.controllers', [])
 
       console.log('userId in App',userId);
       console.log('orderid in App',orderId);
-      var remark=prompt('Please provide Remark');
-      if(remark){
-        $http({
-          method:'POST',
-          url:API_ENDPOINT.url+'/services.php/orderStatusApprove',
-          headers: {
-            'Content-Type': "application/x-www-form-urlencoded"
-          },
-          data:'userid='+userId+'&orderid='+orderId+'&status='+'Approve'+'&remark='+remark
 
-        }).success(function (data) {
-          $scope.hide($ionicLoading);
+      if(window.Connection){
+        if(navigator.connection.type == Connection.NONE){
+          $ionicPopup.alert({
+            title: 'No Internet Connection',
+            content: 'Sorry, no Internet connectivity detected. Please reconnect and try again.'
+          })
+        } else{
+          var remark=prompt('Please provide Remark');
+          if(remark){
+            $http({
+              method:'POST',
+              url:API_ENDPOINT.url+'/services.php/orderStatusApprove',
+              headers: {
+                'Content-Type': "application/x-www-form-urlencoded"
+              },
+              data:'userid='+userId+'&orderid='+orderId+'&status='+'Approve'+'&remark='+remark
+
+            }).success(function (data) {
+              $scope.hide($ionicLoading);
 
 
-          if(data.status==1){
-            $scope.approvestatus=true;
-            if(roldeId==3){
-              $state.go('app.mydisteam_order',null,{reload:true});
+              if(data.status==1){
+                $scope.approvestatus=true;
+                if(roldeId==3){
+                  $state.go('app.mydisteam_order',null,{reload:true});
 
-            } else{
-              $state.go('app.myteam_order',null,{reload:true});
-            }
+                } else{
+                  $state.go('app.myteam_order',null,{reload:true});
+                }
 
-            var alertPopup = $ionicPopup.alert({
-              title: 'Order Approved successfully'
+                var alertPopup = $ionicPopup.alert({
+                  title: 'Order Approved successfully'
+                });
+                OrderHistoryService.getOrderHistory();
+              }
+            }).error(function(){
+
+              var alertPopup = $ionicPopup.alert({
+                title: 'Server is Unreachable, Please try again later'
+              });
+
+            }).finally(function($ionicLoading) {
+              // On both cases hide the loading
+              $scope.hide($ionicLoading);
             });
-            OrderHistoryService.getOrderHistory();
+
+          } else{
+            alert('remark required');
           }
-        }).error(function(){
 
-          var alertPopup = $ionicPopup.alert({
-            title: 'Something wrong'
-          });
-
-        }).finally(function($ionicLoading) {
-          // On both cases hide the loading
-          $scope.hide($ionicLoading);
-        });
-
-      } else{
-        alert('remark required');
+        }
       }
+
+
     }
     $scope.DisApprove= function () {
 
-      var remark=prompt('Please provide Remark');
-      if(remark){
-        $http({
-          method:'POST',
-          url:API_ENDPOINT.url+'/services.php/orderStatusApprove',
-          headers: {
-            'Content-Type': "application/x-www-form-urlencoded"
-          },
-          data:'userid='+userId+'&orderid='+orderId+'&status='+'Reject'+'&remark='+remark
+      if(window.Connection){
+        if(navigator.connection.type == Connection.NONE){
+          $ionicPopup.alert({
+            title: 'No Internet Connection',
+            content: 'Sorry, no Internet connectivity detected. Please reconnect and try again.'
+          })
+        } else{
+          var remark=prompt('Please provide Remark');
+          if(remark){
+            $http({
+              method:'POST',
+              url:API_ENDPOINT.url+'/services.php/orderStatusApprove',
+              headers: {
+                'Content-Type': "application/x-www-form-urlencoded"
+              },
+              data:'userid='+userId+'&orderid='+orderId+'&status='+'Reject'+'&remark='+remark
 
-        }).success(function (data) {
-          $scope.hide($ionicLoading);
+            }).success(function (data) {
+              $scope.hide($ionicLoading);
 
-          if(data.status==1){
-            $scope.approvestatus=true;
-            if(roldeId==3){
-              $state.go('app.mydisteam_order',null,{reload:true});
+              if(data.status==1){
+                $scope.approvestatus=true;
+                if(roldeId==3){
+                  $state.go('app.mydisteam_order',null,{reload:true});
 
-            } else{
-              $state.go('app.myteam_order',null,{reload:true});
-            }
-            var alertPopup = $ionicPopup.alert({
-              title: 'Order Rejected successfully'
+                } else{
+                  $state.go('app.myteam_order',null,{reload:true});
+                }
+                var alertPopup = $ionicPopup.alert({
+                  title: 'Order Rejected successfully'
+                });
+                OrderHistoryService.getOrderHistory();
+              }
+            }).error(function(){
+              var alertPopup = $ionicPopup.alert({
+                title: 'Server is Unreachable, Please try again later'
+              });
+
+            }).finally(function($ionicLoading) {
+              // On both cases hide the loading
+              $scope.hide($ionicLoading);
             });
-            OrderHistoryService.getOrderHistory();
+
+          } else{
+            alert('remark required');
           }
-        }).error(function(){
-          var alertPopup = $ionicPopup.alert({
-            title: 'Something wrong'
-          });
 
-        }).finally(function($ionicLoading) {
-          // On both cases hide the loading
-          $scope.hide($ionicLoading);
-        });
-
-      } else{
-        alert('remark required');
+        }
       }
+
+
     }
 
 
@@ -1114,7 +1222,7 @@ angular.module('starter.controllers', [])
         }
       }).error(function(){
         var alertPopup = $ionicPopup.alert({
-          title: 'Something wrong'
+          title: 'Server is Unreachable, Please try again later'
         });
 
       }).finally(function($ionicLoading) {
@@ -1150,16 +1258,28 @@ angular.module('starter.controllers', [])
       $scope.hide = function(){
         $ionicLoading.hide();
       };
-      $scope.show($ionicLoading);
+    if(window.Connection){
+      if(navigator.connection.type == Connection.NONE){
+        $ionicPopup.alert({
+          title: 'No Internet Connection',
+          content: 'Sorry, no Internet connectivity detected. Please reconnect and try again.'
+        })
+      } else{
+        $scope.show($ionicLoading);
 
-      $http.get(API_ENDPOINT.url+'/services.php/segmentlist/0/0').then(function(results){
-        $scope.retailCreateOrderSegments=results.data.segmentlist;
-      }).catch(function (error) {
-        alert('Something went wrong!!!!')
-      }).finally(function($ionicLoading) {
-        // On both cases hide the loading
-        $scope.hide($ionicLoading);
-      });
+        $http.get(API_ENDPOINT.url+'/services.php/segmentlist/0/0').then(function(results){
+          $scope.retailCreateOrderSegments=results.data.segmentlist;
+        }).catch(function (error) {
+          alert('Something went wrong!!!!')
+        }).finally(function($ionicLoading) {
+          // On both cases hide the loading
+          $scope.hide($ionicLoading);
+        });
+
+      }
+    }
+
+
       $scope.canbook=true;
       $scope.retailsegmentDetail= function (retailCreateProduct) {
         console.log(',,,,,,',retailCreateProduct)
@@ -1201,63 +1321,83 @@ angular.module('starter.controllers', [])
 
       $scope.confirmorderForRetailer= function (qty) {
 
+        if(window.Connection){
+          if(navigator.connection.type == Connection.NONE){
+            $ionicPopup.alert({
+              title: 'No Internet Connection',
+              content: 'Sorry, no Internet connectivity detected. Please reconnect and try again.'
+            })
+          } else{
+            $scope.show($ionicLoading);
+            $http({
+              method:'POST',
+              url:API_ENDPOINT.url+'/services.php/orderplace',
+              headers: {
+                'Content-Type': "application/x-www-form-urlencoded"
+              },
+              data:'userId='+userId+'&productId='+$scope.productID+'&qty='+qty+'&roleid='+roleId
 
-        $scope.show($ionicLoading);
-        $http({
-          method:'POST',
-          url:API_ENDPOINT.url+'/services.php/orderplace',
-          headers: {
-            'Content-Type': "application/x-www-form-urlencoded"
-          },
-          data:'userId='+userId+'&productId='+$scope.productID+'&qty='+qty+'&roleid='+roleId
+            }).success(function (data) {
+              var alertPopup = $ionicPopup.alert({
+                title: 'Order request sent successfully'
+              });
+              $ionicHistory.goBack();
 
-        }).success(function (data) {
-          var alertPopup = $ionicPopup.alert({
-            title: 'Order request sent successfully'
-          });
-          $ionicHistory.goBack();
+            }).error(function(){
+              var alertPopup = $ionicPopup.alert({
+                title: 'Something wrong'
+              });
 
-        }).error(function(){
-          var alertPopup = $ionicPopup.alert({
-            title: 'Something wrong'
-          });
+            }).finally(function($ionicLoading) {
+              // On both cases hide the loading
+              $scope.hide($ionicLoading);
+            });
 
-        }).finally(function($ionicLoading) {
-          // On both cases hide the loading
-          $scope.hide($ionicLoading);
-        });
+          }
+        }
+
+
 
       }
 
     $scope.confirmorderForDistributor= function (qty) {
 
-      $scope.show($ionicLoading);
-      $http({
-        method:'POST',
-        url:API_ENDPOINT.url+'/services.php/orderplace',
-        headers: {
-          'Content-Type': "application/x-www-form-urlencoded"
-        },
-        data:'userId='+userId+'&productId='+$scope.productID+'&qty='+qty+'&roleid='+roleId
+      if(window.Connection){
+        if(navigator.connection.type == Connection.NONE){
+          $ionicPopup.alert({
+            title: 'No Internet Connection',
+            content: 'Sorry, no Internet connectivity detected. Please reconnect and try again.'
+          })
+        } else{
+          $scope.show($ionicLoading);
+          $http({
+            method:'POST',
+            url:API_ENDPOINT.url+'/services.php/orderplace',
+            headers: {
+              'Content-Type': "application/x-www-form-urlencoded"
+            },
+            data:'userId='+userId+'&productId='+$scope.productID+'&qty='+qty+'&roleid='+roleId
 
-      }).success(function (data) {
-        console.log(data);
-        var alertPopup = $ionicPopup.alert({
-          title: 'Order request sent successfully'
-        });
-        $ionicHistory.goBack();
-        console.log('data',data);
-      }).error(function(){
-        console.log('Something wrong')
-        var alertPopup = $ionicPopup.alert({
-          title: 'Something wrong'
-        });
+          }).success(function (data) {
+            console.log(data);
+            var alertPopup = $ionicPopup.alert({
+              title: 'Order request sent successfully'
+            });
+            $ionicHistory.goBack();
+            console.log('data',data);
+          }).error(function(){
+            console.log('Something wrong')
+            var alertPopup = $ionicPopup.alert({
+              title: 'Something wrong'
+            });
 
-      }).finally(function($ionicLoading) {
-        // On both cases hide the loading
-        $scope.hide($ionicLoading);
-      });
+          }).finally(function($ionicLoading) {
+            // On both cases hide the loading
+            $scope.hide($ionicLoading);
+          });
 
+        }
+      }
     }
     })
   .controller('customerLoginCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $state) {
@@ -1556,7 +1696,7 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
         }).error(function (error) {
           var alertPopup = $ionicPopup.alert({
-            title: 'Something went wrong...!'
+            title: 'Server is Unreachable, Please try again later'
           });
 
         }).finally(function($ionicLoading) {
@@ -1828,47 +1968,57 @@ $scope.createNewPassword= function (createpass ,createPassForm) {
 
     $scope.Approve= function () {
       var userId=userinfoService.getUserFKID().FKID;
+      if(window.Connection){
+        if(navigator.connection.type == Connection.NONE){
+          $ionicPopup.alert({
+            title: 'No Internet Connection',
+            content: 'Sorry, no Internet connectivity detected. Please reconnect and try again.'
+          })
+        } else{
+          var remark=prompt('Please provide Remark');
+          if(remark){
+            $http({
+              method:'POST',
+              url:API_ENDPOINT.url+'/services.php/retailerstatus',
+              headers: {
+                'Content-Type': "application/x-www-form-urlencoded"
+              },
+              data:'userid='+userId+'&retailerid='+orderId+'&status='+1
+
+            }).success(function (data) {
+              $scope.hide($ionicLoading);
 
 
-      var remark=prompt('Please provide Remark');
-      if(remark){
-        $http({
-          method:'POST',
-          url:API_ENDPOINT.url+'/services.php/retailerstatus',
-          headers: {
-            'Content-Type': "application/x-www-form-urlencoded"
-          },
-          data:'userid='+userId+'&retailerid='+orderId+'&status='+1
 
-        }).success(function (data) {
-          $scope.hide($ionicLoading);
+              if(data.status==1){
+                $scope.approvestatus=true;
+                $state.go('app.retailerDetails',null,{reload:true});
 
 
+                var alertPopup = $ionicPopup.alert({
+                  title: 'Retailer Approved successfully'
+                });
+                OrderHistoryService.getRetailers();
+              }
+            }).error(function(){
+              /* console.log('Something wrong')*/
+              var alertPopup = $ionicPopup.alert({
+                title: 'Server is Unreachable, Please try again later'
+              });
 
-          if(data.status==1){
-            $scope.approvestatus=true;
-              $state.go('app.retailerDetails',null,{reload:true});
-
-
-            var alertPopup = $ionicPopup.alert({
-              title: 'Retailer Approved successfully'
+            }).finally(function($ionicLoading) {
+              // On both cases hide the loading
+              $scope.hide($ionicLoading);
             });
-            OrderHistoryService.getRetailers();
+
+          } else{
+            alert('remark required');
           }
-        }).error(function(){
-         /* console.log('Something wrong')*/
-          var alertPopup = $ionicPopup.alert({
-            title: 'Something wrong'
-          });
 
-        }).finally(function($ionicLoading) {
-          // On both cases hide the loading
-          $scope.hide($ionicLoading);
-        });
-
-      } else{
-        alert('remark required');
+        }
       }
+
+
     }
 
 

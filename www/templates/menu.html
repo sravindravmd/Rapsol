@@ -1,17 +1,14 @@
-<!--<ion-nav-bar align-title="center">
-            <ion-nav-back-button class="no-text">
-            </ion-nav-back-button>
-          &lt;!&ndash;  <ion-nav-buttons side="right"><a href="#/app/logout" class="button icon ion-log-out button-clear"></a></ion-nav-buttons>&ndash;&gt;
-</ion-nav-bar>-->
 <ion-nav-bar class="custom-dark3" align-title="center">
+  <ion-nav-title><div class="title title-center header-item"><a ng-click="goHome()" class="title-image"><img class="title-image" src="img/logo.png"></a></div></ion-nav-title>
   <ion-nav-back-button class="no-text"></ion-nav-back-button>
   <ion-nav-buttons></ion-nav-buttons>
+
   <ion-nav-buttons side="right">
     <a class="button button icon button-clear" ng-hide="hidenot" style="top: 0.3em" ng-click="goto()"><i class="icon ion-android-notifications" ></i><span class="badge badge-assertive"  ng-show="note>0" style="margin-top: -2.5em;
     margin-left: 2em;
     padding: 2px;">{{note}}</span></a>
   </ion-nav-buttons>
-  <<!--ion-nav-buttons side="right">
+  <!--ion-nav-buttons side="right">
 
     <a class="button button button-clear  " style="top: 0.3em" href="#/app/"><i class="icon ion-android-notifications badge-container"><span class="badge badge-assertive">5</span></i></a>
   </ion-nav-buttons>--> <ion-nav-buttons side="secondary">
